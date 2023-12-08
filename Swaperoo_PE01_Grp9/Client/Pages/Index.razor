@@ -1,0 +1,55 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+
+<PageTitle>Index</PageTitle>
+
+<section id="Section1">
+        <p id="headtext">USE "DISCOUNT20" FOR 20% OFF YOUR FIRST PURCHASE.</p>
+        <button id="headbuttons" type="button">Sell on Swaperoo</button>
+        <button id="headbuttons" type="button">Help & Services</button>
+    </section>
+
+    <section id="Section2">
+        <button class="categorybutton"><img src="category.png" s height="50" alt="Your Image"></button>
+       
+        <button id="Swaperoo">Swaperoo</button>
+        <input type="text" class="Search name=Search">
+        <button type="button" class="SearchButton">Search</button>
+        <button type="button" class="LoginButton" @onclick="GotoLogin">Login</button>
+        <button type="button" class="RegisterButton" @onclick="GotoRegister"> Register</button>
+    </section>
+
+    <section class="Section3">
+        <img class="lady1" src="lady1.png" s height="400" alt="Your Image">
+        <img class="lady2" src="lady2.png" s height="430" alt="Your Image">
+        <p class="saveworld">Do Your Part in Saving The World.<br>Buy Green.</p>
+    </section>
+
+    <section class="Section4">
+        <p class="Featuretext">Featured Listings</p>
+        <div class="wrapper">
+            <div class="div1"></div>
+            <div class="div2"></div>
+            <div class="div3"></div>
+            <div class="div4"></div>
+            <div class="div5"></div>
+            <div class="div6"></div>
+            <div class="div7"></div>
+            <div class="div8"></div>
+            <div class="div9"></div>
+        </div>
+    </section>
+
+@code {
+    public void GotoRegister()
+    {
+        Navigation.NavigateTo("authentication/register");
+    }
+
+    public void GotoLogin()
+    {
+        Navigation.NavigateToLogin("authentication/login");
+    }
+
+
+}
