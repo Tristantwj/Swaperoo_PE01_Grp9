@@ -5,6 +5,8 @@
 <head>
     <link href="css/landing.css" rel="stylesheet" />
 </head>
+
+
 <body>
     <div class="fixed">
         <div class="header">
@@ -28,9 +30,18 @@
             <input class="searchbar" type="text" placeholder="Search">
             <button class="SearchButton">Search</button>
         </div>
+        
         <div class="option_right">
-                <button class="LoginButton" @onclick="GotoLogin">Login</button>
-                <button class="RegisterButton" @onclick="GotoRegister">Register</button>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <button class="LoginButton" @onclick="GotoLogin">Login</button>
+                        <button class="RegisterButton" @onclick="GotoRegister">Register</button>
+                    </NotAuthorized>
+                    <Authorized>
+                            Justin12345
+                            <img class="profile-picture" src="images/guy.jpeg" />
+                    </Authorized>
+                </AuthorizeView>
         </div>
         </div>
     </div>
