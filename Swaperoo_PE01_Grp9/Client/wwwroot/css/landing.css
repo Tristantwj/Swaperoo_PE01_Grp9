@@ -3,7 +3,7 @@
 body {
     margin: 0;
     height: 3000px;
-    padding-top: 40px;
+    padding-top: 80px;
 }
 
 .fixed {
@@ -178,6 +178,16 @@ body {
         opacity: 0.5;
     }
 
+.displayname{
+
+}
+.profilepic{
+    
+}
+.profile-picture {
+    width: 55px;
+    border-radius: 80px;
+}
 /*--------------------display-------------------------*/
 .display {
     display: flex;
