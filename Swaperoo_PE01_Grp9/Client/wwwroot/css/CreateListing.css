@@ -1,0 +1,30 @@
+﻿body {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.formbox{
+    display:flex;
+    align-items: center;
+    
+}
+
+.form_right {
+    flex: 1;
+    align-items: center;
+    
+}
+.form_left {
+    flex: 1;
+    align-items: center;
+    
+}
+
+#itemName{
+    flex:1;
+}
+.submitbutton {
+    border-radius: 50px;
+    background-image: linear-gradient(to right top, #22a3cc, #00b4d1, #00c4cc, #00d3be, #24e0a8);
+}

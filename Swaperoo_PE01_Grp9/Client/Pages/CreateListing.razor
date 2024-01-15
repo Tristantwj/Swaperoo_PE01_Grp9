@@ -1,0 +1,43 @@
+﻿@page "/CreateListing"
+@inject NavigationManager Navigation
+
+<PageTitle>Create Listing</PageTitle>
+
+<head>
+    <link href="css/CreateListing.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h1> Create Listing</h1>
+
+    <form>
+        <div class="formbox">
+            <div class="form_left">
+                <label for="itemName">Item Name:</label><br>
+                <input type="text" id="itemName" name="itemName"><br>
+                <label for="itemImage">Select Image:</label><br>
+                <input type="file" id="itemImage" name="itemImage"><br>
+                <label for="price">Price:</label><br>
+                <input type="number" id="price" name="price"><br>
+                <input type="submit" value="Create" class="submitbutton">
+            </div>
+            <div class="form_right">
+                <label for="itemDescription">Description:</label><br>
+                <textarea id="itemDescription" name="itemDescription"></textarea><br>
+                <label for="category">Category:</label><br>
+                <select id="category" name="category">
+                    <option value="electronics">Electronics</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="home">Home</option>
+                </select><br>
+                <label for="subCategories">Sub Categories:</label><br>
+                <input type="text" id="subCategories" name="subCategories"><br>
+            </div>
+            
+            
+        </div>
+    </form>
+</body>
+@code {
+
+}
