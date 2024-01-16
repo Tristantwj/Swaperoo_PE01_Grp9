@@ -2,6 +2,7 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @using Swaperoo_PE01_Grp9.Shared.Domain
+@using Swaperoo_PE01_Grp9.Client
 
 <PageTitle>Index</PageTitle>
 <head>
@@ -37,4 +38,10 @@
     </div>
 </body>
 @code {
+    private List<Product>? Products;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+    }
 }
