@@ -12,7 +12,7 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public string ItemName { get; set; }
         public DateTime CreatedDate { get; set; }
         public string ItemDescription { get; set; }
-        public string imagepath { get; set; }
+        public string? imagepath { get; set; }
         public double price { get; set; }
         public string status { get; set; }
         public int UserID { get; set; }

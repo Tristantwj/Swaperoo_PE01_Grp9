@@ -1,39 +1,51 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Swaperoo_PE01_Grp9</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+﻿@inject NavigationManager Navigation
+
+<div class="fixed">
+    <div class="header">
+        <div class="header_left">
+        </div>
+        <div class="header_center">
+            Welcome to Swaperoo
+        </div>
+        <div class="header_right">
+            <button class="header_buttons" type="button">Sell on Swaperoo</button>
+            <button class="header_buttons" type="button">Help & Services</button>
+        </div>
+    </div>
+
+    <div class="option">
+        <div class="option_left">
+            <img class="category_icon" src="images/category.png">
+            <button class="Swaperoo">Swaperoo</button>
+        </div>
+        <div class="option_center">
+            <input class="searchbar" type="text" placeholder="Search">
+            <button class="SearchButton">Search</button>
+        </div>
+
+        <div class="option_right">
+            <AuthorizeView>
+                <NotAuthorized>
+                    <button class="LoginButton" @onclick="GotoLogin">Login</button>
+                    <button class="RegisterButton" @onclick="GotoRegister">Register</button>
+                </NotAuthorized>
+                <Authorized>
+                    Justin12345
+                    <img class="profile-picture" src="images/guy.jpeg" />
+                </Authorized>
+            </AuthorizeView>
+        </div>
     </div>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
 @code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    public void GotoRegister()
     {
-        collapseNavMenu = !collapseNavMenu;
+        Navigation.NavigateTo("authentication/register");
+    }
+
+    public void GotoLogin()
+    {
+        Navigation.NavigateToLogin("authentication/login");
     }
 }
