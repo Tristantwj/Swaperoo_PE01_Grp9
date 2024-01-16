@@ -18,51 +18,22 @@
     </div>
 
     <div class="Featured_grid">
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
-            </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>
-        </div>
+        @if (Products != null)
+        {
+            @foreach (var product in Products)
+            {
+                <div class="Featured">
+                    <div class="product_imgrow">
+                        <img class="product_img" src="@product.imagepath">
+                    </div>
 
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
-            </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>
-        </div>
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
-            </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>   
-        </div>     
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
-            </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>   
-        </div>           
+                    <div class="product_info">
+                        <p class="product_name">@product.Name</p>
+                        <p class="product_price">$@product.price</p>
+                    </div>
+                </div>
+            }       
+        }
     </div>
 </body>
 @code {
