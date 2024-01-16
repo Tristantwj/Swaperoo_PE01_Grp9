@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Swaperoo_PE01_Grp9.Shared.Domain
 {
-    public class Messages
+    public class Message
     {
-        public int MessagesId { get; set; }
+        public int Id { get; set; }
         public string MessageContent { get; set; }
-        public DateTime SentTime { get; set; }
+        public DateTime DateCreated { get; set; }
         public int? UserId { get; set; }
         public virtual User? User { get; set; }
         public int ChatId { get; set; }

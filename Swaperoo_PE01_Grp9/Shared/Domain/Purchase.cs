@@ -9,7 +9,7 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
 {
     public class Purchase
     {
-        public int PurchaseId { get; set; }
+        public int Id { get; set; }
         public DateTime SellDate { get; set; }
         public double OfferPrice { get; set; }
         public int? UserId { get; set; }

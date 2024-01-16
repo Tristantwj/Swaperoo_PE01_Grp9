@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Swaperoo_PE01_Grp9.Server.Data;
 using Swaperoo_PE01_Grp9.Server.Models;
 using Microsoft.AspNetCore.Identity;
+using Swaperoo_PE01_Grp9.Server.IRepository;
+using Swaperoo_PE01_Grp9.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
+
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
