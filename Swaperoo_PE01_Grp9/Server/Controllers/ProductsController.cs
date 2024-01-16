@@ -11,6 +11,12 @@ using Swaperoo_PE01_Grp9.Server.Repository;
 using Swaperoo_PE01_Grp9.Server.IRepository;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Swaperoo_PE01_Grp9.Server.IRepository;
+using Swaperoo_PE01_Grp9.Server.Data;
+using Swaperoo_PE01_Grp9.Shared.Domain;
 namespace Swaperoo_PE01_Grp9.Server.Controllers
 {
     [Route("api/[controller]")]
@@ -18,7 +24,10 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ProductsController(IUnitOfWork unitOfWork) 
+
+
+        public ProductsController(IUnitOfWork unitOfWork)
+
         {
             _unitOfWork = unitOfWork;
         }
@@ -31,7 +40,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
             return Ok(products);
         }
 
-        // GET: api/Products/5
+        // GET: api/Product/idnumber 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
@@ -41,7 +50,6 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
             {
                 return NotFound();
             }
-
             return Ok(product);
         }
 
@@ -54,6 +62,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
             {
                 return BadRequest();
             }
+
             _unitOfWork.Products.Update(product);
 
             try
@@ -62,7 +71,6 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                //if (!ProductExists(id))
                 if (!await ProductExists(id))
                 {
                     return NotFound();
@@ -83,7 +91,6 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         {
             await _unitOfWork.Products.Insert(product);
             await _unitOfWork.Save(HttpContext);
-
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
@@ -91,20 +98,18 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _unitOfWork.Products.Get(q =>q.Id == id);
+            var product = await _unitOfWork.Products.Get(q => q.Id == id);
+
             if (product == null)
             {
                 return NotFound();
             }
-
             await _unitOfWork.Products.Delete(id);
             await _unitOfWork.Save(HttpContext);
-
             return NoContent();
         }
 
-        //private bool ProductExists(int id)
-        private async Task<bool> ProductExists(int  id)
+        private async Task<bool> ProductExists(int id)
         {
             var product = await _unitOfWork.Products.Get(q => q.Id == id);
             return product != null;

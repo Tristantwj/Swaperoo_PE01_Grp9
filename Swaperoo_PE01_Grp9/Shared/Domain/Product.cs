@@ -2,7 +2,7 @@
 
 namespace Swaperoo_PE01_Grp9.Shared.Domain
 {
-    public class Product
+    public class Product : BaseDomainModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
