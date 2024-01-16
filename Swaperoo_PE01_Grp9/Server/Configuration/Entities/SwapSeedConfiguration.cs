@@ -5,9 +5,9 @@ using Swaperoo_PE01_Grp9.Shared.Domain;
 
 namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
 {
-    public class SwapSeedConfiguration : IEntityTypeConfiguration<Product>
+    public class SwapSeedConfiguration : IEntityTypeConfiguration<Swap>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Swap> builder)
         {
             builder.HasData(
                 new Swap

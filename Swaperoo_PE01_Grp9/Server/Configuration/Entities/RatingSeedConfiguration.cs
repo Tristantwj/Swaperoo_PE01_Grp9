@@ -4,9 +4,9 @@ using Swaperoo_PE01_Grp9.Shared.Domain;
 
 namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
 {
-    public class RatingSeedConfiguration : IEntityTypeConfiguration<Product>
+    public class RatingSeedConfiguration : IEntityTypeConfiguration<Rating>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Rating> builder)
         {
             builder.HasData(
                 new Rating

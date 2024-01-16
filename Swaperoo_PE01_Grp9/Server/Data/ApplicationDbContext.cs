@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -30,13 +31,30 @@ namespace Swaperoo_PE01_Grp9.Server.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-
             modelBuilder.Entity<Purchase>()
                 .HasOne(p => p.Product)
                 .WithMany()
                 .HasForeignKey(p => p.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            SeedDefaultData(modelBuilder);
+        }
+        private void SeedDefaultData(ModelBuilder modelBuilder)
+        {
+            var user = new ApplicationUser
+            {
+                Name = "Frank Ofoedu",
+                Region = "YourRegion",
+                Email = "frankofoedu@gmail.com",
+                EmailConfirmed = true,
+                UserName = "frankofoedu@gmail.com",
+                NormalizedUserName = "FRANKOFOEDU@GMAIL.COM"
+            };
+
+            var passwordHasher = new PasswordHasher<ApplicationUser>();
+            user.PasswordHash = passwordHasher.HashPassword(user, "mypassword_?");
+
+            modelBuilder.Entity<ApplicationUser>().HasData(user);
         }
 
     }

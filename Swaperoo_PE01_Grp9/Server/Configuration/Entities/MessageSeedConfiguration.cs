@@ -4,9 +4,9 @@ using Swaperoo_PE01_Grp9.Shared.Domain;
 
 namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
 {
-    public class MessageSeedConfiguration : IEntityTypeConfiguration<Product>
+    public class MessageSeedConfiguration : IEntityTypeConfiguration<Message>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Message> builder)
         {
             builder.HasData(
                 new Message

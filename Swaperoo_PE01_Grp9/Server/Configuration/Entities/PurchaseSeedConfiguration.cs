@@ -5,9 +5,9 @@ using Swaperoo_PE01_Grp9.Shared.Domain;
 
 namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
 {
-    public class PurchaseSeedConfiguration : IEntityTypeConfiguration<Product>
+    public class PurchaseSeedConfiguration : IEntityTypeConfiguration<Purchase>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Purchase> builder)
         {
             builder.HasData(
                 new Purchase
