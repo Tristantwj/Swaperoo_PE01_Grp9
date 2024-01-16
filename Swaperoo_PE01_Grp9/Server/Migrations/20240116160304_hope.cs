@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     /// <inheritdoc />
@@ -482,7 +484,68 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Region", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "10c0242f-fd7d-4484-b604-9d684bf46109", 0, "59d008c7-7846-4716-aa3b-841cfaf775a8", "frankofoedu@gmail.com", true, false, null, "Frank Ofoedu", null, "FRANKOFOEDU@GMAIL.COM", "AQAAAAIAAYagAAAAEHSAkL+vL1MUn210t/G9pKSnaOFBcfaSC2/tvYuqKYqjPcyptegW6DWcg5UiMxBA/A==", null, false, "YourRegion", "7f0729bb-3cc9-4165-b9e8-cde70eb2fd04", false, "frankofoedu@gmail.com" });
+                values: new object[] { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "627d4eba-7ba3-4905-962e-309cace7cc1e", "frankofoedu@blazor.com", true, false, null, "Frank Ofoedu", null, null, "AQAAAAIAAYagAAAAEIPYXVeWOwPnonizvjTtOEx334q4LEKB2JbX3ZjXNPoAb0ajlReP5+b6vmFr4JXjwg==", null, false, "North", "2e1e4021-a338-4ffe-b89c-d2ae6ae37da1", false, null });
+
+            migrationBuilder.InsertData(
+                table: "Categorys",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Fashion" });
+
+            migrationBuilder.InsertData(
+                table: "Reports",
+                columns: new[] { "Id", "DateCreated", "Description", "ReportType", "ReportedProductId", "ReportedUserId", "ReporterId", "ReporterUserId", "status" },
+                values: new object[] { 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(7166), "Description", "site", null, null, null, 1, "unsolved" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Description", "Email", "Name", "Region" },
+                values: new object[,]
+                {
+                    { 1, "empty", "frankofoedu@blazor.com", "Frank Ofoedu", "North" },
+                    { 2, "empty", "john@blazor.com", "John", "South" },
+                    { 3, "empty", "tom@blazor.com", "Tom", "East" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SubCategorys",
+                columns: new[] { "Id", "CategoryId", "Name" },
+                values: new object[] { 1, 1, "Shirt" });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "DateCreated", "Description", "Name", "SubCategoryId", "UserId", "imagepath", "price", "status" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6265), "Description", "Nvidea GTX 2080", 1, 1, null, 1000.0, "ongoing" },
+                    { 2, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6269), "Description", "Intel i9", 1, 1, null, 500.0, "sold" },
+                    { 3, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6270), "Brand new", "Air jordon 12", 1, 1, null, 500.0, "ongoing" },
+                    { 4, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6272), "Brand new", "Computer", 1, 1, null, 800.0, "ongoing" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Chats",
+                columns: new[] { "Id", "ChatProfilePicture", "DateCreated", "Name", "ProductId" },
+                values: new object[] { 1, null, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(5856), "First Chat", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Purchases",
+                columns: new[] { "Id", "OfferPrice", "ProductId", "SellDate", "UserId" },
+                values: new object[] { 1, 400.0, 2, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6722), 2 });
+
+            migrationBuilder.InsertData(
+                table: "Swaps",
+                columns: new[] { "Id", "BuyerId", "OfferItemID", "ProductId", "SellerId", "SellertId", "SwapDate" },
+                values: new object[] { 1, 1, 3, 4, null, 2, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(7694) });
+
+            migrationBuilder.InsertData(
+                table: "Messages",
+                columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "UserId" },
+                values: new object[] { 1, 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6069), "Fashion", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Ratings",
+                columns: new[] { "Id", "DateCreated", "Description", "PurchaseId", "RatingValue", "SwapId", "UserId" },
+                values: new object[] { 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6927), "blahblah", 1, 4, null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

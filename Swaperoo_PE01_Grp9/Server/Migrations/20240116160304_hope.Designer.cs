@@ -12,7 +12,7 @@ using Swaperoo_PE01_Grp9.Server.Data;
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240116154248_hope")]
+    [Migration("20240116160304_hope")]
     partial class hope
     {
         /// <inheritdoc />
@@ -376,20 +376,18 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "10c0242f-fd7d-4484-b604-9d684bf46109",
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "59d008c7-7846-4716-aa3b-841cfaf775a8",
-                            Email = "frankofoedu@gmail.com",
+                            ConcurrencyStamp = "627d4eba-7ba3-4905-962e-309cace7cc1e",
+                            Email = "frankofoedu@blazor.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Frank Ofoedu",
-                            NormalizedUserName = "FRANKOFOEDU@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHSAkL+vL1MUn210t/G9pKSnaOFBcfaSC2/tvYuqKYqjPcyptegW6DWcg5UiMxBA/A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIPYXVeWOwPnonizvjTtOEx334q4LEKB2JbX3ZjXNPoAb0ajlReP5+b6vmFr4JXjwg==",
                             PhoneNumberConfirmed = false,
-                            Region = "YourRegion",
-                            SecurityStamp = "7f0729bb-3cc9-4165-b9e8-cde70eb2fd04",
-                            TwoFactorEnabled = false,
-                            UserName = "frankofoedu@gmail.com"
+                            Region = "North",
+                            SecurityStamp = "2e1e4021-a338-4ffe-b89c-d2ae6ae37da1",
+                            TwoFactorEnabled = false
                         });
                 });
 
@@ -408,6 +406,13 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Fashion"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Chat", b =>
@@ -436,6 +441,15 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Chats");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(5856),
+                            Name = "First Chat",
+                            ProductId = 1
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Message", b =>
@@ -466,6 +480,16 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Messages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ChatId = 1,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6069),
+                            MessageContent = "Fashion",
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Product", b =>
@@ -510,6 +534,52 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6265),
+                            Description = "Description",
+                            Name = "Nvidea GTX 2080",
+                            SubCategoryId = 1,
+                            UserId = 1,
+                            price = 1000.0,
+                            status = "ongoing"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6269),
+                            Description = "Description",
+                            Name = "Intel i9",
+                            SubCategoryId = 1,
+                            UserId = 1,
+                            price = 500.0,
+                            status = "sold"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6270),
+                            Description = "Brand new",
+                            Name = "Air jordon 12",
+                            SubCategoryId = 1,
+                            UserId = 1,
+                            price = 500.0,
+                            status = "ongoing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6272),
+                            Description = "Brand new",
+                            Name = "Computer",
+                            SubCategoryId = 1,
+                            UserId = 1,
+                            price = 800.0,
+                            status = "ongoing"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Purchase", b =>
@@ -539,6 +609,16 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Purchases");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OfferPrice = 400.0,
+                            ProductId = 2,
+                            SellDate = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6722),
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Rating", b =>
@@ -577,6 +657,17 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6927),
+                            Description = "blahblah",
+                            PurchaseId = 1,
+                            RatingValue = 4,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Report", b =>
@@ -623,6 +714,17 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("ReporterId");
 
                     b.ToTable("Reports");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(7166),
+                            Description = "Description",
+                            ReportType = "site",
+                            ReporterUserId = 1,
+                            status = "unsolved"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.SubCategory", b =>
@@ -645,6 +747,14 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategorys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Name = "Shirt"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Swap", b =>
@@ -684,6 +794,17 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasIndex("SellerId");
 
                     b.ToTable("Swaps");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BuyerId = 1,
+                            OfferItemID = 3,
+                            ProductId = 4,
+                            SellertId = 2,
+                            SwapDate = new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(7694)
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.User", b =>
@@ -712,6 +833,32 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "empty",
+                            Email = "frankofoedu@blazor.com",
+                            Name = "Frank Ofoedu",
+                            Region = "North"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "empty",
+                            Email = "john@blazor.com",
+                            Name = "John",
+                            Region = "South"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "empty",
+                            Email = "tom@blazor.com",
+                            Name = "Tom",
+                            Region = "East"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

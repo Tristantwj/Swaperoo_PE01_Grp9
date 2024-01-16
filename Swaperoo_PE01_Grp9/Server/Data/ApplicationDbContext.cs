@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Swaperoo_PE01_Grp9.Server.Configuration.Entities;
 using Swaperoo_PE01_Grp9.Server.Models;
 using Swaperoo_PE01_Grp9.Shared.Domain;
 
@@ -38,21 +39,29 @@ namespace Swaperoo_PE01_Grp9.Server.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
             SeedDefaultData(modelBuilder);
+            modelBuilder.ApplyConfiguration(new CategorySeedConfiguration());
+            modelBuilder.ApplyConfiguration(new ChatSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new MessageSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new UserSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new PurchaseSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new RatingSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new ReportSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new SubCategorySeedConfiguration());
+            modelBuilder.ApplyConfiguration(new SwapSeedConfiguration());
         }
         private void SeedDefaultData(ModelBuilder modelBuilder)
         {
             var user = new ApplicationUser
             {
                 Name = "Frank Ofoedu",
-                Region = "YourRegion",
-                Email = "frankofoedu@gmail.com",
-                EmailConfirmed = true,
-                UserName = "frankofoedu@gmail.com",
-                NormalizedUserName = "FRANKOFOEDU@GMAIL.COM"
+                Region = "North",
+                Email = "frankofoedu@blazor.com",
+                EmailConfirmed = true
             };
 
             var passwordHasher = new PasswordHasher<ApplicationUser>();
-            user.PasswordHash = passwordHasher.HashPassword(user, "mypassword_?");
+            user.PasswordHash = passwordHasher.HashPassword(user, "Abc123!");
 
             modelBuilder.Entity<ApplicationUser>().HasData(user);
         }
