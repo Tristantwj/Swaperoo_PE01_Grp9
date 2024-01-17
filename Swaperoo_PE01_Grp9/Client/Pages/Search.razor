@@ -1,0 +1,47 @@
+﻿@page "/Search/{searchTerm}"
+@inject HttpClient _client
+@inject IJSRuntime js
+@inject NavigationManager Navigation
+@using Swaperoo_PE01_Grp9.Shared.Domain
+<PageTitle>Search</PageTitle>
+
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+</head>
+
+<body>
+    <p>Search Term: @searchTerm</p>
+
+    @if (products != null && products.Any())
+    {
+        <h4>Search Results:</h4>
+        <div class="product-list">
+            @foreach (var product in products)
+            {
+                <div class="product">
+                    <h5>@product.Name</h5>
+                    <p>@product.Description</p>
+                    <p>Price: $@product.price</p>
+                    <!-- Add more product details as needed -->
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No products found for the search term.</p>
+    }
+</body>
+
+@code {
+    [Parameter]
+    public string searchTerm { get; set; }
+
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Call your API or data service to fetch products based on the search term
+        products = await _client.GetFromJsonAsync<List<Product>>($"api/products/search/{searchTerm}");
+    }
+}

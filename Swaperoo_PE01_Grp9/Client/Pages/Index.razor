@@ -2,7 +2,7 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @using Swaperoo_PE01_Grp9.Shared.Domain
-@using Swaperoo_PE01_Grp9.Client
+@using Swaperoo_PE01_Grp9.Client.Static
 
 <PageTitle>Index</PageTitle>
 <head>
@@ -40,8 +40,18 @@
 @code {
     private List<Product>? Products;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        try
+        {
+            // No need to check authentication state before making the API call
+            Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+        }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            // Handle exception if necessary
+            Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
+        }
     }
+
 }
