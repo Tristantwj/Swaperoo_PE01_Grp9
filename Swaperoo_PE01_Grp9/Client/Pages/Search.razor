@@ -1,47 +1,50 @@
-﻿@page "/Search/{searchTerm}"
+﻿@page "/Search"
 @inject HttpClient _client
 @inject IJSRuntime js
-@inject NavigationManager Navigation
 @using Swaperoo_PE01_Grp9.Shared.Domain
-<PageTitle>Search</PageTitle>
+
+<PageTitle>Index</PageTitle>
 
 <head>
     <link href="css/landing.css" rel="stylesheet" />
 </head>
-
 <body>
-    <p>Search Term: @searchTerm</p>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
 
-    @if (products != null && products.Any())
-    {
-        <h4>Search Results:</h4>
-        <div class="product-list">
-            @foreach (var product in products)
-            {
-                <div class="product">
-                    <h5>@product.Name</h5>
-                    <p>@product.Description</p>
-                    <p>Price: $@product.price</p>
-                    <!-- Add more product details as needed -->
+    <form method="post" class="searchForm" @onsubmit="OnSearchSubmit">
+        <input type="text" @bind="searchString" />
+        <button type="submit">Search</button>
+    </form>
+
+
+    <div class="Featured_grid">
+        @foreach (var product in products)
+        {
+            <div class="Featured">
+                <div class="product_imgrow">
+                    <img class="product_img" src="@product.imagepath">
                 </div>
-            }
-        </div>
-    }
-    else
-    {
-        <p>No products found for the search term.</p>
-    }
+
+                <div class="product_info">
+                    <p class="product_name">@product.Name</p>
+                    <p class="product_price">$@product.price</p>
+                </div>
+            </div>
+        }
+    </div>
 </body>
 
+
 @code {
-    [Parameter]
-    public string searchTerm { get; set; }
+    private string searchString;
+    private List<Product> products = new List<Product>();
 
-    private List<Product> products;
-
-    protected override async Task OnInitializedAsync()
+    private async Task OnSearchSubmit()
     {
-        // Call your API or data service to fetch products based on the search term
-        products = await _client.GetFromJsonAsync<List<Product>>($"api/products/search/{searchTerm}");
+        products = await _db.Article.Where(x => x.Headline.Contains(searchString)).ToListAsync();
+        StateHasChanged();
     }
 }
