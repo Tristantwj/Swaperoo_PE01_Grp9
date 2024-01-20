@@ -32,7 +32,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("{id}")]
+        [HttpGet("Detail/{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _unitOfWork.Products.Get(q => q.Id == id);
@@ -44,6 +44,26 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
 
             return Ok(product);
         }
+
+        // GET: api/Products/Index
+        [HttpGet("Index")]
+        public async Task<IActionResult> Index(string id)
+        {
+            if (_unitOfWork.Products == null)
+            {
+                return Problem("Entity set 'Products' is null.");
+            }
+
+            var products = await _unitOfWork.Products.GetAll();
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                products = products.Where(p => p.Name.Contains(id, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return Ok(products);
+        }
+
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

@@ -28,10 +28,9 @@
             <button class="Swaperoo" @onclick="index">Swaperoo</button>
         </div>
         <div class="option_center">
-            <form method="post" class="search_form">
-                <input class="searchbar" type="text" placeholder="Search" bind="@searchTerm">
-                <button class="SearchButton">Search</button>
-            </form>
+            <SearchBar OnSearch="HandleSearch" />
+            <!--<input class="searchbar" type="text" placeholder="Search" @bind="searchTerm">
+            <button class="SearchButton" @onclick="SearchProduct">Search</button>-->
         </div>
 
         <div class="option_right">
@@ -74,15 +73,18 @@
         Navigation.NavigateToLogin("/CreateListing");
     }
     public void index() { Navigation.NavigateToLogin("/"); }
-    public void SearchProduct()
-    {
-        Navigation.NavigateToLogin("/Search");
-    }
+
     private string searchTerm;
 
-    private async Task SearchProducts()
+    private void HandleSearch(string term)
     {
-        // Redirect to the search results page with the search term
-        Navigation.NavigateTo($"/Search/{Uri.EscapeDataString(searchTerm)}");
+        searchTerm = string.IsNullOrEmpty(term) ? string.Empty : term;
+
+        // Navigate to the search page only if the search term is not empty
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            Navigation.NavigateTo($"/Search/{Uri.EscapeDataString(searchTerm)}");
+        }
     }
+
 }

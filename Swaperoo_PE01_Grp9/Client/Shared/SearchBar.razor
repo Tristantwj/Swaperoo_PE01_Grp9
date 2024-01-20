@@ -1,0 +1,17 @@
+﻿<!-- SearchBar.razor -->
+<div class="option_center">
+    <input class="searchbar" type="text" placeholder="Search" @bind="searchTerm">
+    <button class="SearchButton" @onclick="SearchProduct">Search</button>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnSearch { get; set; }
+
+    private string searchTerm;
+
+    private async Task SearchProduct()
+    {
+        await OnSearch.InvokeAsync(searchTerm);
+    }
+}
