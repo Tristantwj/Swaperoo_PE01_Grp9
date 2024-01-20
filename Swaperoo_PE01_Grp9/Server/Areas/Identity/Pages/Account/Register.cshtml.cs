@@ -126,6 +126,7 @@ namespace Swaperoo_PE01_Grp9.Server.Areas.Identity.Pages.Account
 
                     var customUser = new User
                     {
+                        Id = user.Id,
                         Name = Input.Name,
                         Email = Input.Email,
                         Region = Input.Region,

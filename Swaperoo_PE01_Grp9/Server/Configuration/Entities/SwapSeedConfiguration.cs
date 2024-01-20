@@ -16,8 +16,8 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     SwapDate = DateTime.Now,
                     OfferItemID = 3,
                     ProductId = 4,
-                    BuyerId = 1,
-                    SellertId = 2
+                    BuyerId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                    SellertId = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1"
                 }
             );
         }

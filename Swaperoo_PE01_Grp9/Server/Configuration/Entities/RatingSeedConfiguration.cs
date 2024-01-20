@@ -15,7 +15,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     RatingValue = 4,
                     Description = "blahblah",
                     DateCreated = DateTime.Now,
-                    UserId = 1,
+                    UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
                     PurchaseId = 1,
                     SwapId = null
                 }

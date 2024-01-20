@@ -14,7 +14,8 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Id = 1,
                     MessageContent = "Fashion",
                     DateCreated = DateTime.Now,
-                    UserId = 1,
+                    SenderId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                    ReceiverId = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
                     ChatId =1
                 }
             );

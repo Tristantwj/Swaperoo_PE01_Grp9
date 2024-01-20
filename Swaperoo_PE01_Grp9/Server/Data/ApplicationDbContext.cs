@@ -52,16 +52,37 @@ namespace Swaperoo_PE01_Grp9.Server.Data
         }
         private void SeedDefaultData(ModelBuilder modelBuilder)
         {
+            var passwordHasher = new PasswordHasher<ApplicationUser>();
+
             var user = new ApplicationUser
             {
+                Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b0",
                 Name = "Frank Ofoedu",
                 Region = "North",
                 Email = "frankofoedu@blazor.com",
                 EmailConfirmed = true
             };
-
-            var passwordHasher = new PasswordHasher<ApplicationUser>();
             user.PasswordHash = passwordHasher.HashPassword(user, "Abc123!");
+
+            var user2 = new ApplicationUser
+            {
+                Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
+                Name = "John",
+                Region = "South",
+                Email = "john@blazor.com",
+                EmailConfirmed = true
+            };
+            user2.PasswordHash = passwordHasher.HashPassword(user2, "Abc123!");
+
+            var user3 = new ApplicationUser
+            {
+                Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b2",
+                Name = "Alice",
+                Region = "West",
+                Email = "alice@blazor.com",
+                EmailConfirmed = true
+            };
+            user3.PasswordHash = passwordHasher.HashPassword(user3, "Abc123!");
 
             modelBuilder.Entity<ApplicationUser>().HasData(user);
         }
