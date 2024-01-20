@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class hope : Migration
+    public partial class upuser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -128,8 +128,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -278,7 +277,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     imagepath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     price = table.Column<double>(type: "float", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -328,7 +327,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SellDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OfferPrice = table.Column<double>(type: "float", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -356,9 +355,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReporterUserId = table.Column<int>(type: "int", nullable: true),
-                    ReporterId = table.Column<int>(type: "int", nullable: true),
-                    ReportedUserId = table.Column<int>(type: "int", nullable: true),
+                    ReporterUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReporterId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReportedUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ReportedProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -390,9 +389,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     SwapDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OfferItemID = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: true),
-                    BuyerId = table.Column<int>(type: "int", nullable: true),
-                    SellertId = table.Column<int>(type: "int", nullable: false),
-                    SellerId = table.Column<int>(type: "int", nullable: true)
+                    BuyerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SellertId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SellerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -428,7 +427,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MessageContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -441,8 +441,13 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Messages_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Messages_Users_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
@@ -456,7 +461,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     RatingValue = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PurchaseId = table.Column<int>(type: "int", nullable: true),
                     SwapId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -484,7 +489,12 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Region", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "627d4eba-7ba3-4905-962e-309cace7cc1e", "frankofoedu@blazor.com", true, false, null, "Frank Ofoedu", null, null, "AQAAAAIAAYagAAAAEIPYXVeWOwPnonizvjTtOEx334q4LEKB2JbX3ZjXNPoAb0ajlReP5+b6vmFr4JXjwg==", null, false, "North", "2e1e4021-a338-4ffe-b89c-d2ae6ae37da1", false, null });
+                values: new object[,]
+                {
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "6e319075-c54d-48ad-9e63-f471723abb8e", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEGdQutR2uCHAN0YkEspBkwxFdAWWMHhWqln2R6n15lJvdeqJS8hnr37BaYDrYHXc5A==", null, false, null, "aaa160af-4063-480f-b0fa-8093d685d6f6", false, "frankofoedu@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "6f69675d-bf73-4b17-9aa5-961cdd179368", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEMVwfwMa5gIWZ9mUAtINGKBnUwi5W88VinwIHpL58SHesxfMYt2MyuaR7CZ7AKPxPA==", null, false, null, "86f8e833-217d-48fc-ac22-e0ffdba15807", false, "john@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "b1a84565-f7f6-4732-8fbb-8f0cd97a4e3a", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEGADGRZnCWrgeTmv5miTRRJaJtAQp3aAgvTRdpE0LPGy4elYWursfagOvbTy38u9bA==", null, false, null, "f33369c5-7798-45b9-8557-492362ca3140", false, "alice@blazor.com" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Categorys",
@@ -494,16 +504,16 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Reports",
                 columns: new[] { "Id", "DateCreated", "Description", "ReportType", "ReportedProductId", "ReportedUserId", "ReporterId", "ReporterUserId", "status" },
-                values: new object[] { 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(7166), "Description", "site", null, null, null, 1, "unsolved" });
+                values: new object[] { 1, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(5310), "Description", "site", null, null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "unsolved" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Description", "Email", "Name", "Region" },
                 values: new object[,]
                 {
-                    { 1, "empty", "frankofoedu@blazor.com", "Frank Ofoedu", "North" },
-                    { 2, "empty", "john@blazor.com", "John", "South" },
-                    { 3, "empty", "tom@blazor.com", "Tom", "East" }
+                    { "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", "empty", "john@blazor.com", "John", "South" },
+                    { "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b2", "empty", "alice@blazor.com", "Alice", "West" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "empty", "frankofoedu@blazor.com", "Frank Ofoedu", "North" }
                 });
 
             migrationBuilder.InsertData(
@@ -516,36 +526,36 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "Id", "DateCreated", "Description", "Name", "SubCategoryId", "UserId", "imagepath", "price", "status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6265), "Description", "Nvidea GTX 2080", 1, 1, null, 1000.0, "ongoing" },
-                    { 2, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6269), "Description", "Intel i9", 1, 1, null, 500.0, "sold" },
-                    { 3, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6270), "Brand new", "Air jordon 12", 1, 1, null, 500.0, "ongoing" },
-                    { 4, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6272), "Brand new", "Computer", 1, 1, null, 800.0, "ongoing" }
+                    { 1, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(2845), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
+                    { 2, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(2855), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
+                    { 3, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(2859), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
+                    { 4, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(2862), "Brand new", "Computer", 1, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", null, 800.0, "ongoing" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Chats",
                 columns: new[] { "Id", "ChatProfilePicture", "DateCreated", "Name", "ProductId" },
-                values: new object[] { 1, null, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(5856), "First Chat", 1 });
+                values: new object[] { 1, null, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(1555), "First Chat", 1 });
 
             migrationBuilder.InsertData(
                 table: "Purchases",
                 columns: new[] { "Id", "OfferPrice", "ProductId", "SellDate", "UserId" },
-                values: new object[] { 1, 400.0, 2, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6722), 2 });
+                values: new object[] { 1, 400.0, 2, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(4003), "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1" });
 
             migrationBuilder.InsertData(
                 table: "Swaps",
                 columns: new[] { "Id", "BuyerId", "OfferItemID", "ProductId", "SellerId", "SellertId", "SwapDate" },
-                values: new object[] { 1, 1, 3, 4, null, 2, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(7694) });
+                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, 4, null, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(6777) });
 
             migrationBuilder.InsertData(
                 table: "Messages",
-                columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "UserId" },
-                values: new object[] { 1, 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6069), "Fashion", 1 });
+                columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "ReceiverId", "SenderId" },
+                values: new object[] { 1, 1, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(2266), "Fashion", "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.InsertData(
                 table: "Ratings",
                 columns: new[] { "Id", "DateCreated", "Description", "PurchaseId", "RatingValue", "SwapId", "UserId" },
-                values: new object[] { 1, new DateTime(2024, 1, 17, 0, 3, 4, 376, DateTimeKind.Local).AddTicks(6927), "blahblah", 1, 4, null, 1 });
+                values: new object[] { 1, new DateTime(2024, 1, 20, 17, 40, 9, 134, DateTimeKind.Local).AddTicks(4554), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -613,9 +623,14 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_UserId",
+                name: "IX_Messages_ReceiverId",
                 table: "Messages",
-                column: "UserId");
+                column: "ReceiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_SenderId",
+                table: "Messages",
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_ConsumedTime",

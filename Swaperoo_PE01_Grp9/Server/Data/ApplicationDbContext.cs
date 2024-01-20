@@ -54,37 +54,42 @@ namespace Swaperoo_PE01_Grp9.Server.Data
         {
             var passwordHasher = new PasswordHasher<ApplicationUser>();
 
+            // Inside SeedDefaultData method
             var user = new ApplicationUser
             {
-                Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b0",
-                Name = "Frank Ofoedu",
-                Region = "North",
+                Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                UserName = "frankofoedu@blazor.com", // Make sure to set a unique UserName
+                NormalizedUserName = "FRANKOFOEDU@BLAZOR.COM", // Set the normalized value
                 Email = "frankofoedu@blazor.com",
+                NormalizedEmail = "FRANKOFOEDU@BLAZOR.COM", // Set the normalized value
                 EmailConfirmed = true
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Abc123!");
 
             var user2 = new ApplicationUser
             {
-                Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
-                Name = "John",
-                Region = "South",
+                Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                UserName = "john@blazor.com", // Make sure to set a unique UserName
+                NormalizedUserName = "JOHN@BLAZOR.COM", // Set the normalized value
                 Email = "john@blazor.com",
+                NormalizedEmail = "JOHN@BLAZOR.COM", // Set the normalized value
                 EmailConfirmed = true
             };
             user2.PasswordHash = passwordHasher.HashPassword(user2, "Abc123!");
 
             var user3 = new ApplicationUser
             {
-                Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b2",
-                Name = "Alice",
-                Region = "West",
+                Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
+                UserName = "alice@blazor.com", // Make sure to set a unique UserName
+                NormalizedUserName = "ALICE@BLAZOR.COM", // Set the normalized value
                 Email = "alice@blazor.com",
+                NormalizedEmail = "ALICE@BLAZOR.COM", // Set the normalized value
                 EmailConfirmed = true
             };
             user3.PasswordHash = passwordHasher.HashPassword(user3, "Abc123!");
 
-            modelBuilder.Entity<ApplicationUser>().HasData(user);
+            modelBuilder.Entity<ApplicationUser>().HasData(user, user2, user3);
+
         }
 
     }

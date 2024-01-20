@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Swaperoo_PE01_Grp9.Shared.Domain;
+using static System.Net.WebRequestMethods;
 
 namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
 {
@@ -15,7 +16,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Name = "Nvidea GTX 2080",
                     DateCreated = DateTime.Now,
                     Description = "Description",
-                    imagepath = null,
+                    imagepath = "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png",
                     price = 1000,
                     status = "ongoing",
                     UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",

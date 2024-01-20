@@ -33,7 +33,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(string id)
         {
             var user = await _unitOfWork.Users.Get(q => q.Id == id);
 
@@ -48,7 +48,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(string id, User user)
         {
             if (id != user.Id)
             {
@@ -89,7 +89,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _unitOfWork.Users.Get(q =>q.Id == id);
             if (user == null)
@@ -97,14 +97,14 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
                 return NotFound();
             }
 
-            await _unitOfWork.Users.Delete(id);
+            await _unitOfWork.Users.DeleteUser(id);
             await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
         //private bool UserExists(int id)
-        private async Task<bool> UserExists(int  id)
+        private async Task<bool> UserExists(string  id)
         {
             var user = await _unitOfWork.Users.Get(q => q.Id == id);
             return user != null;

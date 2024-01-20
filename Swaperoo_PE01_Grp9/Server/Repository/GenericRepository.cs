@@ -26,6 +26,11 @@ namespace Swaperoo_PE01_Grp9.Server.Repository
             var record = await _db.FindAsync(id);
             _db.Remove(record);
         }
+        public async Task DeleteUser(string id)
+        {
+            var record = await _db.FindAsync(id);
+            _db.Remove(record);
+        }
 
         public void DeleteRange(IEnumerable<T> entities)
         {
