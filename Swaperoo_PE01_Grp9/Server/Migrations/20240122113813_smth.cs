@@ -491,9 +491,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Region", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "cc177907-0f7a-403e-b4be-ee1b6a04cb30", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEGRR0nN/CqciQWoNwgJoTmUIgS7LZJXyKBa9QwTBJkn2Zxj1G3E3hOuTa6KfLUEFUg==", null, false, null, "b9d87280-1c7f-4f5c-ab52-2fc89a4bdb1e", false, "frankofoedu@blazor.com" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "5279be65-49fc-4de3-ad51-92b342137244", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEODf9GKyIgg48QafazBnPTde96CmlufirMomYVebGBYyDtZ4EzvMN54iGuQnZDzTaA==", null, false, null, "20bf4a84-5189-4dd1-a605-5ec4c1bacdb6", false, "john@blazor.com" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "2242fea9-2d56-4d9b-8065-8d8fc0358809", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEHksX6/A22oGOYlGWwDF4HrL2VHrwwr0swGVgT1AG+uX+3LvTtl1qPwVahkZWI3g1w==", null, false, null, "b7aa73ae-fc0f-483e-a30d-427921ce44f9", false, "alice@blazor.com" }
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "83c7fb49-af33-45fc-a465-d2b123793fd0", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEOAtAOtnK/Wl37h45pT4cb3p17FlBcleOY6mOrPuydOfj9Mkgt3FAzOOqKrOt/jhxg==", null, false, null, "92fb8d0a-72c9-4aa2-8127-398ba36e259f", false, "frankofoedu@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "ad0fbafc-d3f0-48ae-8516-1fb2a9c48f70", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEC4LNh0ih6d8tFxZq52hqvka3JMuX4kmCWL45b1F7h2OdXT0BLaShgttqNybAYWikA==", null, false, null, "7447fb2f-8d64-4629-94eb-dc5ba5420ae2", false, "john@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "d4a6fee7-243f-4472-9486-47b9528af2ea", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEAphFlARt+yJAiDW2i/qQjo4P9QenedrCDtIckiOZaXBOb0jq4Di+3xS1428W0dObQ==", null, false, null, "0abee066-0e90-4c96-864f-2c3e09b67128", false, "alice@blazor.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -504,7 +504,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Reports",
                 columns: new[] { "Id", "DateCreated", "Description", "ReportType", "ReportedProductId", "ReportedUserId", "ReporterId", "ReporterUserId", "status" },
-                values: new object[] { 1, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(7846), "Description", "site", null, null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "unsolved" });
+                values: new object[] { 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(2235), "Description", "site", null, null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "unsolved" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -526,36 +526,36 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "Id", "DateCreated", "Description", "Name", "SubCategoryId", "UserId", "imagepath", "price", "status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(6148), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
-                    { 2, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(6159), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
-                    { 3, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(6160), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
-                    { 4, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(6162), "Brand new", "Computer", 1, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", null, 800.0, "ongoing" }
+                    { 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(939), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
+                    { 2, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(944), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
+                    { 3, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(946), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
+                    { 4, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(947), "Brand new", "Computer", 1, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", null, 800.0, "ongoing" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Chats",
                 columns: new[] { "Id", "ChatProfilePicture", "DateCreated", "Name", "ProductId" },
-                values: new object[] { 1, null, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(4932), "First Chat", 1 });
+                values: new object[] { 1, null, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(133), "First Chat", 1 });
 
             migrationBuilder.InsertData(
                 table: "Purchases",
                 columns: new[] { "Id", "OfferPrice", "ProductId", "SellDate", "UserId" },
-                values: new object[] { 1, 400.0, 2, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(7174), "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1" });
+                values: new object[] { 1, 400.0, 2, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(1618), "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1" });
 
             migrationBuilder.InsertData(
                 table: "Swaps",
                 columns: new[] { "Id", "BuyerId", "OfferItemID", "ProductId", "SellerId", "SellertId", "SwapDate" },
-                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, 4, null, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(9001) });
+                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, 4, null, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(3979) });
 
             migrationBuilder.InsertData(
                 table: "Messages",
                 columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "ReceiverId", "SenderId" },
-                values: new object[] { 1, 1, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(5265), "Fashion", "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
+                values: new object[] { 1, 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(586), "Fashion", "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.InsertData(
                 table: "Ratings",
                 columns: new[] { "Id", "DateCreated", "Description", "PurchaseId", "RatingValue", "SwapId", "UserId" },
-                values: new object[] { 1, new DateTime(2024, 1, 22, 19, 9, 30, 658, DateTimeKind.Local).AddTicks(7499), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
+                values: new object[] { 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(1930), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

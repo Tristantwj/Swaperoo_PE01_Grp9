@@ -1,7 +1,5 @@
-﻿@page "/Chat"
+﻿@page "/chat"
 @using Microsoft.AspNetCore.SignalR.Client
-@using Swaperoo_PE01_Grp9.Client.Static
-@using Swaperoo_PE01_Grp9.Shared.Domain
 @inject HttpClient _client
 @inject IJSRuntime js
 @inject NavigationManager Navigation
@@ -65,7 +63,7 @@
 
 
 @code {
-    private IList<Chat>? Chats;
+    private List<Chat>? Chats;
 
     private HubConnection? hubConnection;
     private List<string> messages = new List<string>();
