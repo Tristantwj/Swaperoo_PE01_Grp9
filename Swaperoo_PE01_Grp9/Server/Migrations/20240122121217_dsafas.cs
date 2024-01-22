@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class smth : Migration
+    public partial class dsafas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -328,6 +328,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     SellDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OfferPrice = table.Column<double>(type: "float", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PurchaseProductId = table.Column<int>(type: "int", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -356,8 +357,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReporterUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReporterId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ReportedUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReportedUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ReportedProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -369,13 +370,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Reports_Users_ReportedUserId",
-                        column: x => x.ReportedUserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Reports_Users_ReporterId",
-                        column: x => x.ReporterId,
+                        name: "FK_Reports_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
@@ -388,33 +384,23 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SwapDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OfferItemID = table.Column<int>(type: "int", nullable: false),
+                    SwapProductId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: true),
-                    BuyerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SellertId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SellerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    BuyerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellertId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Swaps", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Swaps_Products_OfferItemID",
-                        column: x => x.OfferItemID,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Swaps_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Swaps_Users_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Swaps_Users_SellerId",
-                        column: x => x.SellerId,
+                        name: "FK_Swaps_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
@@ -427,8 +413,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MessageContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SenderId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReceiverId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -441,13 +428,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Messages_Users_ReceiverId",
-                        column: x => x.ReceiverId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Messages_Users_SenderId",
-                        column: x => x.SenderId,
+                        name: "FK_Messages_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
@@ -491,9 +473,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Region", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "83c7fb49-af33-45fc-a465-d2b123793fd0", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEOAtAOtnK/Wl37h45pT4cb3p17FlBcleOY6mOrPuydOfj9Mkgt3FAzOOqKrOt/jhxg==", null, false, null, "92fb8d0a-72c9-4aa2-8127-398ba36e259f", false, "frankofoedu@blazor.com" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "ad0fbafc-d3f0-48ae-8516-1fb2a9c48f70", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEC4LNh0ih6d8tFxZq52hqvka3JMuX4kmCWL45b1F7h2OdXT0BLaShgttqNybAYWikA==", null, false, null, "7447fb2f-8d64-4629-94eb-dc5ba5420ae2", false, "john@blazor.com" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "d4a6fee7-243f-4472-9486-47b9528af2ea", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEAphFlARt+yJAiDW2i/qQjo4P9QenedrCDtIckiOZaXBOb0jq4Di+3xS1428W0dObQ==", null, false, null, "0abee066-0e90-4c96-864f-2c3e09b67128", false, "alice@blazor.com" }
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "254a7add-4a42-4d9f-bf58-59cf2e039881", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEKnAAEzbFHWR+1IGAvNeyMW1VQJP8uCbwnwAqz8CX0UojUlZy/15M8lSjg3htx2WOQ==", null, false, null, "aa897b83-772e-4f73-b2c6-5b7bf9e62344", false, "frankofoedu@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "a2948c75-770e-44d1-a341-81bff0abf125", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEKNZlnNFQrjQoWIGC+Dg9evpq/MXIgJ245JSH8e20a3M1z/pSMbLv9ibJsxjrD+hAg==", null, false, null, "9ed71b24-f385-4609-9754-418621a90ad1", false, "john@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "5ecc8447-eed6-4bae-b932-864fb3cf6633", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEDqaUvJLYOWDDHIHVxtgYssRcfh+o4WWWFXFoTwwxqdxPkufkgUTQ1mDzFrub+SG2w==", null, false, null, "c384c588-b1ec-42c1-a8cf-c113754a5f43", false, "alice@blazor.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -503,8 +485,13 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Reports",
-                columns: new[] { "Id", "DateCreated", "Description", "ReportType", "ReportedProductId", "ReportedUserId", "ReporterId", "ReporterUserId", "status" },
-                values: new object[] { 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(2235), "Description", "site", null, null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "unsolved" });
+                columns: new[] { "Id", "DateCreated", "Description", "ReportType", "ReportedProductId", "ReportedUserId", "ReporterUserId", "UserId", "status" },
+                values: new object[] { 1, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(2415), "Description", "site", null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, "unsolved" });
+
+            migrationBuilder.InsertData(
+                table: "Swaps",
+                columns: new[] { "Id", "BuyerId", "OfferItemID", "ProductId", "SellertId", "SwapDate", "SwapProductId", "UserId" },
+                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, null, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(3441), 4, null });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -517,6 +504,11 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Purchases",
+                columns: new[] { "Id", "OfferPrice", "ProductId", "PurchaseProductId", "SellDate", "UserId" },
+                values: new object[] { 1, 400.0, null, 2, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(1785), "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1" });
+
+            migrationBuilder.InsertData(
                 table: "SubCategorys",
                 columns: new[] { "Id", "CategoryId", "Name" },
                 values: new object[] { 1, 1, "Shirt" });
@@ -526,36 +518,26 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "Id", "DateCreated", "Description", "Name", "SubCategoryId", "UserId", "imagepath", "price", "status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(939), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
-                    { 2, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(944), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
-                    { 3, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(946), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
-                    { 4, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(947), "Brand new", "Computer", 1, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", null, 800.0, "ongoing" }
+                    { 1, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(1147), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
+                    { 2, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(1154), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
+                    { 3, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(1156), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
+                    { 4, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(1157), "Brand new", "Computer", 1, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", null, 800.0, "ongoing" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Chats",
-                columns: new[] { "Id", "ChatProfilePicture", "DateCreated", "Name", "ProductId" },
-                values: new object[] { 1, null, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(133), "First Chat", 1 });
-
-            migrationBuilder.InsertData(
-                table: "Purchases",
-                columns: new[] { "Id", "OfferPrice", "ProductId", "SellDate", "UserId" },
-                values: new object[] { 1, 400.0, 2, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(1618), "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1" });
-
-            migrationBuilder.InsertData(
-                table: "Swaps",
-                columns: new[] { "Id", "BuyerId", "OfferItemID", "ProductId", "SellerId", "SellertId", "SwapDate" },
-                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, 4, null, "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(3979) });
-
-            migrationBuilder.InsertData(
-                table: "Messages",
-                columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "ReceiverId", "SenderId" },
-                values: new object[] { 1, 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(586), "Fashion", "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.InsertData(
                 table: "Ratings",
                 columns: new[] { "Id", "DateCreated", "Description", "PurchaseId", "RatingValue", "SwapId", "UserId" },
-                values: new object[] { 1, new DateTime(2024, 1, 22, 19, 38, 13, 436, DateTimeKind.Local).AddTicks(1930), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
+                values: new object[] { 1, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(2070), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
+
+            migrationBuilder.InsertData(
+                table: "Chats",
+                columns: new[] { "Id", "ChatProfilePicture", "DateCreated", "Name", "ProductId" },
+                values: new object[] { 1, null, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(271), "First Chat", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Messages",
+                columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "ReceiverId", "SenderId", "UserId" },
+                values: new object[] { 1, 1, new DateTime(2024, 1, 22, 20, 12, 17, 650, DateTimeKind.Local).AddTicks(714), "Fashion", "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -623,14 +605,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_ReceiverId",
+                name: "IX_Messages_UserId",
                 table: "Messages",
-                column: "ReceiverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_SenderId",
-                table: "Messages",
-                column: "SenderId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_ConsumedTime",
@@ -693,14 +670,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 column: "ReportedProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_ReportedUserId",
+                name: "IX_Reports_UserId",
                 table: "Reports",
-                column: "ReportedUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reports_ReporterId",
-                table: "Reports",
-                column: "ReporterId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubCategorys_CategoryId",
@@ -708,24 +680,14 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Swaps_BuyerId",
-                table: "Swaps",
-                column: "BuyerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Swaps_OfferItemID",
-                table: "Swaps",
-                column: "OfferItemID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Swaps_ProductId",
                 table: "Swaps",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Swaps_SellerId",
+                name: "IX_Swaps_UserId",
                 table: "Swaps",
-                column: "SellerId");
+                column: "UserId");
         }
 
         /// <inheritdoc />

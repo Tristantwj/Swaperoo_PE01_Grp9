@@ -15,9 +15,8 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public DateTime DateCreated { get; set; }
         public string status { get; set; }
         public string? ReporterUserId { get; set; }
-        public virtual User? Reporter {  get; set; }
         public string? ReportedUserId { get; set; }
-        public virtual User? ReportedUser { get; set; }
+        public virtual User? User { get; set; }
         public int? ReportedProductId { get; set; }
         public virtual Product? ReportedProduct { get; set; }
     }

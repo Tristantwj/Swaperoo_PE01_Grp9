@@ -13,9 +13,8 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public string MessageContent { get; set; }
         public DateTime DateCreated { get; set; }
         public string? SenderId { get; set; }
-        public virtual User? Sender { get; set; }
         public string? ReceiverId { get; set; }
-        public virtual User? Receiver { get; set; }
+        public virtual User? User { get; set; }
         public int ChatId { get; set; }
         public virtual Chat? Chat { get; set; }
     }

@@ -32,11 +32,6 @@ namespace Swaperoo_PE01_Grp9.Server.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Purchase>()
-                .HasOne(p => p.Product)
-                .WithMany()
-                .HasForeignKey(p => p.ProductId)
-                .OnDelete(DeleteBehavior.NoAction);
 
 
             SeedDefaultData(modelBuilder);
