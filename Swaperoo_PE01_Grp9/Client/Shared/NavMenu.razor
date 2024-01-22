@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager Navigation
 
+
 <div class="fixed">
     <div class="header">
         <div class="header_left">
@@ -29,8 +30,6 @@
         </div>
         <div class="option_center">
             <SearchBar OnSearch="HandleSearch" />
-            <!--<input class="searchbar" type="text" placeholder="Search" @bind="searchTerm">
-            <button class="SearchButton" @onclick="SearchProduct">Search</button>-->
         </div>
 
         <div class="option_right">
@@ -48,7 +47,7 @@
                                 <button class="option_box_button">My Profile</button>
                             </div>
                             <div>
-                                <button class="option_box_button">My Chats</button>
+                                <button class="option_box_button" @onclick="GotoChat">My Chats</button>
                             </div>
                            
                         </div>
@@ -60,18 +59,11 @@
 </div>
 
 @code {
-    public void GotoRegister()
-    {
-        Navigation.NavigateTo("authentication/register");
-    }
-    public void GotoLogin()
-    {
-        Navigation.NavigateToLogin("authentication/login");
-    }
-    public void GotoCreateListing()
-    {
-        Navigation.NavigateToLogin("/CreateListing");
-    }
+    public void GotoRegister() { Navigation.NavigateTo("authentication/register"); }
+    public void GotoLogin() { Navigation.NavigateToLogin("authentication/login"); }
+    public void GotoCreateListing() { Navigation.NavigateTo("/CreateListing"); }
+    public void GotoChat() { Navigation.NavigateTo("/Chat"); }
+
     public void index() { Navigation.NavigateToLogin("/"); }
 
     private string? searchTerm;

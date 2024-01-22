@@ -11,6 +11,7 @@ namespace Swaperoo_PE01_Grp9.Client.Static
         private static readonly string Prefix = "api";
 
         public static readonly string ProductsEndpoint = $"{Prefix}/Products";
+        public static readonly string ChatsEndpoint = $"{Prefix}/Chats";
 
     }
 }

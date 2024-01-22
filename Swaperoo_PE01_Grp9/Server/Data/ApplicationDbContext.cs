@@ -38,6 +38,7 @@ namespace Swaperoo_PE01_Grp9.Server.Data
                 .HasForeignKey(p => p.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+
             SeedDefaultData(modelBuilder);
             modelBuilder.ApplyConfiguration(new CategorySeedConfiguration());
             modelBuilder.ApplyConfiguration(new ChatSeedConfiguration());
