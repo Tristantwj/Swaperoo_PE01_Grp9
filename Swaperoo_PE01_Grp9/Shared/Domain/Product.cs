@@ -15,10 +15,7 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public virtual User? User { get; set; }
         public int SubCategoryId { get; set; }
         public virtual SubCategory? SubCategory { get; set; }
-        public virtual List<Chat>? Chats { get; set; }
-        public virtual List<Purchase>? Purchases { get; set; }
-        public virtual List<Swap>? Swaps { get; set; }
-        public virtual List<Report>? Reports { get; set; }
+        
     }
 
 }

@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetReports()
         {
-            var reports = await _unitOfWork.Reports.GetAll();
+            var reports = await _unitOfWork.Reports.GetAll(includes: q => q.Include(x => x.User).Include(x => x.Product));
             return Ok(reports);
         }
 

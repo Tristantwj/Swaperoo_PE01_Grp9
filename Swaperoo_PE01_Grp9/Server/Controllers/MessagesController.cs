@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMessages()
         {
-            var messages = await _unitOfWork.Messages.GetAll();
+            var messages = await _unitOfWork.Messages.GetAll(includes: q => q.Include(x => x.User).Include(x => x.Chat));
             return Ok(messages);
         }
 

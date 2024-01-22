@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSubCategorys()
         {
-            var subcategorys = await _unitOfWork.SubCategorys.GetAll();
+            var subcategorys = await _unitOfWork.SubCategorys.GetAll(includes: q => q.Include(x => x.Category));
             return Ok(subcategorys);
         }
 

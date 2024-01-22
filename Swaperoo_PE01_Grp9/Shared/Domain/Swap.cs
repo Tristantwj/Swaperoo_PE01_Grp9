@@ -17,6 +17,5 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public string BuyerId { get; set; }
         public string SellertId { get; set; }
         public virtual User? User { get; set; }
-        public virtual List<Rating>? Ratings { get; set; }
     }
 }

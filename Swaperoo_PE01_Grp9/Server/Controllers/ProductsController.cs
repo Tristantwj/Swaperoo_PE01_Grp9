@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await _unitOfWork.Products.GetAll();
+            var products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.User).Include(x => x.SubCategory));
             return Ok(products);
         }
 
