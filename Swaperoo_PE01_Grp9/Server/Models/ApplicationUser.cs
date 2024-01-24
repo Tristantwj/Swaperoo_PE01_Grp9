@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Swaperoo_PE01_Grp9.Shared.Domain;
 
 namespace Swaperoo_PE01_Grp9.Server.Models
 {
@@ -6,5 +7,7 @@ namespace Swaperoo_PE01_Grp9.Server.Models
     {
         public string? Name { get; set; }
         public string? Region { get; set; }
+
     }
 }
+

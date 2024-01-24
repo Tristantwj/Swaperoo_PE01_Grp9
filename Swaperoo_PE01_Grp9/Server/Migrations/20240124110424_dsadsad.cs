@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class domain : Migration
+    public partial class dsadsad : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,16 +55,16 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categorys",
                 columns: table => new
                 {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.CategoryId);
+                    table.PrimaryKey("PK_Categorys", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,20 +125,19 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -246,238 +247,297 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubCategory",
+                name: "SubCategorys",
                 columns: table => new
                 {
-                    SubCategoryId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SubCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubCategory", x => x.SubCategoryId);
+                    table.PrimaryKey("PK_SubCategorys", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubCategory_Category_CategoryId",
+                        name: "FK_SubCategorys_Categorys_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
-                        principalColumn: "CategoryId",
+                        principalTable: "Categorys",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    imagepath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    imagepath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     price = table.Column<double>(type: "float", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.ProductId);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_SubCategory_SubCategoryId",
+                        name: "FK_Products_SubCategorys_SubCategoryId",
                         column: x => x.SubCategoryId,
-                        principalTable: "SubCategory",
-                        principalColumn: "SubCategoryId",
+                        principalTable: "SubCategorys",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_User_UserID",
-                        column: x => x.UserID,
-                        principalTable: "User",
-                        principalColumn: "UserId",
+                        name: "FK_Products_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chat",
+                name: "Chats",
                 columns: table => new
                 {
-                    ChatId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ChatName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ChatProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ChatCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chat", x => x.ChatId);
+                    table.PrimaryKey("PK_Chats", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Chat_Product_ProductId",
+                        name: "FK_Chats_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId",
+                        principalTable: "Products",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Purchase",
+                name: "Purchases",
                 columns: table => new
                 {
-                    PurchaseId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SellDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OfferPrice = table.Column<double>(type: "float", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PurchaseProductId = table.Column<int>(type: "int", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Purchase", x => x.PurchaseId);
+                    table.PrimaryKey("PK_Purchases", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Purchase_Product_ProductId",
+                        name: "FK_Purchases_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId");
+                        principalTable: "Products",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Purchase_User_UserId",
+                        name: "FK_Purchases_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId");
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Report",
+                name: "Reports",
                 columns: table => new
                 {
-                    ReportId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReportType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReportDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReporterUserId = table.Column<int>(type: "int", nullable: true),
-                    ReportedUserId = table.Column<int>(type: "int", nullable: true),
-                    ReportedProductId = table.Column<int>(type: "int", nullable: true)
+                    ReporterUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReportedUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReportedProductId = table.Column<int>(type: "int", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Report", x => x.ReportId);
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Report_Product_ReportedProductId",
-                        column: x => x.ReportedProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId");
+                        name: "FK_Reports_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Report_User_ReportedUserId",
-                        column: x => x.ReportedUserId,
-                        principalTable: "User",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Report_User_ReporterUserId",
-                        column: x => x.ReporterUserId,
-                        principalTable: "User",
-                        principalColumn: "UserId");
+                        name: "FK_Reports_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Swap",
+                name: "Swaps",
                 columns: table => new
                 {
-                    SwapId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SwapDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OfferItemID = table.Column<int>(type: "int", nullable: false),
+                    SwapProductId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: true),
-                    BuyerId = table.Column<int>(type: "int", nullable: true),
-                    SellertId = table.Column<int>(type: "int", nullable: false),
-                    SellerUserId = table.Column<int>(type: "int", nullable: true)
+                    BuyerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SellertId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Swap", x => x.SwapId);
+                    table.PrimaryKey("PK_Swaps", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Swap_Product_OfferItemID",
-                        column: x => x.OfferItemID,
-                        principalTable: "Product",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Swap_Product_ProductId",
+                        name: "FK_Swaps_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId");
+                        principalTable: "Products",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Swap_User_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "User",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Swap_User_SellerUserId",
-                        column: x => x.SellerUserId,
-                        principalTable: "User",
-                        principalColumn: "UserId");
+                        name: "FK_Swaps_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
-                    MessagesId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MessageContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SentTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ChatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => x.MessagesId);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_Chat_ChatId",
+                        name: "FK_Messages_Chats_ChatId",
                         column: x => x.ChatId,
-                        principalTable: "Chat",
-                        principalColumn: "ChatId",
+                        principalTable: "Chats",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Messages_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId");
+                        name: "FK_Messages_Users_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rating",
+                name: "Ratings",
                 columns: table => new
                 {
-                    RatingId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RatingValue = table.Column<int>(type: "int", nullable: false),
-                    RatingDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RatingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PurchaseId = table.Column<int>(type: "int", nullable: true),
                     SwapId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rating", x => x.RatingId);
+                    table.PrimaryKey("PK_Ratings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rating_Purchase_PurchaseId",
+                        name: "FK_Ratings_Purchases_PurchaseId",
                         column: x => x.PurchaseId,
-                        principalTable: "Purchase",
-                        principalColumn: "PurchaseId");
+                        principalTable: "Purchases",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Rating_Swap_SwapId",
+                        name: "FK_Ratings_Swaps_SwapId",
                         column: x => x.SwapId,
-                        principalTable: "Swap",
-                        principalColumn: "SwapId");
+                        principalTable: "Swaps",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Rating_User_UserId",
+                        name: "FK_Ratings_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Region", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "067ee84b-7193-4b86-9f00-272ca4b05c0f", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEDdF7xyRg6BWnM2P9v0pl74mrCVbc/eVGqo507BeB0gQQHrpMWsFVwZeHFeAGY8h/Q==", null, false, null, "200eaa29-c211-4a67-9a6a-b06048a41735", false, "frankofoedu@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "922eef4f-1ed9-4a12-be4e-c15f4ae98250", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEFRhM6Oo+icrXPckoBoOnM0APSQ1XM3tEIYgSXdCBCcRaB0PF6h83LQG/AFXznLh2g==", null, false, null, "1ffffb61-2a8c-49e4-ad0a-4097cc195102", false, "john@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "7b378b7f-56ad-41aa-b095-ccaf13f1883c", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEHmTLDh/xHY4RG55p4YeijcK3AWND0vGfO9FJyRLBax1kZ9xKAHiOv/ZiMr3tPsfgw==", null, false, null, "115921df-76f0-491d-a432-eef6f8f24006", false, "alice@blazor.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categorys",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Fashion" });
+
+            migrationBuilder.InsertData(
+                table: "Reports",
+                columns: new[] { "Id", "DateCreated", "Description", "ProductId", "ReportType", "ReportedProductId", "ReportedUserId", "ReporterUserId", "UserId", "status" },
+                values: new object[] { 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(7780), "Description", null, "site", null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, "unsolved" });
+
+            migrationBuilder.InsertData(
+                table: "Swaps",
+                columns: new[] { "Id", "BuyerId", "OfferItemID", "ProductId", "SellertId", "SwapDate", "SwapProductId", "UserId" },
+                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(8822), 4, null });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Description", "Email", "Name", "Region", "Role" },
+                values: new object[,]
+                {
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "empty", "frankofoedu@blazor.com", "Frank Ofoedu", "North", "User" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", "empty", "john@blazor.com", "John", "South", "User" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", "empty", "alice@blazor.com", "Alice", "West", "Admin" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Purchases",
+                columns: new[] { "Id", "OfferPrice", "ProductId", "PurchaseProductId", "SellDate", "UserId" },
+                values: new object[] { 1, 400.0, null, 2, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6985), "2bf0d5d5-7691-418f-b2f7-266c7467a0b1" });
+
+            migrationBuilder.InsertData(
+                table: "SubCategorys",
+                columns: new[] { "Id", "CategoryId", "Name" },
+                values: new object[] { 1, 1, "Shirt" });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "DateCreated", "Description", "Name", "SubCategoryId", "UserId", "imagepath", "price", "status" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6224), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
+                    { 2, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6229), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
+                    { 3, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6230), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
+                    { 4, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6304), "Brand new", "Computer", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", null, 800.0, "ongoing" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ratings",
+                columns: new[] { "Id", "DateCreated", "Description", "PurchaseId", "RatingValue", "SwapId", "UserId" },
+                values: new object[] { 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(7256), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
+
+            migrationBuilder.InsertData(
+                table: "Chats",
+                columns: new[] { "Id", "ChatProfilePicture", "DateCreated", "Name", "ProductId" },
+                values: new object[] { 1, null, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(5613), "First Chat", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Messages",
+                columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "SenderId" },
+                values: new object[] { 1, 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(5973), "Fashion", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -519,8 +579,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chat_ProductId",
-                table: "Chat",
+                name: "IX_Chats_ProductId",
+                table: "Chats",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -545,9 +605,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_UserId",
+                name: "IX_Messages_SenderId",
                 table: "Messages",
-                column: "UserId");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_ConsumedTime",
@@ -570,79 +630,64 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_SubCategoryId",
-                table: "Product",
+                name: "IX_Products_SubCategoryId",
+                table: "Products",
                 column: "SubCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_UserID",
-                table: "Product",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Purchase_ProductId",
-                table: "Purchase",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Purchase_UserId",
-                table: "Purchase",
+                name: "IX_Products_UserId",
+                table: "Products",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rating_PurchaseId",
-                table: "Rating",
+                name: "IX_Purchases_ProductId",
+                table: "Purchases",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Purchases_UserId",
+                table: "Purchases",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_PurchaseId",
+                table: "Ratings",
                 column: "PurchaseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rating_SwapId",
-                table: "Rating",
+                name: "IX_Ratings_SwapId",
+                table: "Ratings",
                 column: "SwapId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rating_UserId",
-                table: "Rating",
+                name: "IX_Ratings_UserId",
+                table: "Ratings",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Report_ReportedProductId",
-                table: "Report",
-                column: "ReportedProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Report_ReportedUserId",
-                table: "Report",
-                column: "ReportedUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Report_ReporterUserId",
-                table: "Report",
-                column: "ReporterUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubCategory_CategoryId",
-                table: "SubCategory",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Swap_BuyerId",
-                table: "Swap",
-                column: "BuyerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Swap_OfferItemID",
-                table: "Swap",
-                column: "OfferItemID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Swap_ProductId",
-                table: "Swap",
+                name: "IX_Reports_ProductId",
+                table: "Reports",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Swap_SellerUserId",
-                table: "Swap",
-                column: "SellerUserId");
+                name: "IX_Reports_UserId",
+                table: "Reports",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubCategorys_CategoryId",
+                table: "SubCategorys",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Swaps_ProductId",
+                table: "Swaps",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Swaps_UserId",
+                table: "Swaps",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -676,10 +721,10 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
-                name: "Rating");
+                name: "Ratings");
 
             migrationBuilder.DropTable(
-                name: "Report");
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -688,25 +733,25 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Chat");
+                name: "Chats");
 
             migrationBuilder.DropTable(
-                name: "Purchase");
+                name: "Purchases");
 
             migrationBuilder.DropTable(
-                name: "Swap");
+                name: "Swaps");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "SubCategory");
+                name: "SubCategorys");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categorys");
         }
     }
 }

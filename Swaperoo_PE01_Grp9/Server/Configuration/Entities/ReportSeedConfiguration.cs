@@ -1,0 +1,26 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Swaperoo_PE01_Grp9.Shared.Domain;
+
+namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
+{
+    public class ReportSeedConfiguration : IEntityTypeConfiguration<Report>
+    {
+        public void Configure(EntityTypeBuilder<Report> builder)
+        {
+            builder.HasData(
+                new Report
+                {
+                    Id = 1,
+                    ReportType = "site",
+                    Description = "Description",
+                    DateCreated = DateTime.Now,
+                    status = "unsolved",
+                    ReporterUserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                    ReportedUserId = null,
+                    ReportedProductId = null
+                }
+            );
+        }
+    }
+}

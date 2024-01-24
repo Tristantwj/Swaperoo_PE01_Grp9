@@ -1,6 +1,8 @@
 ﻿@page "/"
 @inject HttpClient _client
 @inject IJSRuntime js
+@using Swaperoo_PE01_Grp9.Shared.Domain
+@using Swaperoo_PE01_Grp9.Client.Static
 
 <PageTitle>Index</PageTitle>
 <head>
@@ -16,53 +18,45 @@
         <div class="lady2"><img src="images/lady2.png" style="width: 300px;"></div> 
     </div>
 
-    <div class="Featured_grid">
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
-            </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>
-        </div>
+    <AuthorizeView>
+        <Authorized>
+            <div class="Featured_grid">
+                @if (Products != null)
+                {
+                    @foreach (var product in Products)
+                    {
+                        <div class="Featured">
+                            <div class="product_imgrow">
+                                <img class="product_img" src="@product.imagepath">
+                            </div>
 
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
+                            <div class="product_info">
+                                <p class="product_name">@product.Name</p>
+                                <p class="product_price">$@product.price</p>
+                            </div>
+                        </div>
+                    }
+                }
             </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>
-        </div>
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
-            </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>   
-        </div>     
-        <div class="Featured">
-            <div class="product_imgrow">
-                <img class="product_img" src="images/rtx2080.jpeg"> 
-            </div>
-                
-            <div class="product_info">
-                <p class="product_name">rtx 2080</p>
-                <p class="product_price">$400</p>
-                <p class="region">East</p>
-            </div>   
-        </div>           
-    </div>
+        </Authorized>
+    </AuthorizeView>
+    
 </body>
 @code {
+    private List<Product>? Products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // No need to check authentication state before making the API call
+            Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+        }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            // Handle exception if necessary
+            Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
+        }
+    }
+
 }

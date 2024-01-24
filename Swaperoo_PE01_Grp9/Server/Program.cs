@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Swaperoo_PE01_Grp9.Server.Data;
 using Swaperoo_PE01_Grp9.Server.Models;
 using Microsoft.AspNetCore.Identity;
+using Swaperoo_PE01_Grp9.Server.IRepository;
+using Swaperoo_PE01_Grp9.Server.Repository;
+using Swaperoo_PE01_Grp9.Server.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +25,19 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
+
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+// SignalR
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+       new[] { "application/octet-stream" });
+});
 
 var app = builder.Build();
 
@@ -50,9 +64,15 @@ app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthorization();
 
+//SignalR
+app.UseResponseCompression();
+app.MapHub<ChatHub>("/chathub");
 
 app.MapRazorPages();
 app.MapControllers();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapFallbackToFile("index.html");
 
 app.Run();

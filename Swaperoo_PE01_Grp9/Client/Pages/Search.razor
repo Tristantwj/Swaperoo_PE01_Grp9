@@ -1,0 +1,70 @@
+﻿<!-- Search.razor -->
+@page "/Search/{term}"
+@inject HttpClient _client
+@using Swaperoo_PE01_Grp9.Shared.Domain
+@using Swaperoo_PE01_Grp9.Client.Static
+@inject NavigationManager Navigation
+
+
+<PageTitle>Search</PageTitle>
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="Featured_grid">
+        @if (Products != null)
+        {
+            @foreach (var product in Products)
+            {
+                <div class="Featured">
+                    <div class="product_imgrow">
+                        <img class="product_img" src="@product.imagepath">
+                    </div>
+
+                    <div class="product_info">
+                        <p class="product_name">@product.Name</p>
+                        <p class="product_price">$@product.price</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</body>
+
+@code {
+    private List<Product>? Products;
+    [Parameter]
+    public string term { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadProductsAsync();
+    }
+
+    private async Task LoadProductsAsync()
+    {
+        try
+        {
+            // Load all products if the search term is empty
+            if (string.IsNullOrWhiteSpace(term))
+            {
+                Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+            }
+            else
+            {
+                // Filter based on the search term
+                var searchEndpoint = $"{Endpoints.ProductsEndpoint}/Index?id={term}";
+                Products = await _client.GetFromJsonAsync<List<Product>>(searchEndpoint);
+            }
+
+            // Notify Blazor to re-render the component
+            StateHasChanged();
+        }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            // Handle exception if necessary
+            Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
+        }
+    }
+}

@@ -369,110 +369,186 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "067ee84b-7193-4b86-9f00-272ca4b05c0f",
+                            Email = "frankofoedu@blazor.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FRANKOFOEDU@BLAZOR.COM",
+                            NormalizedUserName = "FRANKOFOEDU@BLAZOR.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDdF7xyRg6BWnM2P9v0pl74mrCVbc/eVGqo507BeB0gQQHrpMWsFVwZeHFeAGY8h/Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "200eaa29-c211-4a67-9a6a-b06048a41735",
+                            TwoFactorEnabled = false,
+                            UserName = "frankofoedu@blazor.com"
+                        },
+                        new
+                        {
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "922eef4f-1ed9-4a12-be4e-c15f4ae98250",
+                            Email = "john@blazor.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JOHN@BLAZOR.COM",
+                            NormalizedUserName = "JOHN@BLAZOR.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFRhM6Oo+icrXPckoBoOnM0APSQ1XM3tEIYgSXdCBCcRaB0PF6h83LQG/AFXznLh2g==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1ffffb61-2a8c-49e4-ad0a-4097cc195102",
+                            TwoFactorEnabled = false,
+                            UserName = "john@blazor.com"
+                        },
+                        new
+                        {
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7b378b7f-56ad-41aa-b095-ccaf13f1883c",
+                            Email = "alice@blazor.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ALICE@BLAZOR.COM",
+                            NormalizedUserName = "ALICE@BLAZOR.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHmTLDh/xHY4RG55p4YeijcK3AWND0vGfO9FJyRLBax1kZ9xKAHiOv/ZiMr3tPsfgw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "115921df-76f0-491d-a432-eef6f8f24006",
+                            TwoFactorEnabled = false,
+                            UserName = "alice@blazor.com"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categorys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Fashion"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Chat", b =>
                 {
-                    b.Property<int>("ChatId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatId"));
-
-                    b.Property<DateTime>("ChatCreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ChatName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ChatProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("ChatId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Chat");
+                    b.ToTable("Chats");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(5613),
+                            Name = "First Chat",
+                            ProductId = 1
+                        });
                 });
 
-            modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Messages", b =>
+            modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Message", b =>
                 {
-                    b.Property<int>("MessagesId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessagesId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("MessageContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("SentTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MessagesId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ChatId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ChatId = 1,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(5973),
+                            MessageContent = "Fashion",
+                            SenderId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ItemDescription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ItemName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("imagepath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("price")
@@ -482,22 +558,69 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("SubCategoryId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6224),
+                            Description = "Description",
+                            Name = "Nvidea GTX 2080",
+                            SubCategoryId = 1,
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                            imagepath = "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png",
+                            price = 1000.0,
+                            status = "ongoing"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6229),
+                            Description = "Description",
+                            Name = "Intel i9",
+                            SubCategoryId = 1,
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                            price = 500.0,
+                            status = "sold"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6230),
+                            Description = "Brand new",
+                            Name = "Air jordon 12",
+                            SubCategoryId = 1,
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                            price = 500.0,
+                            status = "ongoing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6304),
+                            Description = "Brand new",
+                            Name = "Computer",
+                            SubCategoryId = 1,
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                            price = 800.0,
+                            status = "ongoing"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Purchase", b =>
                 {
-                    b.Property<int>("PurchaseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("OfferPrice")
                         .HasColumnType("float");
@@ -505,38 +628,51 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PurchaseProductId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("SellDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("PurchaseId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Purchase");
+                    b.ToTable("Purchases");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OfferPrice = 400.0,
+                            PurchaseProductId = 2,
+                            SellDate = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6985),
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Rating", b =>
                 {
-                    b.Property<int>("RatingId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PurchaseId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("RatingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RatingDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RatingValue")
                         .HasColumnType("int");
@@ -544,10 +680,11 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.Property<int?>("SwapId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("RatingId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PurchaseId");
 
@@ -555,23 +692,37 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Rating");
+                    b.ToTable("Ratings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(7256),
+                            Description = "blahblah",
+                            PurchaseId = 1,
+                            RatingValue = 4,
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Report", b =>
                 {
-                    b.Property<int>("ReportId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ReportDate")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ReportDescription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReportType")
                         .IsRequired()
@@ -580,59 +731,80 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.Property<int?>("ReportedProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReportedUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReportedUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ReporterUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReporterUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ReportId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ReportedProductId");
+                    b.HasIndex("ProductId");
 
-                    b.HasIndex("ReportedUserId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("ReporterUserId");
+                    b.ToTable("Reports");
 
-                    b.ToTable("Report");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(7780),
+                            Description = "Description",
+                            ReportType = "site",
+                            ReporterUserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                            status = "unsolved"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.SubCategory", b =>
                 {
-                    b.Property<int>("SubCategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubCategoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SubCategoryName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SubCategoryId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("SubCategory");
+                    b.ToTable("SubCategorys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Name = "Shirt"
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Swap", b =>
                 {
-                    b.Property<int>("SwapId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SwapId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BuyerId")
-                        .HasColumnType("int");
+                    b.Property<string>("BuyerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OfferItemID")
                         .HasColumnType("int");
@@ -640,56 +812,95 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SellerUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SellertId")
-                        .HasColumnType("int");
+                    b.Property<string>("SellertId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("SwapDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("SwapId");
+                    b.Property<int>("SwapProductId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("BuyerId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("OfferItemID");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("SellerUserId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Swap");
+                    b.ToTable("Swaps");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BuyerId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                            OfferItemID = 3,
+                            SellertId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                            SwapDate = new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(8822),
+                            SwapProductId = 4
+                        });
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.User", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Region")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserDescription")
+                    b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                            Description = "empty",
+                            Email = "frankofoedu@blazor.com",
+                            Name = "Frank Ofoedu",
+                            Region = "North",
+                            Role = "User"
+                        },
+                        new
+                        {
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                            Description = "empty",
+                            Email = "john@blazor.com",
+                            Name = "John",
+                            Region = "South",
+                            Role = "User"
+                        },
+                        new
+                        {
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
+                            Description = "empty",
+                            Email = "alice@blazor.com",
+                            Name = "Alice",
+                            Region = "West",
+                            Role = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -754,7 +965,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Messages", b =>
+            modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Message", b =>
                 {
                     b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.Chat", "Chat")
                         .WithMany()
@@ -762,13 +973,13 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "User")
+                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("SenderId");
 
                     b.Navigation("Chat");
 
-                    b.Navigation("User");
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Product", b =>
@@ -781,7 +992,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
 
                     b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -794,13 +1005,11 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 {
                     b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
@@ -832,23 +1041,17 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Report", b =>
                 {
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.Product", "ReportedProduct")
+                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ReportedProductId");
+                        .HasForeignKey("ProductId");
 
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "ReportedUser")
+                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "User")
                         .WithMany()
-                        .HasForeignKey("ReportedUserId");
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "Reporter")
-                        .WithMany()
-                        .HasForeignKey("ReporterUserId");
+                    b.Navigation("Product");
 
-                    b.Navigation("ReportedProduct");
-
-                    b.Navigation("ReportedUser");
-
-                    b.Navigation("Reporter");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.SubCategory", b =>
@@ -864,31 +1067,17 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Swap", b =>
                 {
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "Buyer")
-                        .WithMany()
-                        .HasForeignKey("BuyerId");
-
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.Product", "OfferItem")
-                        .WithMany()
-                        .HasForeignKey("OfferItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
 
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "Seller")
+                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "User")
                         .WithMany()
-                        .HasForeignKey("SellerUserId");
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("OfferItem");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
-                    b.Navigation("Seller");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
