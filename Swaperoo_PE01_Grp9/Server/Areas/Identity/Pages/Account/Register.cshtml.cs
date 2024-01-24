@@ -130,7 +130,8 @@ namespace Swaperoo_PE01_Grp9.Server.Areas.Identity.Pages.Account
                         Name = Input.Name,
                         Email = Input.Email,
                         Region = Input.Region,
-                        Description = "empty"
+                        Description = "empty",
+                        Role = "User"
                     };
                     _dbContext.Users.Add(customUser);
                     _dbContext.SaveChanges();

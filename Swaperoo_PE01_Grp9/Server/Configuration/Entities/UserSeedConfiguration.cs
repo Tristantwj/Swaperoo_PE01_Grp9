@@ -15,7 +15,8 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Name = "Frank Ofoedu",
                     Email = "frankofoedu@blazor.com",
                     Region = "North",
-                    Description = "empty"
+                    Description = "empty",
+                    Role = "User"
                 },
                 new User
                 {
@@ -23,7 +24,8 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Name = "John",
                     Email = "john@blazor.com",
                     Region = "South",
-                    Description = "empty"
+                    Description = "empty",
+                    Role = "User"
                 },
                 new User
                 {
@@ -31,7 +33,8 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Name = "Alice",
                     Email = "alice@blazor.com",
                     Region = "West",
-                    Description = "empty"
+                    Description = "empty",
+                    Role = "Admin"
                 }
             );
         }

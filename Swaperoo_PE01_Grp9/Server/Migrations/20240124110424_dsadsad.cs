@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class sda : Migration
+    public partial class dsadsad : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -132,7 +132,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -472,9 +473,9 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Region", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "897507f8-98e8-4aaf-8a17-5ea11b78c7cb", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEGRBf/xHA4v5PI3HKE+GtUXjJokd92TslU8UksjNiOB0ItfDAEhYd1AlPHT0OuUGaQ==", null, false, null, "d7b4b895-a6c1-4784-9543-f7e26e5b49c3", false, "frankofoedu@blazor.com" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "cd0a451b-802d-468f-8836-6cff1054321d", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEHcAk/rHmrNV5XccmcJjvAiV+iJ1Y3A2fWTO6eOvA23S3b0vCHcnkFI6ineNGPbhqQ==", null, false, null, "10aad0a5-57b9-47d5-8170-3dd1dc6c1c52", false, "john@blazor.com" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "d985af5b-39a0-4db0-9afe-fc033eb71380", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEJoWZQRBY/1tFKnwq2snkpHhlZvPTJ/otKk6lche7J5qTrEIPs3L25gCrwSkhjYZig==", null, false, null, "635c84c8-e498-4753-9d3e-a30c2fc8f2e9", false, "alice@blazor.com" }
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 0, "067ee84b-7193-4b86-9f00-272ca4b05c0f", "frankofoedu@blazor.com", true, false, null, null, "FRANKOFOEDU@BLAZOR.COM", "FRANKOFOEDU@BLAZOR.COM", "AQAAAAIAAYagAAAAEDdF7xyRg6BWnM2P9v0pl74mrCVbc/eVGqo507BeB0gQQHrpMWsFVwZeHFeAGY8h/Q==", null, false, null, "200eaa29-c211-4a67-9a6a-b06048a41735", false, "frankofoedu@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", 0, "922eef4f-1ed9-4a12-be4e-c15f4ae98250", "john@blazor.com", true, false, null, null, "JOHN@BLAZOR.COM", "JOHN@BLAZOR.COM", "AQAAAAIAAYagAAAAEFRhM6Oo+icrXPckoBoOnM0APSQ1XM3tEIYgSXdCBCcRaB0PF6h83LQG/AFXznLh2g==", null, false, null, "1ffffb61-2a8c-49e4-ad0a-4097cc195102", false, "john@blazor.com" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", 0, "7b378b7f-56ad-41aa-b095-ccaf13f1883c", "alice@blazor.com", true, false, null, null, "ALICE@BLAZOR.COM", "ALICE@BLAZOR.COM", "AQAAAAIAAYagAAAAEHmTLDh/xHY4RG55p4YeijcK3AWND0vGfO9FJyRLBax1kZ9xKAHiOv/ZiMr3tPsfgw==", null, false, null, "115921df-76f0-491d-a432-eef6f8f24006", false, "alice@blazor.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -485,27 +486,27 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Reports",
                 columns: new[] { "Id", "DateCreated", "Description", "ProductId", "ReportType", "ReportedProductId", "ReportedUserId", "ReporterUserId", "UserId", "status" },
-                values: new object[] { 1, new DateTime(2024, 1, 24, 2, 21, 51, 451, DateTimeKind.Local).AddTicks(92), "Description", null, "site", null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, "unsolved" });
+                values: new object[] { 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(7780), "Description", null, "site", null, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, "unsolved" });
 
             migrationBuilder.InsertData(
                 table: "Swaps",
                 columns: new[] { "Id", "BuyerId", "OfferItemID", "ProductId", "SellertId", "SwapDate", "SwapProductId", "UserId" },
-                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", new DateTime(2024, 1, 24, 2, 21, 51, 451, DateTimeKind.Local).AddTicks(793), 4, null });
+                values: new object[] { 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", 3, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(8822), 4, null });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Description", "Email", "Name", "Region" },
+                columns: new[] { "Id", "Description", "Email", "Name", "Region", "Role" },
                 values: new object[,]
                 {
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "empty", "frankofoedu@blazor.com", "Frank Ofoedu", "North" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", "empty", "john@blazor.com", "John", "South" },
-                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", "empty", "alice@blazor.com", "Alice", "West" }
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "empty", "frankofoedu@blazor.com", "Frank Ofoedu", "North", "User" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", "empty", "john@blazor.com", "John", "South", "User" },
+                    { "2bf0d5d5-7691-418f-b2f7-266c7467a0b2", "empty", "alice@blazor.com", "Alice", "West", "Admin" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Purchases",
                 columns: new[] { "Id", "OfferPrice", "ProductId", "PurchaseProductId", "SellDate", "UserId" },
-                values: new object[] { 1, 400.0, null, 2, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8918), "2bf0d5d5-7691-418f-b2f7-266c7467a0b1" });
+                values: new object[] { 1, 400.0, null, 2, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6985), "2bf0d5d5-7691-418f-b2f7-266c7467a0b1" });
 
             migrationBuilder.InsertData(
                 table: "SubCategorys",
@@ -517,26 +518,26 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                 columns: new[] { "Id", "DateCreated", "Description", "Name", "SubCategoryId", "UserId", "imagepath", "price", "status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8276), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
-                    { 2, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8281), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
-                    { 3, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8282), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
-                    { 4, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8284), "Brand new", "Computer", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", null, 800.0, "ongoing" }
+                    { 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6224), "Description", "Nvidea GTX 2080", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", "https://images.nvidia.com/aem-dam/Solutions/geforce/news/geforce-rtx-graphics-cards/geforce-rtx-2080-technical-photography-front.png", 1000.0, "ongoing" },
+                    { 2, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6229), "Description", "Intel i9", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "sold" },
+                    { 3, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6230), "Brand new", "Air jordon 12", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0", null, 500.0, "ongoing" },
+                    { 4, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(6304), "Brand new", "Computer", 1, "2bf0d5d5-7691-418f-b2f7-266c7467a0b1", null, 800.0, "ongoing" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Ratings",
                 columns: new[] { "Id", "DateCreated", "Description", "PurchaseId", "RatingValue", "SwapId", "UserId" },
-                values: new object[] { 1, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(9172), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
+                values: new object[] { 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(7256), "blahblah", 1, 4, null, "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.InsertData(
                 table: "Chats",
                 columns: new[] { "Id", "ChatProfilePicture", "DateCreated", "Name", "ProductId" },
-                values: new object[] { 1, null, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(7536), "First Chat", 1 });
+                values: new object[] { 1, null, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(5613), "First Chat", 1 });
 
             migrationBuilder.InsertData(
                 table: "Messages",
                 columns: new[] { "Id", "ChatId", "DateCreated", "MessageContent", "SenderId" },
-                values: new object[] { 1, 1, new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(7869), "Fashion", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
+                values: new object[] { 1, 1, new DateTime(2024, 1, 24, 19, 4, 23, 992, DateTimeKind.Local).AddTicks(5973), "Fashion", "2bf0d5d5-7691-418f-b2f7-266c7467a0b0" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

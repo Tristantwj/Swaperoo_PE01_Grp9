@@ -52,6 +52,9 @@
                             <div>
                                 <button class="option_box_button" @onclick="Logout">Logout</button>
                             </div>
+                            <div>
+                                <button class="option_box_button" @onclick="GotoAdminMenu">Admin</button>
+                            </div>
                         </div>
                     </div>
                 </Authorized>
@@ -66,6 +69,7 @@
     public void Logout() { Navigation.NavigateToLogout("authentication/logout", "/"); }
     public void GotoCreateListing() { Navigation.NavigateTo("/CreateListing"); }
     public void GotoChat() { Navigation.NavigateTo("/Chat"); }
+    public void GotoAdminMenu() { Navigation.NavigateTo("/users"); }
 
     public void index() { Navigation.NavigateToLogin("/"); }
 
