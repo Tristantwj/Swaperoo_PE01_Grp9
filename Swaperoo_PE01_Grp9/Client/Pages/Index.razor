@@ -25,7 +25,7 @@
                 {
                     @foreach (var product in Products)
                     {
-                        <div class="Featured">
+                        <a href="/product/listed/@product.Id" class="Featured">
                             <div class="product_imgrow">
                                 <img class="product_img" src="@product.imagepath">
                             </div>
@@ -34,7 +34,7 @@
                                 <p class="product_name">@product.Name</p>
                                 <p class="product_price">$@product.price</p>
                             </div>
-                        </div>
+                        </a>
                     }
                 }
             </div>
