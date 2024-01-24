@@ -12,8 +12,8 @@ using Swaperoo_PE01_Grp9.Server.Data;
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240122133317_askmd")]
-    partial class askmd
+    [Migration("20240123182151_sda")]
+    partial class sda
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -378,15 +378,15 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ad60535a-a83f-4866-931c-1692e20a12d0",
+                            ConcurrencyStamp = "897507f8-98e8-4aaf-8a17-5ea11b78c7cb",
                             Email = "frankofoedu@blazor.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "FRANKOFOEDU@BLAZOR.COM",
                             NormalizedUserName = "FRANKOFOEDU@BLAZOR.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDPTuWf3iB7L3GOWSCshP+CEX5L9cyglHdYwPY7SaOzprENuetoq1E7NKkbKcTgvDQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGRBf/xHA4v5PI3HKE+GtUXjJokd92TslU8UksjNiOB0ItfDAEhYd1AlPHT0OuUGaQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c8d3f36d-20f4-4afa-a14d-012028d2e5c3",
+                            SecurityStamp = "d7b4b895-a6c1-4784-9543-f7e26e5b49c3",
                             TwoFactorEnabled = false,
                             UserName = "frankofoedu@blazor.com"
                         },
@@ -394,15 +394,15 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "908cb4c4-f5c0-445b-8586-df0dc8572fa3",
+                            ConcurrencyStamp = "cd0a451b-802d-468f-8836-6cff1054321d",
                             Email = "john@blazor.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JOHN@BLAZOR.COM",
                             NormalizedUserName = "JOHN@BLAZOR.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDiMgH/M91S/b+uoJvBQCEjL3sP+av3W2no/c0F/hMxZ9DdpzGODRTcIFCIAeWMtaw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHcAk/rHmrNV5XccmcJjvAiV+iJ1Y3A2fWTO6eOvA23S3b0vCHcnkFI6ineNGPbhqQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f8ce0d22-18b9-4bfb-b998-8cc934755d79",
+                            SecurityStamp = "10aad0a5-57b9-47d5-8170-3dd1dc6c1c52",
                             TwoFactorEnabled = false,
                             UserName = "john@blazor.com"
                         },
@@ -410,15 +410,15 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "986bbeb9-5c03-47a7-beb4-b30909049b11",
+                            ConcurrencyStamp = "d985af5b-39a0-4db0-9afe-fc033eb71380",
                             Email = "alice@blazor.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ALICE@BLAZOR.COM",
                             NormalizedUserName = "ALICE@BLAZOR.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP+MXLTUAfODlZhrFYHf4iMpAz29XuedsoH5EmddG3CTZHGv5pgM7e7at8vmT9v7Og==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJoWZQRBY/1tFKnwq2snkpHhlZvPTJ/otKk6lche7J5qTrEIPs3L25gCrwSkhjYZig==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59e2a9bd-4a31-46fd-bb2e-fe3fe9f6dceb",
+                            SecurityStamp = "635c84c8-e498-4753-9d3e-a30c2fc8f2e9",
                             TwoFactorEnabled = false,
                             UserName = "alice@blazor.com"
                         });
@@ -479,7 +479,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(3329),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(7536),
                             Name = "First Chat",
                             ProductId = 1
                         });
@@ -503,20 +503,14 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReceiverId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SenderId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChatId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
 
@@ -525,9 +519,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = 1,
                             ChatId = 1,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(3791),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(7869),
                             MessageContent = "Fashion",
-                            ReceiverId = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
                             SenderId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0"
                         });
                 });
@@ -580,7 +573,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(4131),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8276),
                             Description = "Description",
                             Name = "Nvidea GTX 2080",
                             SubCategoryId = 1,
@@ -592,7 +585,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(4136),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8281),
                             Description = "Description",
                             Name = "Intel i9",
                             SubCategoryId = 1,
@@ -603,7 +596,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 3,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(4138),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8282),
                             Description = "Brand new",
                             Name = "Air jordon 12",
                             SubCategoryId = 1,
@@ -614,11 +607,11 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 4,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(4140),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8284),
                             Description = "Brand new",
                             Name = "Computer",
                             SubCategoryId = 1,
-                            UserId = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
                             price = 800.0,
                             status = "ongoing"
                         });
@@ -661,8 +654,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                             Id = 1,
                             OfferPrice = 400.0,
                             PurchaseProductId = 2,
-                            SellDate = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(5596),
-                            UserId = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1"
+                            SellDate = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(8918),
+                            UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1"
                         });
                 });
 
@@ -708,7 +701,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(6099),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 450, DateTimeKind.Local).AddTicks(9172),
                             Description = "blahblah",
                             PurchaseId = 1,
                             RatingValue = 4,
@@ -766,7 +759,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(6430),
+                            DateCreated = new DateTime(2024, 1, 24, 2, 21, 51, 451, DateTimeKind.Local).AddTicks(92),
                             Description = "Description",
                             ReportType = "site",
                             ReporterUserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
@@ -849,8 +842,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                             Id = 1,
                             BuyerId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
                             OfferItemID = 3,
-                            SellertId = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
-                            SwapDate = new DateTime(2024, 1, 22, 21, 33, 17, 581, DateTimeKind.Local).AddTicks(7098),
+                            SellertId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                            SwapDate = new DateTime(2024, 1, 24, 2, 21, 51, 451, DateTimeKind.Local).AddTicks(793),
                             SwapProductId = 4
                         });
                 });
@@ -890,7 +883,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         },
                         new
                         {
-                            Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
                             Description = "empty",
                             Email = "john@blazor.com",
                             Name = "John",
@@ -898,7 +891,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         },
                         new
                         {
-                            Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b2",
+                            Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
                             Description = "empty",
                             Email = "alice@blazor.com",
                             Name = "Alice",
@@ -976,13 +969,13 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "User")
+                    b.HasOne("Swaperoo_PE01_Grp9.Shared.Domain.User", "Sender")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("SenderId");
 
                     b.Navigation("Chat");
 
-                    b.Navigation("User");
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Swaperoo_PE01_Grp9.Shared.Domain.Product", b =>

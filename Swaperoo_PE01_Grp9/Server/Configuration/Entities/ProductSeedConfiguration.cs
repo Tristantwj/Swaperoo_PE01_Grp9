@@ -55,7 +55,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     imagepath = null,
                     price = 800,
                     status = "ongoing",
-                    UserId = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
+                    UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
                     SubCategoryId = 1
                 }
             );

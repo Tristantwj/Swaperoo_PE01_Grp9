@@ -215,10 +215,10 @@ body {
     border-color: transparent;
 }
     .option_box_button:active {
-        opacity: 0.9;
+        opacity: 0.6;
     }
 .profile-picture-container:hover .option-box {
-    height: 80px; /* adjust the height to fit your option box */
+    height: 100px; /* adjust the height to fit your option box */
 }
 
 /*--------------------display-------------------------*/

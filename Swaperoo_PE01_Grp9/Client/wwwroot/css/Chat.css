@@ -1,15 +1,107 @@
-﻿.chatpage{
-    display:flex;
+﻿.chatpage {
+    display: flex;
 }
 
 .chatbar {
     flex: 1;
     max-width: 250px;
     min-width: 150px;
+    margin-right: 10px;
+}
+.chatbarcontent {
     border-style: solid;
     border-color: black;
     border-width: 1px;
+    color: gray;
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
 }
+    .chatbarcontent:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .chatbarcontent:active {
+        box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+    }
 .chatarea {
+    flex: 1;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.productdisplaybar {
+    display:flex;
+    height: 50px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    align-items: center;    
+}
+.productdisplaybar_name {
+    border-style: solid;
+    border-color: red;
+    border-width: 1px;
+    flex: 1;
+    align-items: center;
+    text-align: right;
+}
+.productdisplaybar_buttons {
+    border-style: solid;
+    border-color: blue;
+    border-width: 1px;
+    align-items: center;
+    text-align: right;
+    min-width: 160px;
+}
+.product_button {
+    width: 70px;
+}
+.product_button:hover {
+    opacity: 0.8;
+}
+.product_button:active {
+    opacity: 0.5;
+}
+
+
+.messagebox {
+    border-style: solid;
+    border-color: blue;
+    border-width: 1px;
+}
+.messageboxName {
+    display: block;
+}
+.messageboxContent {
+    display: block;
+    border-top-style: dotted;
+    border-color: blue;
+    border-width: 1px;
+}
+
+.messageinput {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f0f0f0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.messageinputbar {
+    flex: 3;
+    margin-right: 10px;
+}
+.messageinputbartext{
+    width:100%;
+}
+
+.messageinputbutton {
+    flex: 1;
+    flex-shrink: 0;
+}
+.messageinputbutton {
     flex: 1;
 }

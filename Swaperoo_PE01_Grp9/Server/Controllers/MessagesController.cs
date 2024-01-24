@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMessages()
         {
-            var messages = await _unitOfWork.Messages.GetAll(includes: q => q.Include(x => x.User).Include(x => x.Chat));
+            var messages = await _unitOfWork.Messages.GetAll(includes: q => q.Include(x => x.Chat).Include(x => x.Sender));
             return Ok(messages);
         }
 
@@ -35,7 +35,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMessage(int id)
         {
-            var message = await _unitOfWork.Messages.Get(q => q.Id == id);
+            var message = await _unitOfWork.Messages.Get(q => q.Id == id, includes: q => q.Include(x => x.Chat).Include(x => x.Sender));
 
             if (message == null)
             {

@@ -1,0 +1,135 @@
+﻿@page "/chat/view/{id:int}"
+@inject HttpClient _client
+@inject IJSRuntime js
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<PageTitle>PrivateChat</PageTitle>
+
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Chat.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="chatpage">
+        <div class="chatbar">
+            @if (Chats != null)
+            {
+                @foreach (var chat in Chats)
+                {
+                    <a href="/chat/view/@chat.Id" class="chatbarcontent">
+                        <div class="chatbarcontent">
+                            <div>
+                                @chat.Product.User.Name
+                            </div>
+                            <div>
+                                @chat.Product.Name
+                            </div>
+                        </div>
+                        
+                    </a>
+                }
+            }
+        </div>
+        <div class="chatarea">
+            <div class="productdisplaybar">
+                <div class="productdisplaybar_name">
+                    @product.Name
+                </div>
+                <div class="productdisplaybar_buttons">
+                    <button class="product_button">Edit</button>
+                    <button class="product_button">Confirm</button>
+                </div>
+            </div>
+            <div>
+                @if (Messages != null)
+                {
+                    @foreach (var message in Messages)
+                    {
+                        @if (message.ChatId == id)
+                        {
+                            <div class="messagebox">
+                                <div class="messageboxName">
+                                    @message.Sender.Name
+                                </div>
+                                <div class="messageboxContent">
+                                    @message.MessageContent
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No messages available.</p>
+                }
+                <div class="messageinput">
+                    <div class="messageinputbar">
+                        <input class="messageinputbartext" @bind="messageInput" />
+                    </div>
+                    <div class="messageinputbutton">
+                        <button @onclick="SendMessage">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@code {
+    [Parameter] public int id { get; set; }
+    private List<Chat>? Chats;
+    private List<Message>? Messages;
+    private List<User>? users;
+
+    Product? product = new Product();
+
+    private string username;
+    private string userId;
+
+    private List<string> messages = new List<string>();
+    private string? userInput;
+    private string? messageInput;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
+        Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
+        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/Detail/{id}");
+        users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+
+        Console.WriteLine($"Username: {user.Identity.Name}");
+        // Get the userId from the user's identity
+        username = user.Identity.Name;
+
+        @foreach (var i in users)
+        {
+            if (i.Email == username)
+            {
+                userId = i.Id;
+            }
+        }
+        Console.WriteLine($"User ID: {userId}");
+    }
+
+    private async Task SendMessage()
+    {
+        var message = new Message
+            {
+                MessageContent = messageInput,
+                DateCreated = DateTime.Now,
+                SenderId = userId,
+                ChatId = id
+            };
+
+        await _client.PostAsJsonAsync(Endpoints.MessagesEndpoint, message);
+        Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
+        messageInput = string.Empty;
+    }
+
+
+}
+        

@@ -47,7 +47,7 @@
         try
         {
             // Load all products if the search term is empty
-            if (string.IsNullOrEmpty(term))
+            if (string.IsNullOrWhiteSpace(term))
             {
                 Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
             }

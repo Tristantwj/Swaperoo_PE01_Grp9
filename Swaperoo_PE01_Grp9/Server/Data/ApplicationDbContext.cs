@@ -32,7 +32,7 @@ namespace Swaperoo_PE01_Grp9.Server.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
 
             SeedDefaultData(modelBuilder);
             modelBuilder.ApplyConfiguration(new CategorySeedConfiguration());

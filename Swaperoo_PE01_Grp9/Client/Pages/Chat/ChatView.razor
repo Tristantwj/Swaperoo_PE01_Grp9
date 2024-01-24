@@ -5,7 +5,7 @@
 @inject NavigationManager Navigation
 @implements IAsyncDisposable
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Chat</PageTitle>
 
 <head>
     <link href="css/landing.css" rel="stylesheet" />
@@ -20,24 +20,24 @@
             {
                 @foreach (var chat in Chats)
                 {
-                    @chat.Name
-                    @if (chat.Product != null)
-                    {
-                        @chat.Product.Name
-                    }
-                    else
-                    {
-                        <p>>No product associated</p>
-                    }
+                    <a href="/chat/view/@chat.Id" class="chatbarcontent">
+                        <div class="chatbarcontent">
+                            <div>
+                                @chat.Product.User.Name
+                            </div>
+                            <div>
+                                @chat.Product.Name
+                            </div>
+                        </div>
+                        
+                    </a>
                 }
             }
-
         </div>
         <div class="chatarea">
             <div class="form-group">
                 <label>
-                    User:
-                    <input @bind="userInput" />
+                    User: @userInput
                 </label>
             </div>
             <div class="form-group">
@@ -49,7 +49,6 @@
             <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
 
             <hr>
-
             <ul id="messagesList">
                 @foreach (var message in messages)
                 {
@@ -69,6 +68,7 @@
     private List<string> messages = new List<string>();
     private string? userInput;
     private string? messageInput;
+    private string? receiverId;
 
     protected override async Task OnInitializedAsync()
     {

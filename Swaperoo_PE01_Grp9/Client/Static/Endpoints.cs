@@ -12,7 +12,7 @@ namespace Swaperoo_PE01_Grp9.Client.Static
 
         public static readonly string ProductsEndpoint = $"{Prefix}/products";
         public static readonly string ChatsEndpoint = $"{Prefix}/chats";
-        public static readonly string MessagessEndpoint = $"{Prefix}/messages";
+        public static readonly string MessagesEndpoint = $"{Prefix}/messages";
         public static readonly string CategorysEndpoint = $"{Prefix}/categorys";
         public static readonly string PurchasesEndpoint = $"{Prefix}/purchases";
         public static readonly string RatingsEndpoint = $"{Prefix}/ratings";

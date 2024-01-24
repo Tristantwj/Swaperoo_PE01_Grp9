@@ -8,5 +8,11 @@ namespace Swaperoo_PE01_Grp9.Server.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
+
+        public async Task SendToUser(string user, string receiveConnectionId, string message)
+        {
+            await Clients.Client(receiveConnectionId).SendAsync("ReceiveMessage", user, message);
+        }
+        public string GetConnectionId() => Context.ConnectionId;
     }
 }

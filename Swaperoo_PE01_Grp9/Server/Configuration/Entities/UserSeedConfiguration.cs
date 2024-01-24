@@ -19,7 +19,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                 },
                 new User
                 {
-                    Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b1",
+                    Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
                     Name = "John",
                     Email = "john@blazor.com",
                     Region = "South",
@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                 },
                 new User
                 {
-                    Id = "2bf0d5d5 - 7691 - 418f - b2f7 - 266c7467a0b2",
+                    Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
                     Name = "Alice",
                     Email = "alice@blazor.com",
                     Region = "West",
