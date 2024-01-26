@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSwaps()
         {
-            var swaps = await _unitOfWork.Swaps.GetAll();
+            var swaps = await _unitOfWork.Swaps.GetAll(includes: q => q.Include(x => x.OfferItem).ThenInclude(p => p.User).Include(x => x.SwapProduct).ThenInclude(x => x.User));
             return Ok(swaps);
         }
 
@@ -35,7 +35,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSwap(int id)
         {
-            var swap = await _unitOfWork.Swaps.Get(q => q.Id == id);
+            var swap = await _unitOfWork.Swaps.Get(q => q.Id == id, includes: q => q.Include(x => x.OfferItem).ThenInclude(p => p.User).Include(x => x.SwapProduct).ThenInclude(x => x.User));
 
             if (swap == null)
             {

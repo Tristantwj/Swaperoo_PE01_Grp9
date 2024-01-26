@@ -22,12 +22,24 @@
                 {
                     <a href="/chat/view/@chat.Id" class="chatbarcontent">
                         <div class="chatbarcontent">
-                            <div>
-                                @chat.Name
-                            </div>
-                            <div>
-                                @chat.Id
-                            </div>
+                            @if (@chat.PurchaseId != null)
+                            {
+                                <div>
+                                    @chat.Purchase.PurchaseProduct.User.Name
+                                </div>
+                                <div>
+                                    @chat.Purchase.PurchaseProduct.Name
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    @chat.Swap.SwapProduct.User.Name
+                                </div>
+                                <div>
+                                    @chat.Swap.SwapProduct.Name
+                                </div>
+                            }
                         </div>
                         
                     </a>

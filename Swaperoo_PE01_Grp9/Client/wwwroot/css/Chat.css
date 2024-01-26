@@ -1,4 +1,8 @@
-﻿.chatpage {
+﻿body{
+    height: 100%;
+}
+
+.chatpage {
     display: flex;
 }
 
@@ -25,8 +29,8 @@
     }
 .chatarea {
     flex: 1;
+    height: 565px;
     flex-direction: column;
-    height: 100vh;
     overflow-y: auto;
 }
 
@@ -64,7 +68,12 @@
     opacity: 0.5;
 }
 
-
+.chattextarea {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height:auto;
+}
 .messagebox {
     border-style: solid;
     border-color: blue;
