@@ -299,7 +299,8 @@ body {
 }
 
 .product_img {
-    width: 100%;
+    max-width: 266px;
+    max-height: 150px;
 }
 
 .product_info {

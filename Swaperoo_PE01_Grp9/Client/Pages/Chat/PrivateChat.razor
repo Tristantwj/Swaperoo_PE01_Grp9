@@ -19,12 +19,12 @@
                 {
                     <a href="/chat/view/@chat.Id" class="chatbarcontent">
                         <div class="chatbarcontent">
-                            if(@chat.PurchaseId == null){
+                            @if(@chat.PurchaseId != null){
                             <div>
-                                @chat.Purchase.Product.User.Name
+                                @chat.Purchase.PurchaseProduct.User.Name
                             </div>
                             <div>
-                                @chat.Purchase.Product.Name
+                                @chat.Purchase.PurchaseProduct.Name
                             </div>
                             }
                             else{
@@ -32,7 +32,7 @@
                                 @chat.Swap.SwapProduct.User.Name
                             </div>
                             <div>
-                                @chat.Swap.SwapProduct.User.Name
+                                @chat.Swap.SwapProduct.Name
                             </div>
                             }
                         </div>
@@ -51,7 +51,8 @@
                     <button class="product_button">Confirm</button>
                 </div>
             </div>
-            <div>
+
+            <div class="chattextarea">
                 @if (Messages != null)
                 {
                     @foreach (var message in Messages)
@@ -123,7 +124,18 @@
             }
         }
         Console.WriteLine($"User ID: {userId}");
+
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            await js.InvokeVoidAsync("initScrollToBottom");
+        }
+    }
+
 
     private async Task SendMessage()
     {
@@ -138,8 +150,28 @@
         await _client.PostAsJsonAsync(Endpoints.MessagesEndpoint, message);
         Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
         messageInput = string.Empty;
+
+        await ScrollToBottom();
     }
 
+    private async Task ScrollToBottom()
+    {
+        await js.InvokeVoidAsync("scrollToBottom");
+    }
 
 }
+
+<script>
+    // JavaScript function to scroll to the bottom
+    window.scrollToBottom = function () {
+        var chatArea = document.querySelector('.chatarea');
+        if (chatArea) {
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+    };
+
+    window.initScrollToBottom = function () {
+        window.scrollToBottom();
+    };
+</script>
         
