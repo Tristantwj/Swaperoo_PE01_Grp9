@@ -1,20 +1,19 @@
-﻿@page "/products/create"
+﻿@page "/products/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
-@layout NoMenuLayout
 
-
-<h3 class="card-title">Create New Products</h3>
+<h3 class="card-title">Create New Product</h3>
 <hr />
 <br />
-<FormComponent ButtonText="Create Products" product="product" OnValidSubmit="@CreateProduct" />
+
+<FormComponent ButtonText="Create Product" product="product" OnValidSubmit="@CreateProduct" />
+
 
 @code {
     Product product = new Product();
 
     private IList<User>? Users;
     private IList<SubCategory>? SubCategorys;
-
 
     protected async override Task OnInitializedAsync()
     {
@@ -27,4 +26,5 @@
         await _client.PostAsJsonAsync(Endpoints.ProductsEndpoint, product);
         _navManager.NavigateTo("/products/");
     }
+
 }

@@ -4,9 +4,7 @@
 <EditForm Model="@product" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-
-    <fieldset disabled ="@Disabled">
-
+    <fieldset disabled="@Disabled">
         <div class="form-group">
             <label>Name: </label>
             <div>
@@ -86,11 +84,11 @@
 
     </fieldset>
 
+
     @if (!Disabled)
     {
         <button type="submit" class="btn btn-success btn-block">
-
-            Edit Product
+            @ButtonText
         </button>
     }
     <BackToList Target="products" />
@@ -113,3 +111,4 @@
         SubCategorys = await _client.GetFromJsonAsync<List<SubCategory>>($"{Endpoints.SubCategorysEndpoint}");
     }
 }
+

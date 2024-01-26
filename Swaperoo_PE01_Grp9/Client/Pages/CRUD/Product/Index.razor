@@ -30,6 +30,7 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
+                <th>ProductId</th>
                 <th>Name</th>
                 <th>Date</th>
                 <th>Image</th>
@@ -41,6 +42,7 @@ else
             @foreach (var product in Products)
             {
                 <tr>
+                    <td>@product.Id</td>
                     <td>@product.Name</td>
                     <td>@product.DateCreated.Date.ToString("dd MMMM yyyy")</td>
                     <td><img src=@product.imagepath height="100"/></td>

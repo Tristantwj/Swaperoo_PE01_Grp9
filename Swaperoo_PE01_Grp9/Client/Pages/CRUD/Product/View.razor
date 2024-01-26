@@ -10,6 +10,6 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/detail/{id}");
+        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{id}");
     }
 }

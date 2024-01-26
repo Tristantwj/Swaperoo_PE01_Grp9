@@ -1,1 +1,21 @@
-﻿
+﻿@page "/chats/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3 class="card-title">Create New Chat</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Chat" chat="chat" OnValidSubmit="@CreateChat" />
+
+@code {
+    Chat chat = new Chat();
+
+    private async Task CreateChat()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ChatsEndpoint, chat);
+        _navManager.NavigateTo("/chats/");
+    }
+
+}

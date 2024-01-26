@@ -28,6 +28,7 @@
         <table class="table table-responsive" id="chatsTable">
             <thead>
                 <tr>
+                    <th>Chat Id</th>
                     <th>Name</th>
                     <th>Date</th>
                     <th>Actions</th>
@@ -37,6 +38,7 @@
                 @foreach (var chat in Chats)
                 {
                     <tr>
+                        <td>@chat.Id</td>
                         <td>@chat.Name</td>
                         <td>@chat.DateCreated.Date.ToString("dd MMMM yyyy")</td>
                         <td>

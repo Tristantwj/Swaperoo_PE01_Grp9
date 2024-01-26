@@ -1,1 +1,24 @@
-﻿
+﻿@page "/chats/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3>Edit Chats</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditChats" chat="chat" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Chat? chat = new Chat();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        chat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+    }
+
+    async Task EditChats()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.ChatsEndpoint}/{id}", chat);
+        _navManager.NavigateTo("/chats/");
+    }
+}

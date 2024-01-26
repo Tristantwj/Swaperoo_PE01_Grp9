@@ -27,4 +27,19 @@
     <Folder Include="Pages\CRUD\Swap\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\CRUD\Chat\Create.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\CRUD\Chat\Edit.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\CRUD\Chat\FormComponent.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\CRUD\Chat\View.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>
