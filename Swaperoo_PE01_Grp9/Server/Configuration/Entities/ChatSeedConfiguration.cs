@@ -13,10 +13,18 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                 new Chat
                 {
                     Id = 1,
-                    Name = "First Chat",
-                    ChatProfilePicture = null,
+                    Name = "Test Purchase Chat",
                     DateCreated = DateTime.Now,
-                    ProductId = 1
+                    PurchaseId = 1,
+                    SwapId = null
+                },
+                new Chat
+                {
+                    Id = 2,
+                    Name = "Test Swap Chat",
+                    DateCreated = DateTime.Now,
+                    PurchaseId = 1,
+                    SwapId = null
                 }
             );
         }

@@ -16,6 +16,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Email = "frankofoedu@blazor.com",
                     Region = "North",
                     Description = "empty",
+                    profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
                     Role = "User"
                 },
                 new User
@@ -25,6 +26,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Email = "john@blazor.com",
                     Region = "South",
                     Description = "empty",
+                    profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
                     Role = "User"
                 },
                 new User
@@ -34,6 +36,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Email = "alice@blazor.com",
                     Region = "West",
                     Description = "empty",
+                    profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
                     Role = "Admin"
                 }
             );

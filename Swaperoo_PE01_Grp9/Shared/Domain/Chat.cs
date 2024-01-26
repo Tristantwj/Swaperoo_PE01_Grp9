@@ -11,10 +11,11 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string? ChatProfilePicture { get; set; }
         public DateTime DateCreated { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product? Product { get; set; }
+        public int? PurchaseId { get; set; }
+        public virtual Purchase? Purchase { get; set;}
+        public int? SwapId { get; set; }
+        public virtual Swap? Swap { get; set; }
         
     }
 }
