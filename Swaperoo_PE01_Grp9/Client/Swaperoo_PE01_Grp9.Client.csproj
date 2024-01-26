@@ -24,15 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\CRUD\Category\" />
-    <Folder Include="Pages\CRUD\Chat\" />
-    <Folder Include="Pages\CRUD\Message\" />
-    <Folder Include="Pages\CRUD\SubCategory\" />
-    <Folder Include="Pages\CRUD\Report\" />
-    <Folder Include="Pages\CRUD\Rating\" />
-    <Folder Include="Pages\CRUD\Purchase\" />
     <Folder Include="Pages\CRUD\Swap\" />
-    <Folder Include="Pages\CRUD\Product\" />
   </ItemGroup>
 
 </Project>

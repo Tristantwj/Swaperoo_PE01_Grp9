@@ -1,0 +1,26 @@
+﻿@page "/products/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+
+
+<h3>Edit Product</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditProduct" product="product" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Product? product = new Product();
+    protected async override Task OnParametersSetAsync()
+    {
+        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/detail/{id}");
+    }
+    async Task EditProduct()
+    {
+        Console.WriteLine($"[SWAPEROO] {product.Id} {product.UserId}");
+        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{id}",
+        product);
+        _navManager.NavigateTo("/Products/");
+    }
+}
