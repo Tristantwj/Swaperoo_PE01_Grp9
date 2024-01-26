@@ -23,8 +23,8 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Id = 2,
                     Name = "Test Swap Chat",
                     DateCreated = DateTime.Now,
-                    PurchaseId = 1,
-                    SwapId = null
+                    PurchaseId = null,
+                    SwapId = 1
                 }
             );
         }

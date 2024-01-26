@@ -19,12 +19,22 @@
                 {
                     <a href="/chat/view/@chat.Id" class="chatbarcontent">
                         <div class="chatbarcontent">
+                            if(@chat.PurchaseId == null){
                             <div>
-                                @chat.Name
+                                @chat.Purchase.Product.User.Name
                             </div>
                             <div>
-                                @chat.Id
+                                @chat.Purchase.Product.Name
                             </div>
+                            }
+                            else{
+                            <div>
+                                @chat.Swap.Product.User.Name
+                            </div>
+                            <div>
+                                @chat.Swap.Product.Name
+                            </div>
+                            }
                         </div>
                         
                     </a>
