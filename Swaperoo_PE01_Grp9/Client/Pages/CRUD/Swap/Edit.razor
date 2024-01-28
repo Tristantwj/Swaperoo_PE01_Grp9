@@ -1,0 +1,24 @@
+﻿@page "/swaps/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3>Edit Swaps</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditSwaps" swap="swap" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Swap? swap = new Swap();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        swap = await _client.GetFromJsonAsync<Swap>($"{Endpoints.SwapsEndpoint}/{id}");
+    }
+
+    async Task EditSwaps()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.SwapsEndpoint}/{id}", swap);
+        _navManager.NavigateTo("/swaps/");
+    }
+}

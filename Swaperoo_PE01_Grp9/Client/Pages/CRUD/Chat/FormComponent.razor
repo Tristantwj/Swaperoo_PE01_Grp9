@@ -6,13 +6,6 @@
     <ValidationSummary />
     <fieldset disabled ="@Disabled">
         <div class="form-group">
-            <label>Chat Id: </label>
-            <div>
-                <InputNumber @bind-Value="@chat.Id" class="form-control" />
-                <ValidationMessage For="@(() => chat.Id)" />
-            </div>
-        </div>
-        <div class="form-group">
             <label>Chat Name: </label>
             <div>
                 <InputText @bind-Value="@chat.Name" class="form-control" />
@@ -87,6 +80,7 @@
     {
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
         Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
+        chat.DateCreated = DateTime.Now;
     }
 
     private void OnPurchaseSelected(ChangeEventArgs args)

@@ -12,13 +12,8 @@ using Swaperoo_PE01_Grp9.Server.Data;
 namespace Swaperoo_PE01_Grp9.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-    [Migration("20240126043316_Meow")]
-    partial class Meow
-========
-    [Migration("20240126032706_fin")]
-    partial class fin
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+    [Migration("20240126071656_meow")]
+    partial class meow
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -383,25 +378,15 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
                             AccessFailedCount = 0,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            ConcurrencyStamp = "99927673-e593-46e3-8db5-2882b02b1c5d",
-========
-                            ConcurrencyStamp = "606c1744-3862-465e-9279-11ccea4d54c5",
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            ConcurrencyStamp = "16e387e4-0a54-471b-aa1d-413fa1931641",
                             Email = "frankofoedu@blazor.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "FRANKOFOEDU@BLAZOR.COM",
                             NormalizedUserName = "FRANKOFOEDU@BLAZOR.COM",
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            PasswordHash = "AQAAAAIAAYagAAAAEA0z5aOcQy/c+fmmrsjJB5k70nc73TG1FHNU7H3974/WY1uQ4lHfEyNKB/qyxjo8Ew==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIl6RRNor6GyX+waMnAXueUHo3+cY0d4gZpcQPlBpJaLd994vIZSG4jnVoEIOJWwvA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f886db5f-19dc-4826-9157-30a38f25c54b",
-========
-                            PasswordHash = "AQAAAAIAAYagAAAAEOpuZ3Ve7ICIWZy2SNnku1AOe0ijkQdypXD8iANkAXdB+uB7oRLfe/hsZ6T3oYr4/Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a8c49cd5-2b8c-4fa9-8fa5-0fc7f609357c",
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            SecurityStamp = "6022c4b2-cdd6-4683-82ed-e7cedba9d522",
                             TwoFactorEnabled = false,
                             UserName = "frankofoedu@blazor.com"
                         },
@@ -409,25 +394,15 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
                             AccessFailedCount = 0,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            ConcurrencyStamp = "3690e4e0-b5e8-471b-a196-ce11cf6b045e",
-========
-                            ConcurrencyStamp = "06b5f9cf-5703-40f1-baa0-b38339945657",
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            ConcurrencyStamp = "3a4c17d9-7935-4fd5-bfc2-a3fbc7adfa94",
                             Email = "john@blazor.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JOHN@BLAZOR.COM",
                             NormalizedUserName = "JOHN@BLAZOR.COM",
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            PasswordHash = "AQAAAAIAAYagAAAAEE1gX/jae+694JhLFPxDprhitVZ61h1H3v8roh+4KbxlEhlC5SyEHz3OxmlG52/Wag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJVLEfc7Witj4nRScI3V1pvh/ASPT72VPukyW2DUzI8dbm+GqVP9L6trdEFS8NzfBQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7ce4e9a7-1e61-42f3-bad4-c2f22596abc9",
-========
-                            PasswordHash = "AQAAAAIAAYagAAAAENmNuzC14kKCqOyR3mvWMrnDM0tMRibCsPIcULZdQofam7PLr1L6mkYf9PhrilIrVg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "026f971d-10ab-40b6-bb0f-91dc0059ee48",
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            SecurityStamp = "65b9fb59-341c-469d-8c21-c3f4c1184e8b",
                             TwoFactorEnabled = false,
                             UserName = "john@blazor.com"
                         },
@@ -435,25 +410,15 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
                             AccessFailedCount = 0,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            ConcurrencyStamp = "de8dbbb2-7c8d-4665-89d9-62faedf147ab",
-========
-                            ConcurrencyStamp = "6f3dcd20-fcb6-4ea2-92b9-d730b8a945db",
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            ConcurrencyStamp = "4abfb4f9-f180-4bc6-8c89-9fdd5dcbddeb",
                             Email = "alice@blazor.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ALICE@BLAZOR.COM",
                             NormalizedUserName = "ALICE@BLAZOR.COM",
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            PasswordHash = "AQAAAAIAAYagAAAAEOFD2lPbOft9ll7sr911yt/bQHhPGjLHvzi+5S/HDAQXsoFYymEZBuj2ACJSzm42Eg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFwZsXir2nmG1L/LIJu+h+RahBN6NsBld2Yazq7fKYAxvuDmJqP+OHdtb+M7OIOZlA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b20ca73a-bf13-4a5a-8868-76cc1c6f6350",
-========
-                            PasswordHash = "AQAAAAIAAYagAAAAEMKw/A0YEfKDkFBcVApepK4zMaAlNYNAQdYBBk/sZQkKdwDYFn6uRWbat08pn6/AOw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "82431bc4-cbed-406c-92cb-358fc854be74",
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            SecurityStamp = "7f12c842-9538-47ab-b2fb-b54c9d7de4d7",
                             TwoFactorEnabled = false,
                             UserName = "alice@blazor.com"
                         });
@@ -516,22 +481,14 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(1317),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 123, DateTimeKind.Local).AddTicks(8113),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(5643),
                             Name = "Test Purchase Chat",
                             PurchaseId = 1
                         },
                         new
                         {
                             Id = 2,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(1331),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 123, DateTimeKind.Local).AddTicks(8138),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(5654),
                             Name = "Test Swap Chat",
                             SwapId = 1
                         });
@@ -571,11 +528,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         {
                             Id = 1,
                             ChatId = 1,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(1640),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 123, DateTimeKind.Local).AddTicks(8466),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(5889),
                             MessageContent = "Fashion",
                             SenderId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0"
                         });
@@ -629,11 +582,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(1844),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 123, DateTimeKind.Local).AddTicks(9298),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(6047),
                             Description = "Description",
                             Name = "Nvidea GTX 2080",
                             SubCategoryId = 1,
@@ -645,11 +594,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 2,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(1847),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 123, DateTimeKind.Local).AddTicks(9306),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(6049),
                             Description = "Description",
                             Name = "Intel i9",
                             SubCategoryId = 1,
@@ -661,11 +606,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 3,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(1849),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 123, DateTimeKind.Local).AddTicks(9308),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(6051),
                             Description = "Brand new",
                             Name = "Air jordon 12",
                             SubCategoryId = 1,
@@ -677,11 +618,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 4,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(1851),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 123, DateTimeKind.Local).AddTicks(9310),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(6052),
                             Description = "Brand new",
                             Name = "Computer",
                             SubCategoryId = 1,
@@ -726,11 +663,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                             Id = 1,
                             OfferPrice = 400.0,
                             PurchaseProductId = 2,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            SellDate = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(2444),
-========
-                            SellDate = new DateTime(2024, 1, 26, 11, 27, 6, 124, DateTimeKind.Local).AddTicks(80),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            SellDate = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(6449),
                             UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1"
                         });
                 });
@@ -777,11 +710,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(2689),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 124, DateTimeKind.Local).AddTicks(389),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(6634),
                             Description = "blahblah",
                             PurchaseId = 1,
                             RatingValue = 4,
@@ -838,11 +767,7 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                         new
                         {
                             Id = 1,
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            DateCreated = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(2940),
-========
-                            DateCreated = new DateTime(2024, 1, 26, 11, 27, 6, 124, DateTimeKind.Local).AddTicks(676),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            DateCreated = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(6812),
                             Description = "Description",
                             ReportType = "site",
                             ReporterUserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
@@ -903,10 +828,6 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                     b.Property<string>("SellerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SellertId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("SwapDate")
                         .HasColumnType("datetime2");
 
@@ -931,12 +852,8 @@ namespace Swaperoo_PE01_Grp9.Server.Migrations
                             Id = 1,
                             BuyerId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
                             OfferItemId = 3,
-                            SellertId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
-<<<<<<<< HEAD:Swaperoo_PE01_Grp9/Server/Migrations/20240126043316_Meow.Designer.cs
-                            SwapDate = new DateTime(2024, 1, 26, 12, 33, 16, 42, DateTimeKind.Local).AddTicks(3841),
-========
-                            SwapDate = new DateTime(2024, 1, 26, 11, 27, 6, 124, DateTimeKind.Local).AddTicks(1368),
->>>>>>>> bf07761162d3c9700a8d2fab9900a91e60e16b5f:Swaperoo_PE01_Grp9/Server/Migrations/20240126032706_fin.Designer.cs
+                            SellerId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                            SwapDate = new DateTime(2024, 1, 26, 15, 16, 56, 672, DateTimeKind.Local).AddTicks(7174),
                             SwapProductId = 4
                         });
                 });

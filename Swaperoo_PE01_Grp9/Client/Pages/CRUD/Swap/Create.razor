@@ -1,0 +1,35 @@
+﻿@page "/swaps/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3 class="card-title">Create New Swap</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Swap" swap="swap" OnValidSubmit="@CreateSwap" />
+
+
+@code {
+    Swap swap = new Swap();
+
+    private IList<User>? Users;
+    private IList<Product>? SwapProducts;
+    private IList<User>? Buyers;
+    private IList<User>? Sellers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        SwapProducts = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        Buyers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        Sellers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+    }
+
+    private async Task CreateSwap()
+    {
+        await _client.PostAsJsonAsync(Endpoints.SwapsEndpoint, swap);
+        _navManager.NavigateTo("/swaps/");
+    }
+
+}

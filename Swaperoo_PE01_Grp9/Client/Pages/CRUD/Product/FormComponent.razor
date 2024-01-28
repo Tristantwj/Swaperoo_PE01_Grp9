@@ -41,8 +41,8 @@
             <label>Status: </label>
             <div>
                 <InputSelect @bind-Value="product.status" class="form-control">
-                    <option value="NotSold">Not Sold</option>
-                    <option value="Sold">Sold</option>
+                    <option value="ongoing">ongoing</option>
+                    <option value="sold">sold</option>
                 </InputSelect>
                 <ValidationMessage For="@(()=>product.status)"></ValidationMessage>
             </div>
@@ -52,7 +52,6 @@
             <label>Seller: </label>
             <div>
                 <InputSelect @bind-Value="product.UserId" class="form-control">
-                    <option value=""> --Select User</option>
                     @if (Users != null)
                     {
                         @foreach (var user in Users)
@@ -69,7 +68,6 @@
             <label>Sub Category: </label>
             <div>
                 <InputSelect @bind-Value="product.SubCategoryId" class="form-control">
-                    <option value=""> --Select SubCategory</option>
                     @if (SubCategorys != null)
                     {
                         @foreach (var subCategory in SubCategorys)
@@ -109,6 +107,7 @@
     {
         Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
         SubCategorys = await _client.GetFromJsonAsync<List<SubCategory>>($"{Endpoints.SubCategorysEndpoint}");
+        product.DateCreated = DateTime.Now;
     }
 }
 

@@ -1,5 +1,24 @@
-﻿<h3>Edit</h3>
+﻿@page "/purchases/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3>Edit Purchases</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditPurchases" purchase="purchase" />
 
 @code {
+    [Parameter] public int id { get; set; }
+    Purchase? purchase = new Purchase();
 
+    protected async override Task OnParametersSetAsync()
+    {
+        purchase = await _client.GetFromJsonAsync<Purchase>($"{Endpoints.PurchasesEndpoint}/{id}");
+    }
+
+    async Task EditPurchases()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{id}", purchase);
+        _navManager.NavigateTo("/purchases/");
+    }
 }

@@ -17,7 +17,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     OfferItemId = 3,
                     SwapProductId = 4,
                     BuyerId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
-                    SellertId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1"
+                    SellerId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1"
                 }
             );
         }
