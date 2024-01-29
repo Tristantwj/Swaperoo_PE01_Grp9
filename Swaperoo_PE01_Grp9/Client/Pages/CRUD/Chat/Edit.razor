@@ -10,15 +10,39 @@
 @code {
     [Parameter] public int id { get; set; }
     Chat? chat = new Chat();
+    private IList<Purchase>? Purchases;
+    private IList<Swap>? Swaps;
+    private int? selectedPurchaseId;
+    private int? selectedSwapId;
 
     protected async override Task OnParametersSetAsync()
     {
         chat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+        Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
+        Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
+
+        // Set the selected values
+        selectedPurchaseId = chat.PurchaseId;
+        selectedSwapId = chat.SwapId;
     }
 
     async Task EditChats()
     {
+        // Update the chat object with selected values
+        chat.PurchaseId = selectedPurchaseId;
+        chat.SwapId = selectedSwapId;
+
         await _client.PutAsJsonAsync($"{Endpoints.ChatsEndpoint}/{id}", chat);
         _navManager.NavigateTo("/chats/");
+    }
+
+    private void OnPurchaseSelected(ChangeEventArgs args)
+    {
+        selectedSwapId = null;
+    }
+
+    private void OnSwapSelected(ChangeEventArgs args)
+    {
+        selectedPurchaseId = null;
     }
 }

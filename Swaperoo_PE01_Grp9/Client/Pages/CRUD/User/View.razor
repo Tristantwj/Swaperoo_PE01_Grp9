@@ -1,16 +1,15 @@
-﻿@page "/messages/view/{id:int}"
+﻿@page "/users/view/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 @layout NoMenuLayout
-
 <h3>View</h3>
-<FormComponent message="message" Disabled="true" />
+<FormComponent user="user" Disabled="true" />
 @code {
     [Parameter] public int id { get; set; }
-    Message? message = new Message();
+    User? user = new User();
 
     protected async override Task OnParametersSetAsync()
     {
-        message = await _client.GetFromJsonAsync<Message>($"{Endpoints.MessagesEndpoint}/{id}");
+        user = await _client.GetFromJsonAsync<User>($"{Endpoints.UsersEndpoint}/{id}");
     }
 }

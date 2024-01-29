@@ -106,7 +106,7 @@
     {
         Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
         Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
-        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/Detail/{id}");
+        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/detail/{id}");
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
 
         var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();

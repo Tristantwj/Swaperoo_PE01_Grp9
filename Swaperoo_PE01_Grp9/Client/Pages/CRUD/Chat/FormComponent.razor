@@ -4,7 +4,21 @@
 <EditForm Model="@chat" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <fieldset disabled ="@Disabled">
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Created Date: </label>
+            <div>
+                <InputDate @bind-Value="@chat.DateCreated" class="form-control" />
+                <ValidationMessage For="@(() => chat.DateCreated)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Chat Id: </label>
+            <div>
+                <InputNumber @bind-Value="@chat.Id" class="form-control" />
+                <ValidationMessage For="@(() => chat.Id)" />
+            </div>
+        </div>
         <div class="form-group">
             <label>Chat Name: </label>
             <div>
@@ -22,30 +36,29 @@
         <div class="form-group">
             <label>Purchase: </label>
             <div>
-                <InputSelect @bind-Value="chat.PurchaseId" class="form-control" @oninput="OnPurchaseSelected">
+                <InputSelect @bind-Value="chat.PurchaseId" class="form-control">
                     <option value="">-- Select Purchase --</option>
                     @if (Purchases != null)
                     {
                         foreach (var purchase in Purchases)
                         {
-                            <option value="@purchase.Id">@purchase.Id - @purchase.PurchaseProduct.Name</option>
+                            <option value="@purchase.Id">@purchase.PurchaseProduct.Name</option>
                         }
                     }
                 </InputSelect>
                 <ValidationMessage For="@(() => chat.PurchaseId)" />
             </div>
         </div>
-
         <div class="form-group">
             <label>Swap: </label>
             <div>
-                <InputSelect @bind-Value="chat.SwapId" class="form-control" @oninput="OnSwapSelected">
+                <InputSelect @bind-Value="chat.SwapId" class="form-control">
                     <option value="">-- Select Swap --</option>
                     @if (Swaps != null)
                     {
                         foreach (var swap in Swaps)
                         {
-                            <option value="@swap.Id">@swap.Id - @swap.SwapProduct.Name</option>
+                            <option value="@swap.Id">@swap.SwapProduct.Name</option>
                         }
                     }
                 </InputSelect>
@@ -80,16 +93,5 @@
     {
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
         Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
-        chat.DateCreated = DateTime.Now;
-    }
-
-    private void OnPurchaseSelected(ChangeEventArgs args)
-    {
-        chat.SwapId = null;
-    }
-
-    private void OnSwapSelected(ChangeEventArgs args)
-    {
-        chat.PurchaseId = null;
     }
 }
