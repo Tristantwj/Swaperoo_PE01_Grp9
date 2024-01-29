@@ -11,7 +11,7 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public string? imagepath { get; set; }
         public double price { get; set; }
         public string status { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public virtual User? User { get; set; }
         public int SubCategoryId { get; set; }
         public virtual SubCategory? SubCategory { get; set; }

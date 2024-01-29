@@ -16,7 +16,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Description = "Description",
                     DateCreated = DateTime.Now,
                     status = "unsolved",
-                    ReporterUserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                    ReporterUserId = 1,
                     ReportedUserId = null,
                     ReportedProductId = null
                 }

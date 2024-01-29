@@ -135,7 +135,7 @@
                             {
                                 @foreach (var p in products)
                                 {
-                                    if (p.UserId == userId && p.Id != IndivChat.Swap.SwapProductId)
+                                    if (p.Id == userId && p.Id != IndivChat.Swap.SwapProductId)
                                     {
                                         <option value="@p.Id">@p.Name</option>
                                     }
@@ -188,7 +188,7 @@
     Chat? IndivChat = new Chat();
 
     private string username;
-    private string userId;
+    private int userId;
 
     private List<string> messages = new List<string>();
     private string? userInput;

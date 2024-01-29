@@ -126,13 +126,15 @@ namespace Swaperoo_PE01_Grp9.Server.Areas.Identity.Pages.Account
 
                     var customUser = new User
                     {
-                        Id = user.Id,
+                        UserId = user.Id,
                         Name = Input.Name,
                         Email = Input.Email,
                         Region = Input.Region,
                         Description = "empty",
                         profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-                        Role = "User"
+                        Role = "User",
+                        DateCreated = DateTime.Now,
+                        DateUpdated = DateTime.Now
                     };
                     _dbContext.Users.Add(customUser);
                     _dbContext.SaveChanges();

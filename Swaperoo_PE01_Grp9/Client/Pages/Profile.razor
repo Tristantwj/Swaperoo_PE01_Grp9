@@ -1,4 +1,4 @@
-﻿@page "/profile/{id}"
+﻿@page "/profile/{id:int}"
 @inject HttpClient _client
 @inject IJSRuntime js
 @inject NavigationManager Navigation
@@ -61,7 +61,7 @@
 </body>
 
 @code {
-    [Parameter] public string id { get; set; }
+    [Parameter] public int id { get; set; }
 
     private List<Product>? products;
 

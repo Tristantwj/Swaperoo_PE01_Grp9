@@ -2,7 +2,7 @@
 @inject IJSRuntime js
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
-
+@attribute [Authorize]
 
 <div class="fixed">
     <div class="header">
@@ -66,12 +66,13 @@
     </div>
 </div>
 
+
 @code {
     public void GotoRegister() { Navigation.NavigateTo("authentication/register"); }
     public void GotoLogin() { Navigation.NavigateToLogin("authentication/login"); }
     public void Logout() { Navigation.NavigateToLogout("authentication/logout", "/"); }
     public void GotoCreateListing() { Navigation.NavigateTo("/CreateListing"); }
-    public void GotoProfile() { Navigation.NavigateTo($"/profile/{Uri.EscapeDataString(userId)}"); }
+    public void GotoProfile() { Navigation.NavigateTo($"/profile/{userId}"); }
     public void GotoChat() { Navigation.NavigateTo("/Chat"); }
     public void GotoAdminMenu() { Navigation.NavigateTo("/users"); }
 
@@ -80,10 +81,10 @@
     private string? searchTerm;
 
     private List<User>? users;
-    
+
     private string userpfp;
     private string username;
-    private string userId;
+    private int userId;
 
     private void HandleSearch(string term)
     {
@@ -98,28 +99,34 @@
 
     protected override async Task OnInitializedAsync()
     {
-        users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
-
         var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authenticationState.User;
-
-        Console.WriteLine($"Username: {user.Identity.Name}");
-        // Get the userId from the user's identity
-        username = user.Identity.Name;
-        if (users != null)
+        if (authenticationState.User.Identity.IsAuthenticated)
         {
-            @foreach (var i in users)
+
+            users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+
+
+            var user = authenticationState.User;
+
+            Console.WriteLine($"Username: {user.Identity.Name}");
+            // Get the userId from the user's identity
+            username = user.Identity.Name;
+            if (users != null)
             {
-                if (i.Email == username)
+                @foreach (var i in users)
                 {
-                    userpfp = i.profilepicture;
-                    userId = i.Id;
-                    Console.WriteLine("UserId: {userId}");
-                    break;
+                    if (i.Email == username)
+                    {
+                        userpfp = i.profilepicture;
+                        userId = i.Id;
+                        Console.WriteLine("UserId: {userId}");
+                        break;
+                    }
+                    Console.WriteLine("no userid found");
                 }
-                Console.WriteLine("no userid found");
+
             }
+            Console.WriteLine("User not found");
         }
-        Console.WriteLine("User not found");
     }
 }

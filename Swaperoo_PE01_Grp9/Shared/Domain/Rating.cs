@@ -13,7 +13,7 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public int RatingValue { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public virtual User? User { get; set; }
         public int? PurchaseId { get; set; }
         public virtual Purchase? Purchase { get; set; }

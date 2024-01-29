@@ -69,7 +69,7 @@
                         {
                             @foreach (var p in products)
                             {
-                                if(p.UserId == userId)
+                                if(p.Id == userId)
                                 {
                                     <option value="@p.Id">@p.Name</option>
                                 }
@@ -96,7 +96,7 @@
 
     private List<User>? users;
     private string username;
-    private string userId;
+    private int userId;
 
     private double offervalue;
     private int offerProductId;
