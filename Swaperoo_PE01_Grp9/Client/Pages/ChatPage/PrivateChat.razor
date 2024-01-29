@@ -135,7 +135,7 @@
                             {
                                 @foreach (var p in products)
                                 {
-                                    if (p.Id == userId && p.Id != IndivChat.Swap.SwapProductId)
+                                    if (p.UserId == userId && p.Id != IndivChat.Swap.OfferItemId)
                                     {
                                         <option value="@p.Id">@p.Name</option>
                                     }
@@ -196,6 +196,8 @@
 
     private int offervalue;
     private int offerProductId;
+
+    private int? purchaseid;
     //popup---------------------
     private bool isEditPopupVisible = false;
     private bool isConfirmPopupVisible = false;
@@ -274,29 +276,45 @@
         await js.InvokeVoidAsync("scrollToBottom");
     }
 
-    
+
 
     public async Task editpurchaseoffer()
     {
         var purchase = new Purchase()
-        {
-            
-
+            {
+                Id = IndivChat.Purchase.Id,
+                SellDate = IndivChat.Purchase.SellDate,
+                OfferPrice = offervalue,
+                Status = IndivChat.Purchase.Status,
+                UserId = IndivChat.Purchase.UserId,
+                PurchaseProductId = IndivChat.Purchase.PurchaseProductId
         };
-
-        await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{id}", purchase);
+        await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{IndivChat.Purchase.Id}", purchase);
+        IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+        CloseEditPopup();
     }
 
 
 
-    public void confirmpurchaseoffer()
+    public async Task confirmpurchaseoffer()
     {
-
     }
 
-    public void editswapoffer()
+    public async Task editswapoffer()
     {
-
+        var swap = new Swap()
+            {
+                Id = IndivChat.Swap.Id,
+                SwapDate = IndivChat.Swap.SwapDate,
+                Status = IndivChat.Swap.Status,
+                OfferItemId = offerProductId,
+                SwapProductId = IndivChat.Swap.SwapProductId,
+                BuyerId = IndivChat.Swap.BuyerId,
+                SellerId = IndivChat.Swap.SellerId
+            };
+        await _client.PutAsJsonAsync($"{Endpoints.SwapsEndpoint}/{IndivChat.Swap.Id}", swap);
+        IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+        CloseEditPopup();
     }
     public void confirmswapoffer()
     {

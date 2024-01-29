@@ -20,7 +20,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     price = 1000,
                     status = "ongoing",
                     UserId = 1,
-                    SubCategoryId = 1
+                    SubCategoryId = 3
                 },
                 new Product
                 {
@@ -32,7 +32,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     price = 500,
                     status = "sold",
                     UserId = 1,
-                    SubCategoryId = 1
+                    SubCategoryId = 4
                 },
                 new Product
                 {
@@ -44,7 +44,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     price = 500,
                     status = "ongoing",
                     UserId = 1,
-                    SubCategoryId = 1
+                    SubCategoryId = 2
                 },
                 new Product
                 {
@@ -56,7 +56,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     price = 800,
                     status = "ongoing",
                     UserId = 2,
-                    SubCategoryId = 1
+                    SubCategoryId = 5
                 }
             );
         }

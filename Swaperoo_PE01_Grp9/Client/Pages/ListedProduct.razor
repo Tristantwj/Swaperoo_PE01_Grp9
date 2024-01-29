@@ -69,8 +69,10 @@
                         {
                             @foreach (var p in products)
                             {
-                                if(p.Id == userId)
+                                Console.WriteLine($"Product: {p.Name}");
+                                if(p.UserId == userId)
                                 {
+                                    Console.WriteLine($"Product-Linked: {p.Name}");
                                     <option value="@p.Id">@p.Name</option>
                                 }
                             }

@@ -35,7 +35,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPurchase(int id)
         {
-            var purchase = await _unitOfWork.Purchases.Get(q => q.Id == id);
+            var purchase = await _unitOfWork.Purchases.Get(q => q.Id == id, includes: q => q.Include(x => x.User).Include(x => x.PurchaseProduct));
 
             if (purchase == null)
             {
