@@ -1,0 +1,354 @@
+﻿@page "/chat/view/{id:int}"
+@inject HttpClient _client
+@inject IJSRuntime js
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<PageTitle>PrivateChat</PageTitle>
+
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Chat.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="chatpage">
+        <div class="chatbar">
+            @if (Chats != null)
+            {
+                @foreach (var chat in Chats)
+                {
+                    <a href="/chat/view/@chat.Id" class="chatbarcontent">
+                        <div class="chatbarcontent">
+                            @if(@chat.PurchaseId != null){
+                            <div>
+                                @chat.Purchase.PurchaseProduct.User.Name
+                            </div>
+                            <div>
+                                @chat.Purchase.PurchaseProduct.Name
+                            </div>
+                            }
+                            else{
+                            <div>
+                                @chat.Swap.SwapProduct.User.Name
+                            </div>
+                            <div>
+                                @chat.Swap.SwapProduct.Name
+                            </div>
+                            }
+                        </div>
+                        
+                    </a>
+                }
+            }
+        </div>
+        <div class="chatarea">
+            <div class="productdisplaybar">
+                @if (IndivChat.PurchaseId != null)
+                {
+                <div class="productdisplaybar_name">
+                    <div>
+                        @IndivChat.Purchase.PurchaseProduct.Name
+                    </div>
+                    <div>
+                        S$@IndivChat.Purchase.OfferPrice
+                    </div>
+                </div>
+                <div class="productdisplaybar_buttons">
+                        <button class="product_button" @onclick="ToggleEditPopUp">Edit</button>
+                    <button class="product_button" @onclick="ToggleConfirmPopUp">Confirm</button>
+                </div>
+                }
+                else{
+                <div class="productdisplaybar_name">
+                    <div>
+                        @IndivChat.Swap?.SwapProduct.Name
+                    </div>
+                    <div>
+                        @IndivChat.Swap?.OfferItem.Name
+                    </div>
+                </div>
+                <div class="productdisplaybar_buttons">
+                        <button class="product_button" @onclick="ToggleEditPopUp">Edit</button>
+                        <button class="product_button" @onclick="ToggleConfirmPopUp">Confirm</button>
+                </div>
+                }
+            </div>
+
+            <div class="chattextarea">
+                @if (Messages != null)
+                {
+                    @foreach (var message in Messages)
+                    {
+                        @if (message.ChatId == id)
+                        {
+                            <div class="messagebox">
+                                <div class="messageboxName">
+                                    @message.Sender.Name
+                                </div>
+                                <div class="messageboxContent">
+                                    @message.MessageContent
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No messages available.</p>
+                }
+                <div class="messageinput">
+                    <div class="messageinputbar">
+                        <input class="messageinputbartext" @bind="messageInput" />
+                    </div>
+                    <div class="messageinputbutton">
+                        <button @onclick="SendMessage">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup" style="top: @editpopupTop; opacity: @editpopupOpacity; transform: @editpopupTransform">
+        <div class="close-btn" @onclick="CloseEditPopup">&times;</div>
+        <div class="sellform">
+            <h2>Edit Offer</h2>
+
+            @if(IndivChat.Purchase != null)
+            {
+                <h3><img src="@IndivChat.Purchase.PurchaseProduct.imagepath" class="productofferimage"> @IndivChat.Purchase.PurchaseProduct.Name"</h3>
+                <div class="sell-form-element">
+                    <label for="offer">Your offer</label>
+                    <input type="text" id="offer" placeholder="@IndivChat.Purchase.OfferPrice" @bind="offervalue">
+                </div>
+                <div class="sell-form-element">
+                    <button @onclick="editpurchaseoffer">Edit Offer</button>
+                </div>
+            }
+            else
+            {
+                @if(IndivChat.Swap != null)
+                {
+                    <h3><img src="@IndivChat.Swap.SwapProduct.imagepath" class="productofferimage"> @IndivChat.Swap.SwapProduct.Name"</h3>
+                    <div class="sell-form-element">
+                        <label for="offer">Your offer</label>
+                        <select id="swapoffer" @bind="offerProductId">
+                            @if (products != null)
+                            {
+                                @foreach (var p in products)
+                                {
+                                    if (p.UserId == userId && p.Id != IndivChat.Swap.SwapProductId)
+                                    {
+                                        <option value="@p.Id">@p.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="sell-form-element">
+                        <button @onclick="editswapoffer">Edit Offer</button>
+                    </div>
+                }   
+            }
+        </div>
+    </div>
+    <div class="popup" style="top: @confirmpopupTop; opacity: @confirmpopupOpacity; transform: @confirmpopupTransform">
+        <div class="close-btn" @onclick="CloseConfirmPopup">&times;</div>
+        <div class="sellform">
+            <h2>Confirm Offer</h2>
+            @if (IndivChat.Purchase != null)
+            {
+                <h3><img src="@IndivChat.Purchase.PurchaseProduct.imagepath" class="productofferimage"> @IndivChat.Purchase.PurchaseProduct.Name</h3>
+                <h3>For: @IndivChat.Purchase.OfferPrice</h3>
+                <div class="sell-form-element">
+                    <button @onclick="confirmpurchaseoffer">Confirm Offer</button>
+                </div>
+
+            }
+            else
+            {
+                @if(IndivChat.Swap != null)
+                {
+                    <h3><img src="@IndivChat.Swap.SwapProduct.imagepath" class="productofferimage"> @IndivChat.Swap.SwapProduct.Name</h3>
+                    <h3><img src="@IndivChat.Swap.OfferItem.imagepath" class="productofferimage">@IndivChat.Swap.OfferItem.Name</h3>
+                    <div class="sell-form-element">
+                        <button @onclick="confirmswapoffer">Confirm Offer</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</body>
+
+@code {
+    [Parameter] public int id { get; set; }
+    private List<Chat>? Chats;
+    private List<Message>? Messages;
+    private List<User>? users;
+    private List<Product>? products;
+
+    Chat? IndivChat = new Chat();
+
+    private string username;
+    private string userId;
+
+    private List<string> messages = new List<string>();
+    private string? userInput;
+    private string? messageInput;
+
+    private int offervalue;
+    private int offerProductId;
+    //popup---------------------
+    private bool isEditPopupVisible = false;
+    private bool isConfirmPopupVisible = false;
+
+    private string editpopupTop = "-150%";
+    private string editpopupOpacity = "0";
+    private string editpopupTransform = "translate(-50%, -50%) scale(1.25)";
+
+    private string confirmpopupTop = "-150%";
+    private string confirmpopupOpacity = "0";
+    private string confirmpopupTransform = "translate(-50%, -50%) scale(1.25)";
+    //--------------------------------
+
+    protected override async Task OnInitializedAsync()
+    {
+        Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
+        IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+        Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
+        users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+
+        Console.WriteLine($"Username: {user.Identity.Name}");
+        // Get the userId from the user's identity
+        username = user.Identity.Name;
+
+        @foreach (var i in users)
+        {
+            if (i.Email == username)
+            {
+                userId = i.Id;
+            }
+        }
+        Console.WriteLine($"User ID: {userId}");
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ScrollToBottom();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+        // Additional data retrieval if needed
+        await ScrollToBottom();
+    }
+
+    private async Task SendMessage()
+    {
+        @if (messageInput != null)
+        {
+            var message = new Message
+            {
+                MessageContent = messageInput,
+                DateCreated = DateTime.Now,
+                SenderId = userId,
+                ChatId = id
+            };
+
+        await _client.PostAsJsonAsync(Endpoints.MessagesEndpoint, message);
+        Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
+        messageInput = string.Empty;
+        }
+        await ScrollToBottom();
+    }
+
+    private async Task ScrollToBottom()
+    {
+        await js.InvokeVoidAsync("scrollToBottom");
+    }
+
+    
+
+    public async Task editpurchaseoffer()
+    {
+        var purchase = new Purchase()
+        {
+            
+
+        };
+
+        await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{id}", purchase);
+    }
+
+
+
+    public void confirmpurchaseoffer()
+    {
+
+    }
+
+    public void editswapoffer()
+    {
+
+    }
+    public void confirmswapoffer()
+    {
+        
+    }
+
+    //----------------POPUP---------------//
+    private void ToggleEditPopUp()
+    {
+        isEditPopupVisible = !isEditPopupVisible;
+
+        // Set styles based on popup visibility
+        editpopupTop = isEditPopupVisible ? "50%" : "-150%";
+        editpopupOpacity = isEditPopupVisible ? "1" : "0";
+        editpopupTransform = isEditPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+    private void ToggleConfirmPopUp()
+    {
+        isConfirmPopupVisible = !isConfirmPopupVisible;
+
+        // Set styles based on popup visibility
+        confirmpopupTop = isConfirmPopupVisible ? "50%" : "-150%";
+        confirmpopupOpacity = isConfirmPopupVisible ? "1" : "0";
+        confirmpopupTransform = isConfirmPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+    private void CloseEditPopup()
+    {
+        isEditPopupVisible = false;
+
+        // Reset styles to hide the popup
+        editpopupTop = "-150%";
+        editpopupOpacity = "0";
+        editpopupTransform = "translate(-50%, -50%) scale(1.25)";
+    }
+    private void CloseConfirmPopup()
+    {
+        isConfirmPopupVisible = false;
+
+        // Reset styles to hide the popup
+        confirmpopupTop = "-150%";
+        confirmpopupOpacity = "0";
+        confirmpopupTransform = "translate(-50%, -50%) scale(1.25)";
+    }
+}
+
+<script>
+    // JavaScript function to scroll to the bottom
+    window.scrollToBottom = function () {
+        var chatArea = document.querySelector('.chattextarea');
+        if (chatArea) {
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+    };
+</script>
+        

@@ -1,0 +1,71 @@
+﻿body {
+    height:100%;
+}
+
+.profilearea{
+    display:flex;
+    flex-direction:column;
+}
+.profiletop {
+    display: flex;
+    height: 250px;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    font-size: 60px;
+    font-weight: bold;
+    font-family: inter, Arial;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255,0,0);
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,207,82,1) 100%);
+}
+
+
+.profileinformation {
+    display:flex;
+}
+/*-------------------Left--------------------*/
+.profileinformation-left {
+    flex: 1;
+    max-width: 150px;
+    position: relative;
+    margin-left: 50px;
+    flex-direction: column; /* Change to column direction */
+    align-items: center;
+}
+.image-container {
+    position:relative;
+    top:-50px;
+    
+}
+.profilepic {
+    height: 150px;
+    border-radius: 50px;
+}
+
+.rating {
+    position: relative;
+    top: -50px;
+    text-align:center;  
+}
+
+/*---------------------Center--------------------*/
+.profileinformation-center {
+    flex:1;
+    margin-left: 70px;
+    margin-top:20px;
+}
+
+/*---------------------Right--------------------*/
+.profileoption {
+    background-color: transparent;
+    color: transparent;
+    cursor:pointer;
+    height:50px;
+}
+    .profileoption:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .profileoption:active {
+        opacity: 0.7;
+    }

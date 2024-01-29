@@ -23,6 +23,9 @@
          <div class="productprice">
              S$@product.price
          </div>
+         <div class="productdescription">
+             @product.Description
+         </div>
         </div>
         <div class="seller">
             <div class="sellerinfo">
@@ -34,44 +37,49 @@
                 </div>
             </div>
             <div class="transactbutton">
-                <button class="sellbutton" @onclick="ToggleSellPopUp">Sell</button>
-                <button class="swapbutton">Swap</button>
+                <button class="sellbutton" @onclick="ToggleSellPopUp">Buy</button>
+                <button class="swapbutton" @onclick="ToggleSwapPopUp">Swap</button>
             </div>
         </div>
-        <div class="popup" style="top: @popupTop; opacity: @popupOpacity; transform: @popupTransform">
-            <div class="close-btn" @onclick="ClosePopup">&times;</div>
+
+        <div class="popup" style="top: @sellpopupTop; opacity: @sellpopupOpacity; transform: @sellpopupTransform">
+            <div class="close-btn" @onclick="CloseSellPopup">&times;</div>
             <div class="sellform">
                 <h2>Create Purchase Offer</h2>
                 <h3><img src="@product.imagepath" class="productofferimage"> @product.Name</h3>
                 <div class="sell-form-element">
                     <label for="offer">Your offer</label>
-                    <input type="text" id="offer" placeholder="@product.price">
+                    <input type="text" id="offer" placeholder="@product.price"  @bind="offervalue">
                 </div>
                 <div class="sell-form-element">
-                    <button>Make Offer</button>
+                    <button @onclick="makepurchase">Make Offer</button>
                 </div>
             </div>
         </div>
 
-        <div class="popup" style="top: @popupTop; opacity: @popupOpacity; transform: @popupTransform">
-            <div class="close-btn" @onclick="ClosePopup">&times;</div>
+        <div class="popup" style="top: @swappopupTop; opacity: @swappopupOpacity; transform: @swappopupTransform">
+            <div class="close-btn" @onclick="CloseSwapPopup">&times;</div>
             <div class="sellform">
                 <h2>Create Swap Offer</h2>
                 <h3><img src="@product.imagepath" class="productofferimage"> @product.Name</h3>
                 <div class="sell-form-element">
                     <label for="offer">Your offer</label>
-                    <select id="swapoffer">
-                        @foreach (var p in products)
+                    <select id="swapoffer" @bind="offerProductId">
+                        @if (products != null)
                         {
-                            if(p.UserId == userId)
+                            @foreach (var p in products)
                             {
-                                <option value="@p.Id">@p.Name</option>
+                                if(p.UserId == userId)
+                                {
+                                    <option value="@p.Id">@p.Name</option>
+                                }
                             }
                         }
+                        
                     </select>
                 </div>
                 <div class="sell-form-element">
-                    <button>Make Offer</button>
+                    <button @onclick="makeswap">Make Offer</button>
                 </div>
             </div>
         </div>
@@ -90,16 +98,28 @@
     private string username;
     private string userId;
 
-    private bool isPopupVisible = false;
-    private string popupTop = "-150%";
-    private string popupOpacity = "0";
-    private string popupTransform = "translate(-50%, -50%) scale(1.25)";
+    private double offervalue;
+    private int offerProductId;
+
+    //popup---------------------
+    private bool isSellPopupVisible = false;
+    private bool isSwapPopupVisible = false;
+
+    private string sellpopupTop = "-150%";
+    private string sellpopupOpacity = "0";
+    private string sellpopupTransform = "translate(-50%, -50%) scale(1.25)";
+
+    private string swappopupTop = "-150%";
+    private string swappopupOpacity = "0";
+    private string swappopupTransform = "translate(-50%, -50%) scale(1.25)";
+    //--------------------------------
 
     protected override async Task OnInitializedAsync()
     {
         products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
         product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/Detail/{id}");
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+
 
         var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authenticationState.User;
@@ -120,21 +140,109 @@
 
     private void ToggleSellPopUp()
     {
-        isPopupVisible = !isPopupVisible;
+        isSellPopupVisible = !isSellPopupVisible;
 
         // Set styles based on popup visibility
-        popupTop = isPopupVisible ? "50%" : "-150%";
-        popupOpacity = isPopupVisible ? "1" : "0";
-        popupTransform = isPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+        sellpopupTop = isSellPopupVisible ? "50%" : "-150%";
+        sellpopupOpacity = isSellPopupVisible ? "1" : "0";
+        sellpopupTransform = isSellPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
     }
 
-    private void ClosePopup()
+    private void ToggleSwapPopUp()
     {
-        isPopupVisible = false;
+        isSwapPopupVisible = !isSwapPopupVisible;
+
+        // Set styles based on popup visibility
+        swappopupTop = isSwapPopupVisible ? "50%" : "-150%";
+        swappopupOpacity = isSwapPopupVisible ? "1" : "0";
+        swappopupTransform = isSwapPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+
+    private void CloseSellPopup()
+    {
+        isSellPopupVisible = false;
 
         // Reset styles to hide the popup
-        popupTop = "-150%";
-        popupOpacity = "0";
-        popupTransform = "translate(-50%, -50%) scale(1.25)";
+        sellpopupTop = "-150%";
+        sellpopupOpacity = "0";
+        sellpopupTransform = "translate(-50%, -50%) scale(1.25)";
+    }
+    private void CloseSwapPopup()
+    {
+        isSwapPopupVisible = false;
+
+        // Reset styles to hide the popup
+        swappopupTop = "-150%";
+        swappopupOpacity = "0";
+        swappopupTransform = "translate(-50%, -50%) scale(1.25)";
+    }
+
+    private async Task makepurchase()
+    {
+
+        var purchase = new Purchase
+            {
+                SellDate = DateTime.Now,
+                OfferPrice = offervalue,
+                Status = null,
+                UserId = userId,
+                PurchaseProductId = product.Id
+            };
+        await _client.PostAsJsonAsync(Endpoints.PurchasesEndpoint, purchase);
+
+        var response = await _client.PostAsJsonAsync(Endpoints.PurchasesEndpoint, purchase);
+
+        // Check if the request was successful
+        if (response.IsSuccessStatusCode)
+        {
+            // Read the response content to get the newly created Purchase
+            purchase = await response.Content.ReadFromJsonAsync<Purchase>();
+
+            // Continue with creating the Chat
+            var chat = new Chat
+                {
+                    Name = @product.Name,
+                    DateCreated = DateTime.Now,
+                    PurchaseId = purchase.Id,
+                    SwapId = null
+                };
+
+            await _client.PostAsJsonAsync(Endpoints.ChatsEndpoint, chat);
+            Navigation.NavigateTo("/chat/");
+        }
+    }
+
+    private async Task makeswap()
+    {
+        var swap = new Swap
+            {
+                SwapDate = DateTime.Now,
+                Status = null,
+                OfferItemId = offerProductId,
+                SwapProductId = product.Id,
+                BuyerId = userId,
+                SellerId = product.UserId
+            };
+
+        var responseS = await _client.PostAsJsonAsync(Endpoints.SwapsEndpoint, swap);
+
+        if (responseS.IsSuccessStatusCode)
+        {
+            // Read the response content to get the newly created Purchase
+            swap = await responseS.Content.ReadFromJsonAsync<Swap>();
+
+            // Continue with creating the Chat
+            var chat = new Chat
+                {
+                    Name = @product.Name,
+                    DateCreated = DateTime.Now,
+                    PurchaseId = null,
+                    SwapId = swap.Id
+                };
+
+            await _client.PostAsJsonAsync(Endpoints.ChatsEndpoint, chat);
+            Navigation.NavigateTo("/chat/");
+        }
+
     }
 }
