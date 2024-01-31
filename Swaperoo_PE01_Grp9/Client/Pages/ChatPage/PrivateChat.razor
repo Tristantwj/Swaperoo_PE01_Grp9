@@ -319,6 +319,40 @@
 
     public async Task confirmpurchaseoffer()
     {
+        var purchase = new Purchase()
+            {
+                Id = IndivChat.Purchase.Id,
+                SellDate = IndivChat.Purchase.SellDate,
+                OfferPrice = IndivChat.Purchase.OfferPrice,
+                Status = "Confirmed",
+                UserId = IndivChat.Purchase.UserId,
+                PurchaseProductId = IndivChat.Purchase.PurchaseProductId
+            };
+
+        var product = new Product()
+            {
+                Id = IndivChat.Purchase.PurchaseProduct.Id,
+                Name = IndivChat.Purchase.PurchaseProduct.Name,
+                DateCreated = IndivChat.Purchase.PurchaseProduct.DateCreated,
+                imagepath = IndivChat.Purchase.PurchaseProduct.imagepath,
+                price = IndivChat.Purchase.OfferPrice,
+                status = "sold",
+                UserId = IndivChat.Purchase.PurchaseProduct.UserId,
+                SubCategoryId = IndivChat.Purchase.PurchaseProduct.SubCategoryId
+            };
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.Id);
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.Name);
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.DateCreated);
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.imagepath);
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.OfferPrice);
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.status);
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.UserId);
+        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.SubCategoryId);
+
+        await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{IndivChat.Purchase.Id}", purchase);
+        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Purchase.PurchaseProduct.Id}", product);
+        IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+        CloseConfirmPopup();
     }
 
     public async Task editswapoffer()
@@ -337,9 +371,46 @@
         IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
         CloseEditPopup();
     }
-    public void confirmswapoffer()
+
+    public async Task confirmswapoffer()
     {
-        
+        var swap = new Swap()
+            {
+                Id = IndivChat.Swap.Id,
+                SwapDate = IndivChat.Swap.SwapDate,
+                Status = "Confirmed",
+                OfferItemId = IndivChat.Swap.OfferItemId,
+                SwapProductId = IndivChat.Swap.SwapProductId,
+                BuyerId = IndivChat.Swap.BuyerId,
+                SellerId = IndivChat.Swap.SellerId
+            };
+        var swapproduct = new Product()
+            {
+                Id = IndivChat.Swap.SwapProduct.Id,
+                Name = IndivChat.Swap.SwapProduct.Name,
+                DateCreated = IndivChat.Swap.SwapProduct.DateCreated,
+                price = IndivChat.Swap.SwapProduct.price,
+                status = "sold",
+                UserId = IndivChat.Swap.SwapProduct.UserId,
+                SubCategoryId = IndivChat.Swap.SwapProduct.SubCategoryId
+            };
+        var offerproduct = new Product()
+            {
+                Id = IndivChat.Swap.OfferItem.Id,
+                Name = IndivChat.Swap.OfferItem.Name,
+                DateCreated = IndivChat.Swap.OfferItem.DateCreated,
+                price = IndivChat.Swap.OfferItem.price,
+                status = "sold",
+                UserId = IndivChat.Swap.OfferItem.UserId,
+                SubCategoryId = IndivChat.Swap.OfferItem.SubCategoryId
+            };
+
+        await _client.PutAsJsonAsync($"{Endpoints.SwapsEndpoint}/{IndivChat.Swap.Id}", swap);
+        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.SwapProduct.Id}", swapproduct);
+        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.OfferItem.Id}", offerproduct);
+        IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
+        CloseConfirmPopup();
+
     }
 
     //----------------POPUP---------------//
