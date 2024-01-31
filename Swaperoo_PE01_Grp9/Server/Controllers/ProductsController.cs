@@ -54,7 +54,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
                 return Problem("Entity set 'Products' is null.");
             }
 
-            var products = await _unitOfWork.Products.GetAll();
+            var products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.User).Include(x => x.SubCategory));
 
             if (!String.IsNullOrEmpty(id))
             {

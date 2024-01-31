@@ -55,9 +55,17 @@
                             <div>
                                 <button class="option_box_button" @onclick="Logout">Logout</button>
                             </div>
-                            <div>
-                                <button class="option_box_button" @onclick="GotoAdminMenu">Admin</button>
-                            </div>
+                            @if (userrole == "Admin")
+                            {
+                                <div>
+                                    <button class="option_box_button" @onclick="GotoAdminMenu">Admin</button>
+                                </div>
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not An Admin");
+                            }
+
                         </div>
                     </div>
                 </Authorized>
@@ -85,6 +93,7 @@
     private string userpfp;
     private string username;
     private int userId;
+    private string userrole;
 
     private void HandleSearch(string term)
     {
@@ -119,6 +128,7 @@
                     {
                         userpfp = i.profilepicture;
                         userId = i.Id;
+                        userrole = i.Role;
                         Console.WriteLine($"UserId: {userId}");
                         break;
                     }

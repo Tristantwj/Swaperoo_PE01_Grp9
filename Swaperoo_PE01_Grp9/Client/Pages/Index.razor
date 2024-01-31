@@ -35,14 +35,18 @@
                                     <p class="product_name">@product.Name</p>
                                     <p class="product_price">$@product.price</p>
                                 </div>
-                            
                             </a>
                             <a href="/profile/@product.User.Id">
                                 <div class="productuserpfp">
                                     <img class="product-userppfp" src="@product.User.profilepicture">
                                 </div>
-                                <div class="productusername">
-                                    @product.User.Name
+                                <div class="productusertext">
+                                    <div class="productusername">
+                                        @product.User.Name
+                                    </div>
+                                    <div class="productusername">
+                                        @product.User.Region
+                                    </div>
                                 </div>
                             </a>
                         </div>
