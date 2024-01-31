@@ -25,16 +25,27 @@
                 {
                     @foreach (var product in Products)
                     {
-                        <a href="/product/listed/@product.Id" class="Featured">
-                            <div class="product_imgrow">
-                                <img class="product_img" src="@product.imagepath">
-                            </div>
+                        <div class="Featured">
+                            <a href="/product/listed/@product.Id">
+                                <div class="product_imgrow">
+                                    <img class="product_img" src="@product.imagepath">
+                                </div>
 
-                            <div class="product_info">
-                                <p class="product_name">@product.Name</p>
-                                <p class="product_price">$@product.price</p>
-                            </div>
-                        </a>
+                                <div class="product_info">
+                                    <p class="product_name">@product.Name</p>
+                                    <p class="product_price">$@product.price</p>
+                                </div>
+                            
+                            </a>
+                            <a href="/profile/@product.User.Id">
+                                <div class="productuserpfp">
+                                    <img class="product-userppfp" src="@product.User.profilepicture">
+                                </div>
+                                <div class="productusername">
+                                    @product.User.Name
+                                </div>
+                            </a>
+                        </div>
                     }
                 }
             </div>

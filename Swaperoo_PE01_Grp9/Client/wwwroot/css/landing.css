@@ -316,3 +316,21 @@ body {
     line-height: 20px;
     margin-bottom: 6px;
 }
+
+.product-userppfp {
+    display: inline;
+    height: 40px;
+}
+.productuserpfp,
+.productusername {
+    display: inline-block;
+}
+
+a {
+    text-decoration: none; /* Remove default underline */
+    outline: none; /* Remove default blue highlight */
+    color:black;
+}
+    a:focus {
+        outline: none; /* Remove outline on focus for accessibility */
+    }
