@@ -4,7 +4,7 @@
 @inject IJSRuntime js
 @inject NavigationManager Navigation
 @implements IAsyncDisposable
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <PageTitle>Chat</PageTitle>
 
 <head>
@@ -20,29 +20,33 @@
             {
                 @foreach (var chat in Chats)
                 {
-                    <a href="/chat/view/@chat.Id" class="chatbarcontent">
-                        <div class="chatbarcontent">
-                            @if (@chat.PurchaseId != null)
-                            {
-                                <div>
-                                    @chat.Purchase.PurchaseProduct.User.Name
-                                </div>
-                                <div>
-                                    @chat.Purchase.PurchaseProduct.Name
-                                </div>
-                            }
-                            else
-                            {
-                                <div>
-                                    @chat.Swap.SwapProduct.User.Name
-                                </div>
-                                <div>
-                                    @chat.Swap.SwapProduct.Name
-                                </div>
-                            }
-                        </div>
+                    @if (chat.Purchase != null && (chat.Purchase.User?.Id == userId || chat.Purchase.PurchaseProduct?.User?.Id == userId) ||
+                                     chat.Swap != null && (chat.Swap.SwapProduct?.User?.Id == userId || chat.Swap.OfferItem?.User?.Id == userId))
+                    {
+                        <a href="/chat/view/@chat.Id" class="chatbarcontent">
+                            <div class="chatbarcontent">
+                                @if (@chat.PurchaseId != null)
+                                {
+                                    <div>
+                                        @chat.Purchase.PurchaseProduct.User.Name
+                                    </div>
+                                    <div>
+                                        @chat.Purchase.PurchaseProduct.Name
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        @chat.Swap.SwapProduct.User.Name
+                                    </div>
+                                    <div>
+                                        @chat.Swap.SwapProduct.Name
+                                    </div>
+                                }
+                            </div>
                         
                     </a>
+                    }
                 }
             }
         </div>
@@ -76,6 +80,10 @@
 @code {
     private List<Chat>? Chats;
 
+    private List<User>? users;
+    private string username;
+    private int userId;
+
     private HubConnection? hubConnection;
     private List<string> messages = new List<string>();
     private string? userInput;
@@ -86,6 +94,7 @@
     {
 
         Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
+        users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
 
         hubConnection = new HubConnectionBuilder()
             .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
@@ -99,6 +108,22 @@
         });
 
         await hubConnection.StartAsync();
+
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+
+        Console.WriteLine($"Username: {user.Identity.Name}");
+        // Get the userId from the user's identity
+        username = user.Identity.Name;
+
+        @foreach (var i in users)
+        {
+            if (i.Email == username)
+            {
+                userId = i.Id;
+            }
+        }
+        Console.WriteLine($"User ID: {userId}");
     }
 
     private async Task Send()

@@ -10,7 +10,6 @@
     flex: 1;
     max-width: 250px;
     min-width: 150px;
-    margin-right: 10px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -46,17 +45,11 @@
     align-items: center;    
 }
 .productdisplaybar_name {
-    border-style: solid;
-    border-color: red;
-    border-width: 1px;
     flex: 1;
     align-items: center;
     text-align: right;
 }
 .productdisplaybar_buttons {
-    border-style: solid;
-    border-color: blue;
-    border-width: 1px;
     align-items: center;
     text-align: right;
     min-width: 160px;
@@ -84,14 +77,22 @@
     border-width: 1px;
     margin-bottom: 5px;
 }
+.othermessagebox {
+    border-style: solid;
+    border-color: pink;
+    border-width: 1px;
+    margin-bottom: 5px;
+    text-align:end;
+}
 .messageboxName {
     display: block;
+    margin-left:10px;
+    margin-right:10px;
 }
 .messageboxContent {
     display: block;
-    border-top-style: dotted;
-    border-color: blue;
-    border-width: 1px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .messageinput {
