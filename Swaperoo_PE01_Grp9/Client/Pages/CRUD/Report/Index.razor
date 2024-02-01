@@ -1,0 +1,96 @@
+﻿@page "/reports/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+<h3 class="card-title">Reports</h3>
+<br />
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Crud.css" rel="stylesheet" />
+</head>
+
+
+<a href="/reports/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Reports
+</a>
+<br />
+<br />
+@if (Reports == null)
+{
+    <div class="alert alert-info">Loading Reports....</div>
+}
+else
+{
+    <table class="table table-responsive" id="reportsTable">
+        <thead>
+            <tr>
+                <th>ReportId</th>
+                <th>Product</th>
+                <th>ReportType</th>
+                <th>ReporterUser</th>
+                <th>ReportedUser</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Reports)
+            {
+                <tr>
+                    <td>@report.Id</td>
+                    <td>@report.Product.Name</td>
+                    <td>@report.ReportType</td>
+                    <td>@report.ReporterUser.Name</td>
+                    <td>@report.ReportedUser.Name</td>
+                    <td>
+                        <a href="/Reports/view/@report.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Reports/edit/@report.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(report.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<br />
+@code {
+    private List<Report>? Reports;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Reports = await _client.GetFromJsonAsync<List<Report>>($"{Endpoints.ReportsEndpoint}");
+    }
+
+    async Task Delete(int ReportId)
+    {
+        if (Reports != null)
+        {
+            var Report = Reports.First(q => q.Id == ReportId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Report.Id}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.ReportsEndpoint}/{ReportId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#reportsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#reportsTable");
+    }
+}
+

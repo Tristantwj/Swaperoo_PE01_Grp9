@@ -11,62 +11,51 @@
     <link href="css/Crud.css" rel="stylesheet" />
 </head>
 
-<body>
-    <a href="/users/create" class="btn btn-secondary">
-        <span class="oi oi-plus"></span>
-        Create New User
-    </a>
-    <br />
-    <br />
 
-    @if (Users == null)
-    {
-        <div class="alert alert-info">Loading Users...</div>
-    }
-    else
-    {
-        <table class="table table-responsive" id="usersTable">
-            <thead>
+<a href="/users/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Users
+</a>
+<br />
+<br />
+@if (Users == null)
+{
+    <div class="alert alert-info">Loading Users....</div>
+}
+else
+{
+    <table class="table table-responsive" id="usersTable">
+        <thead>
+            <tr>
+                <th>User Id</th>
+                <th>User Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Users)
+            {
                 <tr>
-                    <th>Name</th>
-                    <th>Actions</th>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>
+                        <a href="/Users/view/@user.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Users/edit/@user.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(user.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Users)
-                {
-                    <tr>
-                        <td>@user.Name</td>
-                        <td>
-                            <a href="/users/view/@user.UserId" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                            <a href="/users/edit/@user.UserId" class="btn btn-warning">
-                                <span class="oi oi-pencil"></span>
-                            </a>
-                            <button class="btn btn-danger" @onclick="@(()=>Delete(user.Id))">
-                                <span class="oi oi-delete"></span>
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-</body>
-
-
+            }
+        </tbody>
+    </table>
+}
+<br />
 @code {
-
-    private bool collapseNavMenu = true;
-
-    private string? CrudLayoutCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
     private List<User>? Users;
 
     protected async override Task OnInitializedAsync()
@@ -74,15 +63,15 @@
         Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
     }
 
-    async Task Delete(int userId)
+    async Task Delete(string UserId)
     {
         if (Users != null)
         {
-            var user = Users.First(q => q.Id == userId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {user.Name}?");
+            var User = Users.First(q => q.Id == UserId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {User.Id}?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.UsersEndpoint}/{userId}");
+                await _client.DeleteAsync($"{Endpoints.UsersEndpoint}/{UserId}");
                 await OnInitializedAsync();
             }
         }
@@ -97,5 +86,5 @@
     {
         js.InvokeVoidAsync("DataTablesDispose", "#usersTable");
     }
-
 }
+

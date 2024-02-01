@@ -1,0 +1,16 @@
+﻿@page "/swaps/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3>View</h3>
+<FormComponent swap="swap" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    Swap? swap = new Swap();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        swap = await _client.GetFromJsonAsync<Swap>($"{Endpoints.SwapsEndpoint}/{id}");
+    }
+}

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿    using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Swaperoo_PE01_Grp9.Shared.Domain

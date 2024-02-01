@@ -1,0 +1,107 @@
+﻿@inject HttpClient _client
+@using Swaperoo_PE01_Grp9.Client.Components
+
+<EditForm Model="@swap" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+
+        <div class="form-group">
+            <label>OfferItem: </label>
+            <div>
+                <InputSelect @bind-Value="swap.OfferItemId" class="form-control">
+                    @if (OfferItems != null)
+                    {
+                        @foreach (var offerItem in OfferItems)
+                        {
+                            <option value="@offerItem.Id">@offerItem.Id - @offerItem.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>swap.OfferItemId)"></ValidationMessage>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Swapped Product: </label>
+            <div>
+                <InputSelect @bind-Value="swap.SwapProductId" class="form-control">
+                    @if (SwapProducts != null)
+                    {
+                        @foreach (var swapProduct in SwapProducts)
+                        {
+                            <option value="@swapProduct.Id">@swapProduct.Id - @swapProduct.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>swap.SwapProductId)"></ValidationMessage>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Buyer: </label>
+            <div>
+                <InputSelect @bind-Value="swap.BuyerId" class="form-control">
+                    @if (Buyers != null)
+                    {
+                        @foreach (var buyer in Buyers)
+                        {
+                            <option value="@buyer.Id">@buyer.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>swap.BuyerId)"></ValidationMessage>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Seller: </label>
+            <div>
+                <InputSelect @bind-Value="swap.SellerId" class="form-control">
+                    @if (Sellers != null)
+                    {
+                        @foreach (var seller in Sellers)
+                        {
+                            <option value="@seller.Id">@seller.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>swap.SellerId)"></ValidationMessage>
+            </div>
+        </div>
+
+    </fieldset>
+
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="swaps" />
+
+</EditForm>
+
+
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Swap? swap { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Product>? OfferItems;
+    private IList<Product>? SwapProducts;
+    private IList<User>? Buyers;
+    private IList<User>? Sellers;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        OfferItems = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        SwapProducts = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        Buyers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        Sellers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        swap.SwapDate = DateTime.Now;
+    }
+}
+

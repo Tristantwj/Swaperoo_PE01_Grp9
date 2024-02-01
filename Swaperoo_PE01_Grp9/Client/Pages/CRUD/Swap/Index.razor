@@ -1,0 +1,90 @@
+﻿@page "/swaps/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+<h3 class="card-title">Swaps</h3>
+<br />
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Crud.css" rel="stylesheet" />
+</head>
+
+
+<a href="/swaps/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Swaps
+</a>
+<br />
+<br />
+@if (Swaps == null)
+{
+    <div class="alert alert-info">Loading Swaps....</div>
+}
+else
+{
+    <table class="table table-responsive" id="swapsTable">
+        <thead>
+            <tr>
+                <th>SwapId</th>
+                <th>Product</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var swap in Swaps)
+            {
+                <tr>
+                    <td>@swap.Id</td>
+                    <td>@swap.SwapProduct.Name</td>
+                    <td>
+                        <a href="/Swaps/view/@swap.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Swaps/edit/@swap.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(swap.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<br />
+@code {
+    private List<Swap>? Swaps;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
+    }
+
+    async Task Delete(int SwapId)
+    {
+        if (Swaps != null)
+        {
+            var Swap = Swaps.First(q => q.Id == SwapId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Swap.Id}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.SwapsEndpoint}/{SwapId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#swapsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#swapsTable");
+    }
+}
+

@@ -119,7 +119,7 @@
     protected override async Task OnInitializedAsync()
     {
         products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
-        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/Detail/{id}");
+        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/detail/{id}");
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
 
 

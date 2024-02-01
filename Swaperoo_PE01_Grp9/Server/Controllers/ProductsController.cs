@@ -32,7 +32,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         }
 
         // GET: api/Products/5
-        [HttpGet("Detail/{id}")]
+        [HttpGet("detail/{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _unitOfWork.Products.Get(q => q.Id == id, includes: q => q.Include(x => x.User).Include(x => x.SubCategory));
@@ -93,7 +93,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(product);
         }
 
         // POST: api/Products

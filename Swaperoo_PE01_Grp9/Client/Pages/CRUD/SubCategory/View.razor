@@ -1,0 +1,16 @@
+﻿@page "/subCategorys/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3>View</h3>
+<FormComponent subCategory="subCategory" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    SubCategory? subCategory = new SubCategory();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        subCategory = await _client.GetFromJsonAsync<SubCategory>($"{Endpoints.SubCategorysEndpoint}/{id}");
+    }
+}

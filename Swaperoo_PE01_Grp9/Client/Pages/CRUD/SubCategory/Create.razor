@@ -1,0 +1,30 @@
+﻿@page "/subCategorys/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3 class="card-title">Create New SubCategory</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create SubCategory" subCategory="subCategory" OnValidSubmit="@CreateSubCategory" />
+
+
+@code {
+    SubCategory subCategory = new SubCategory();
+
+    private IList<Category>? Categorys;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Categorys = await _client.GetFromJsonAsync<List<Category>>($"{Endpoints.CategorysEndpoint}");
+    }
+
+    private async Task CreateSubCategory()
+    {
+        await _client.PostAsJsonAsync(Endpoints.SubCategorysEndpoint, subCategory);
+        _navManager.NavigateTo("/subCategorys/");
+    }
+
+}
