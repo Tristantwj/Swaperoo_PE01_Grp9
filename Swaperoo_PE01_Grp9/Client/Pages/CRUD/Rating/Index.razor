@@ -74,7 +74,7 @@
         Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
     }
 
-    async Task Delete(string userId)
+    async Task Delete(int userId)
     {
         if (Users != null)
         {
