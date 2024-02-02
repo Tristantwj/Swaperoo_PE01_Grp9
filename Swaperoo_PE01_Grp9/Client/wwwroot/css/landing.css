@@ -1,5 +1,4 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
+﻿
 body {
     margin: 0;
     height: 3000px;
@@ -218,7 +217,7 @@ body {
         opacity: 0.6;
     }
 .profile-picture-container:hover .option-box {
-    height: 100px; /* adjust the height to fit your option box */
+    height: 150px; /* adjust the height to fit your option box */
 }
 
 /*--------------------display-------------------------*/
@@ -300,7 +299,8 @@ body {
 }
 
 .product_img {
-    width: 100%;
+    max-width: 266px;
+    max-height: 150px;
 }
 
 .product_info {
@@ -316,3 +316,25 @@ body {
     line-height: 20px;
     margin-bottom: 6px;
 }
+
+.product-userppfp {
+    display: inline;
+    height: 40px;
+    margin-bottom:25px;
+}
+.productuserpfp,
+.productusertext {
+    display: inline-block;
+}
+.productusername{
+    display:block;
+}
+
+a {
+    text-decoration: none; /* Remove default underline */
+    outline: none; /* Remove default blue highlight */
+    color: black;
+}
+    a:focus {
+        outline: none; /* Remove outline on focus for accessibility */
+    }

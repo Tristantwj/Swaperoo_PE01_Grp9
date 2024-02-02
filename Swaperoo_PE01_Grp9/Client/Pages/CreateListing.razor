@@ -1,44 +1,96 @@
 ﻿@page "/CreateListing"
+@inject HttpClient _client
+@inject IJSRuntime js
 @inject NavigationManager Navigation
-@layout NoMenuLayout
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Create Listing</PageTitle>
 
 <head>
+    <link href="css/landing.css" rel="stylesheet" />
     <link href="css/CreateListing.css" rel="stylesheet" />
 </head>
 
 <body>
     <h1> Create Listing</h1>
-
-    <form>
         <div class="formbox">
             <div class="form_left">
                 <label for="itemName">Item Name:</label><br>
                 <input type="text" id="itemName" name="itemName"><br>
                 <label for="itemImage">Select Image:</label><br>
-                <input type="file" id="itemImage" name="itemImage"><br>
+            <input type="text" id="itemImage" name="itemImage"><br>
+            <!--<input type="file" id="itemImage" name="itemImage"><br>-->
                 <label for="price">Price:</label><br>
                 <input type="number" id="price" name="price"><br>
-                <input type="submit" value="Create" class="submitbutton">
+                <button class="submitbutton" @onclick="CreateProduct">Submit</button>
             </div>
             <div class="form_right">
                 <label for="itemDescription">Description:</label><br>
                 <textarea id="itemDescription" name="itemDescription"></textarea><br>
-                <label for="category">Category:</label><br>
-                <select id="category" name="category">
-                    <option value="electronics">Electronics</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="home">Home</option>
-                </select><br>
-                <label for="subCategories">Sub Categories:</label><br>
-                <input type="text" id="subCategories" name="subCategories"><br>
+                <label for="subCategory">Sub Categories:</label><br>
+                <select id="subCategory" name="subCategory" @bind="subCategory">
+                @if (subCategories != null)
+                {
+                    @foreach (var sub in subCategories)
+                    {
+                        <option value="@sub.Id">@sub.Name</option>
+                    }
+                }
+            </select><br>
             </div>
             
             
         </div>
-    </form>
 </body>
 @code {
+    private List<User>? users;
+    private List<SubCategory>? subCategories;
+    private string username;
+    private int userId;
+
+    private string itemName;
+    private string itemImage;
+    private double price;
+    private string itemDescription;
+    private int subCategory;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        subCategories = await _client.GetFromJsonAsync<List<SubCategory>>(Endpoints.SubCategorysEndpoint);
+
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+
+        Console.WriteLine($"Username: {user.Identity.Name}");
+        // Get the userId from the user's identity
+        username = user.Identity.Name;
+
+        @foreach (var i in users)
+        {
+            if (i.Email == username)
+            {
+                userId = i.Id;
+            }
+        }
+        Console.WriteLine($"User ID: {userId}");
+    }
+
+    private async Task CreateProduct()
+    {
+        var product = new Product
+        {
+                Name = itemName,
+                DateCreated = DateTime.Now,
+                Description = itemDescription,
+                imagepath = itemImage,
+                price = price,
+                status = "ongoing", 
+                UserId = userId, 
+                SubCategoryId = subCategory
+        };
+
+    await _client.PostAsJsonAsync(Endpoints.ProductsEndpoint, product);
+    }
 
 }

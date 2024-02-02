@@ -13,6 +13,11 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                 {
                     Id = 1,
                     Name = "Fashion"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Electronics"
                 }
             );
         }

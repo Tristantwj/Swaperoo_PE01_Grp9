@@ -19,7 +19,6 @@ namespace Swaperoo_PE01_Grp9.Server.IRepository
         Task Insert(T entity);
         Task InsertRange(IEnumerable<T> entities);
         Task Delete(int id);
-        Task DeleteUser(string id);
         void DeleteRange(IEnumerable<T> entities);
         void Update(T entity);
     }

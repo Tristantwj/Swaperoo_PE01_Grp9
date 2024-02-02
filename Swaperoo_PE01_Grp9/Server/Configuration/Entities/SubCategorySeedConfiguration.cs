@@ -14,6 +14,30 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Id = 1,
                     Name = "Shirt",
                     CategoryId = 1
+                },
+                new SubCategory
+                {
+                    Id = 2,
+                    Name = "Shoes",
+                    CategoryId = 1
+                },
+                new SubCategory
+                {
+                    Id = 3,
+                    Name = "Graphic Card",
+                    CategoryId = 2
+                },
+                new SubCategory
+                {
+                    Id = 4,
+                    Name = "CPU",
+                    CategoryId = 2
+                },
+                new SubCategory
+                {
+                    Id = 5,
+                    Name = "Computer",
+                    CategoryId = 2
                 }
             );
         }

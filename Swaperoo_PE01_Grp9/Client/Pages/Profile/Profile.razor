@@ -1,0 +1,109 @@
+﻿@page "/profile/{id:int}"
+@inject HttpClient _client
+@inject IJSRuntime js
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Profile</PageTitle>
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Profile.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="profilearea">
+        <div class="profiletop">
+            @user.Name's store
+        </div>
+        
+        <div class="profileinformation">
+            <div class="profileinformation-left">
+                <div class="image-container">
+                    <img src="@user.profilepicture" alt="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profilepic">
+                </div>
+                <div class="rating">
+                    Rating
+                </div>
+            </div>
+            <div class="profileinformation-center">
+                <div>About Myself</div>
+                <div>@user.Description</div>
+            </div>
+            <div class="profileinformation-right">
+                @if(id == userId)
+                {
+                    <a @onclick="GotoEditProfile">
+                        <img class="profileoption" src="https://cdn-icons-png.flaticon.com/512/7606/7606176.png" />
+                    </a>
+                }
+                else
+                {
+                    Console.WriteLine("NOT U");
+                }
+
+                
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="Featured_grid">
+        @if (products != null)
+        {
+            @foreach (var product in products)
+            {
+                @if (product.UserId == id)
+                {
+                    <a href="/product/listed/@product.Id" class="Featured">
+                        <div class="product_imgrow">
+                        <img class="product_img" src="@product.imagepath">
+                    </div>
+
+                    <div class="product_info">
+                        <p class="product_name">@product.Name</p>
+                        <p class="product_price">$@product.price</p>
+                    </div>
+                    </a>
+                }
+            }
+        }
+    </div>
+    
+</body>
+
+@code {
+    [Parameter] public int id { get; set; }
+
+    private List<Product>? products;
+
+    User? user = new User();
+
+    private List<User>? users;
+    private string username;
+    private int userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+        user = await _client.GetFromJsonAsync<User>($"{Endpoints.UsersEndpoint}/{id}");
+        users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userauth = authenticationState.User;
+
+        Console.WriteLine($"Username: {userauth.Identity.Name}");
+        // Get the userId from the user's identity
+        username = userauth.Identity.Name;
+
+        @foreach (var i in users)
+        {
+            if (i.Email == username)
+            {
+                userId = i.Id;
+            }
+        }
+        Console.WriteLine($"User ID: {userId}");
+    }
+
+    private void GotoEditProfile() { Navigation.NavigateTo($"/editprofile/{id}"); }
+}

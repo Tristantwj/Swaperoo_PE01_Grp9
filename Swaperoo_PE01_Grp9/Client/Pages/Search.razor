@@ -17,7 +17,8 @@
         {
             @foreach (var product in Products)
             {
-                <div class="Featured">
+                <!--
+                <a href="/product/listed/@product.Id" class="Featured">
                     <div class="product_imgrow">
                         <img class="product_img" src="@product.imagepath">
                     </div>
@@ -26,7 +27,41 @@
                         <p class="product_name">@product.Name</p>
                         <p class="product_price">$@product.price</p>
                     </div>
+                </a>
+                -->
+                <div class="Featured">
+                    <a href="/product/listed/@product.Id">
+                        <div class="product_imgrow">
+                            <img class="product_img" src="@product.imagepath">
+                        </div>
+
+                        <div class="product_info">
+                            <p class="product_name">@product.Name</p>
+                            <p class="product_price">$@product.price</p>
+                        </div>
+                    </a>
+                    @if (product.User != null)
+                    { 
+                    <a href="/profile/@product.User.Id">
+                        <div class="productuserpfp">
+                            <img class="product-userppfp" src="@product.User.profilepicture">
+                        </div>
+                        <div class="productusertext">
+                            <div class="productusername">
+                                @product.User.Name
+                            </div>
+                            <div class="productusername">
+                                Region: @product.User.Region
+                            </div>
+                        </div>
+                        </a>
+                    }
+                    else
+                    {
+                        Console.WriteLine("NO USER FOUND IN PRODUCT");
+                    }
                 </div>
+                
             }
         }
     </div>

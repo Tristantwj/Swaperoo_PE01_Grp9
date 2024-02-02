@@ -54,10 +54,10 @@ namespace Swaperoo_PE01_Grp9.Server.Data
             var user = new ApplicationUser
             {
                 Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
-                UserName = "frankofoedu@blazor.com", // Make sure to set a unique UserName
-                NormalizedUserName = "FRANKOFOEDU@BLAZOR.COM", // Set the normalized value
-                Email = "frankofoedu@blazor.com",
-                NormalizedEmail = "FRANKOFOEDU@BLAZOR.COM", // Set the normalized value
+                UserName = "frank@blazor.com", // Make sure to set a unique UserName
+                NormalizedUserName = "FRANK@BLAZOR.COM", // Set the normalized value
+                Email = "frank@blazor.com",
+                NormalizedEmail = "FRANK@BLAZOR.COM", // Set the normalized value
                 EmailConfirmed = true
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Abc123!");

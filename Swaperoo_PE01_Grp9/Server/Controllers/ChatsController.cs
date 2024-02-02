@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetChats()
         {
-            var chats = await _unitOfWork.Chats.GetAll(includes: q => q.Include(x => x.Product).ThenInclude(p => p.User));
+            var chats = await _unitOfWork.Chats.GetAll(includes: q => q.Include(x => x.Purchase).ThenInclude(p => p.PurchaseProduct).ThenInclude(u => u.User).Include(x => x.Purchase).ThenInclude(p => p.User).Include(x => x.Swap).ThenInclude(p => p.SwapProduct).ThenInclude(c => c.User).Include(x => x.Swap).ThenInclude(p => p.OfferItem).ThenInclude(c => c.User));
             return Ok(chats);
 
         }
@@ -36,7 +36,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetChat(int id)
         {
-            var chat = await _unitOfWork.Chats.Get(q => q.Id == id);
+            var chat = await _unitOfWork.Chats.Get(q => q.Id == id, includes: q => q.Include(x => x.Purchase).ThenInclude(p => p.PurchaseProduct).ThenInclude(u => u.User).Include(x => x.Purchase).ThenInclude(p => p.User).Include(x => x.Swap).ThenInclude(p => p.SwapProduct).ThenInclude(c => c.User).Include(x => x.Swap).ThenInclude(p => p.OfferItem).ThenInclude(c => c.User));
 
             if (chat == null)
             {

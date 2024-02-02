@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\CRUD\Category\" />
-    <Folder Include="Pages\CRUD\Chat\" />
+    <Folder Include="Pages\CRUD\Chats\" />
     <Folder Include="Pages\CRUD\Message\" />
     <Folder Include="Pages\CRUD\SubCategory\" />
     <Folder Include="Pages\CRUD\Report\" />

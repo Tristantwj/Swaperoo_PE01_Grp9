@@ -11,30 +11,42 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
             builder.HasData(
                 new User
                 {
-                    Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
-                    Name = "Frank Ofoedu",
-                    Email = "frankofoedu@blazor.com",
+                    Id = 1,
+                    UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b0",
+                    Name = "Frank",
+                    Email = "frank@blazor.com",
                     Region = "North",
                     Description = "empty",
-                    Role = "User"
+                    profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                    Role = "User",
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now
                 },
                 new User
                 {
-                    Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
+                    Id = 2,
+                    UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b1",
                     Name = "John",
                     Email = "john@blazor.com",
                     Region = "South",
                     Description = "empty",
-                    Role = "User"
+                    profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                    Role = "User",
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now
                 },
                 new User
                 {
-                    Id = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
+                    Id = 3,
+                    UserId = "2bf0d5d5-7691-418f-b2f7-266c7467a0b2",
                     Name = "Alice",
                     Email = "alice@blazor.com",
                     Region = "West",
                     Description = "empty",
-                    Role = "Admin"
+                    profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                    Role = "Admin",
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now
                 }
             );
         }
