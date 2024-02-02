@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\CRUD\Chats\**" />
+    <Content Remove="Pages\CRUD\Chats\**" />
+    <EmbeddedResource Remove="Pages\CRUD\Chats\**" />
+    <None Remove="Pages\CRUD\Chats\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.13" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.13" />
@@ -25,7 +32,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\CRUD\Category\" />
-    <Folder Include="Pages\CRUD\Chats\" />
+	<Folder Include="Pages\CRUD\Chat\" />
     <Folder Include="Pages\CRUD\Message\" />
     <Folder Include="Pages\CRUD\SubCategory\" />
     <Folder Include="Pages\CRUD\Report\" />
