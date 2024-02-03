@@ -16,17 +16,17 @@
         <div class="formbox">
             <div class="form_left">
                 <label for="itemName">Item Name:</label><br>
-                <input type="text" id="itemName" name="itemName"><br>
+                <input type="text" id="itemName" name="itemName" @bind="itemName"><br>
                 <label for="itemImage">Select Image:</label><br>
-            <input type="text" id="itemImage" name="itemImage"><br>
+                <input type="text" id="itemImage" name="itemImage" @bind="itemImage"><br>
             <!--<input type="file" id="itemImage" name="itemImage"><br>-->
                 <label for="price">Price:</label><br>
-                <input type="number" id="price" name="price"><br>
+                <input type="number" id="price" name="price" @bind="price"><br>
                 <button class="submitbutton" @onclick="CreateProduct">Submit</button>
             </div>
             <div class="form_right">
                 <label for="itemDescription">Description:</label><br>
-                <textarea id="itemDescription" name="itemDescription"></textarea><br>
+                <textarea id="itemDescription" name="itemDescription" @bind="itemDescription"></textarea><br>
                 <label for="subCategory">Sub Categories:</label><br>
                 <select id="subCategory" name="subCategory" @bind="subCategory">
                 @if (subCategories != null)
@@ -38,9 +38,9 @@
                 }
             </select><br>
             </div>
-            
-            
         </div>
+
+
 </body>
 @code {
     private List<User>? users;
@@ -91,6 +91,7 @@
         };
 
     await _client.PostAsJsonAsync(Endpoints.ProductsEndpoint, product);
+
     }
 
 }

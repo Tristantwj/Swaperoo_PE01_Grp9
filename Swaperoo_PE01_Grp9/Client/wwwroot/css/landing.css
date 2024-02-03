@@ -95,7 +95,7 @@ body {
     color: #fff;
     padding: 20px;
     transition: left 0.3s ease-in-out;
-    opacity:0.8;
+    opacity:0.9;
 }
 
 .Swaperoo {
@@ -208,7 +208,7 @@ body {
     margin:0;
 }
 .profile-picture {
-    width: 40px;
+    max-height:50px;
     border-radius: 80px;
 }
 
@@ -305,6 +305,7 @@ body {
 
 .Featured {
     cursor: pointer;
+    position:relative;
 }
 
     .Featured:hover {
@@ -360,4 +361,10 @@ a {
         outline: none; /* Remove outline on focus for accessibility */
     }
 
-
+.status{
+    position:absolute;
+    top:55%;
+    right:10px;
+    font-size:20px;
+    background-color:lightgray;
+}

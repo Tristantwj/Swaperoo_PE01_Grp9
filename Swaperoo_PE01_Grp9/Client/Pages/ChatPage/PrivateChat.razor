@@ -49,34 +49,59 @@
         </div>
         <div class="chatarea">
             <div class="productdisplaybar">
-                @if (IndivChat.PurchaseId != null)
+                @if(IndivChat.Purchase?.PurchaseProduct?.status == "sold" || IndivChat.Swap?.SwapProduct?.status =="sold" || IndivChat.Swap?.OfferItem?.status == "sold")
                 {
-                <div class="productdisplaybar_name">
-                    <div>
-                        @IndivChat.Purchase.PurchaseProduct.Name
+                    <div class="productssold">
+                        PRODUCT SOLD 
                     </div>
-                    <div>
-                        S$@IndivChat.Purchase.OfferPrice
-                    </div>
-                </div>
-                <div class="productdisplaybar_buttons">
-                        <button class="product_button" @onclick="ToggleEditPopUp">Edit</button>
-                    <button class="product_button" @onclick="ToggleConfirmPopUp">Confirm</button>
-                </div>
                 }
-                else{
-                <div class="productdisplaybar_name">
-                    <div>
-                        @IndivChat.Swap?.SwapProduct.Name
+                else
+                {
+                    @if (IndivChat.PurchaseId != null) //purchase
+                    {
+                    <div class="productdisplaybar_name">
+                        <div>
+                            @IndivChat.Purchase.PurchaseProduct.Name
+                        </div>
+                        <div>
+                            S$@IndivChat.Purchase.OfferPrice
+                        </div>
                     </div>
-                    <div>
-                        @IndivChat.Swap?.OfferItem.Name
+                    <div class="productdisplaybar_buttons">
+                        @if (IndivChat.Purchase.PurchaseProduct.User.Id == userId)
+                        {
+                            <button class="product_button" @onclick="ToggleEditPopUp">Edit</button>
+                            <button class="product_button" @onclick="ToggleConfirmPopUp">Confirm</button>
+                        }
+                        else
+                        {
+                            <button class="product_button" @onclick="ToggleEditPopUp" style="width:140px">Edit</button>
+                        }
+
                     </div>
-                </div>
-                <div class="productdisplaybar_buttons">
-                        <button class="product_button" @onclick="ToggleEditPopUp">Edit</button>
-                        <button class="product_button" @onclick="ToggleConfirmPopUp">Confirm</button>
-                </div>
+                    }
+                    else{ //swap
+                    <div class="productdisplaybar_name">
+                        <div>
+                            @IndivChat.Swap?.SwapProduct.Name
+                        </div>
+                        <div>
+                            @IndivChat.Swap?.OfferItem.Name
+                        </div>
+                    </div>
+                    <div class="productdisplaybar_buttons">
+                            @if (IndivChat.Swap?.SwapProduct?.User?.Id == userId)
+                            {
+                                <button class="product_button" @onclick="ToggleEditPopUp">Edit</button>
+                                <button class="product_button" @onclick="ToggleConfirmPopUp">Confirm</button>
+                            }
+                            else
+                            {
+                                <button class="product_button" @onclick="ToggleEditPopUp" style="width:140px">Edit</button>
+                            }
+
+                    </div>
+                    }
                 }
             </div>
 
@@ -109,8 +134,7 @@
                                     </div>
                                 </div>
                             }
-
-                }
+                        }
                     }
                 }
                 else
@@ -118,12 +142,15 @@
                     <p>No messages available.</p>
                 }
                 <div class="messageinput">
-                    <div class="messageinputbar">
-                        <input class="messageinputbartext" @bind="messageInput" />
+                    <div class="messageinputcontent">
+                        <div class="messageinputbar">
+                            <input class="messageinputbartext" @bind="messageInput" />
+                        </div>
+                        <div class="messageinputbutton">
+                            <button @onclick="SendMessage">Send</button>
+                        </div>
                     </div>
-                    <div class="messageinputbutton">
-                        <button @onclick="SendMessage">Send</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -315,8 +342,6 @@
         CloseEditPopup();
     }
 
-
-
     public async Task confirmpurchaseoffer()
     {
         var purchase = new Purchase()
@@ -334,20 +359,13 @@
                 Id = IndivChat.Purchase.PurchaseProduct.Id,
                 Name = IndivChat.Purchase.PurchaseProduct.Name,
                 DateCreated = IndivChat.Purchase.PurchaseProduct.DateCreated,
+                Description = IndivChat.Purchase.PurchaseProduct.Description,
                 imagepath = IndivChat.Purchase.PurchaseProduct.imagepath,
                 price = IndivChat.Purchase.OfferPrice,
                 status = "sold",
                 UserId = IndivChat.Purchase.PurchaseProduct.UserId,
                 SubCategoryId = IndivChat.Purchase.PurchaseProduct.SubCategoryId
             };
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.Id);
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.Name);
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.DateCreated);
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.imagepath);
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.OfferPrice);
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.status);
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.UserId);
-        Console.WriteLine("PRODUCT ID:" + IndivChat.Purchase.PurchaseProduct.SubCategoryId);
 
         await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{IndivChat.Purchase.Id}", purchase);
         await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Purchase.PurchaseProduct.Id}", product);
@@ -389,6 +407,8 @@
                 Id = IndivChat.Swap.SwapProduct.Id,
                 Name = IndivChat.Swap.SwapProduct.Name,
                 DateCreated = IndivChat.Swap.SwapProduct.DateCreated,
+                Description = IndivChat.Swap.SwapProduct.Description,
+                imagepath = IndivChat.Swap.SwapProduct.imagepath,
                 price = IndivChat.Swap.SwapProduct.price,
                 status = "sold",
                 UserId = IndivChat.Swap.SwapProduct.UserId,
@@ -399,6 +419,8 @@
                 Id = IndivChat.Swap.OfferItem.Id,
                 Name = IndivChat.Swap.OfferItem.Name,
                 DateCreated = IndivChat.Swap.OfferItem.DateCreated,
+                Description = IndivChat.Swap.OfferItem.Description,
+                imagepath = IndivChat.Swap.OfferItem.imagepath,
                 price = IndivChat.Swap.OfferItem.price,
                 status = "sold",
                 UserId = IndivChat.Swap.OfferItem.UserId,

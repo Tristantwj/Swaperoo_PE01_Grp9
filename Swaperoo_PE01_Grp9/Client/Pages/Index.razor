@@ -49,6 +49,13 @@
                                     </div>
                                 </div>
                             </a>
+                            @if(product.status == "sold")
+                            {
+                                <div class="status">
+                                    @product.status
+                                </div>
+                            }
+                            
                         </div>
                     }
                 }
