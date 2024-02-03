@@ -64,7 +64,14 @@
                         <p class="product_name">@product.Name</p>
                         <p class="product_price">$@product.price</p>
                     </div>
+                        @if (product.status == "sold")
+                        {
+                            <div class="status">
+                                @product.status
+                            </div>
+                        }
                     </a>
+                    
                 }
             }
         }
