@@ -56,8 +56,11 @@
         </Authorized>
     </AuthorizeView>
     
+    
 </body>
 @code {
+    
+
     private List<Product>? Products;
 
     protected override async Task OnInitializedAsync()
@@ -73,4 +76,7 @@
             Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
         }
     }
+
+    
+    
 }

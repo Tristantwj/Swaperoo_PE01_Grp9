@@ -28,7 +28,7 @@
 
     <div class="option">
         <div class="option_left">
-            <img class="category_icon" src="images/category.png">
+            <img class="category_icon" src="images/category.png" @onclick="ToggleSlideBox" />
             <button class="Swaperoo" @onclick="index">Swaperoo</button>
         </div>
         <div class="option_center">
@@ -72,6 +72,13 @@
             </AuthorizeView>
         </div>
     </div>
+    <div id="slideBox" class="slide-box" style="left: @slidebox">
+        <div class="slide-content">
+            <!-- Your sliding box content goes here -->
+            <!-- Example: -->
+            <p>This is the sliding box content.</p>
+        </div>
+    </div>
 </div>
 
 
@@ -94,6 +101,8 @@
     private string username;
     private int userId;
     private string userrole;
+
+    
 
     private void HandleSearch(string term)
     {
@@ -142,5 +151,14 @@
             }
             
         }
+    }
+
+    private bool isSlideBoxVisible = false;
+    private string slidebox = "-250"; // Adjust the initial position based on your design
+
+    private void ToggleSlideBox()
+    {
+        isSlideBoxVisible = !isSlideBoxVisible;
+        slidebox = isSlideBoxVisible ? "0px" : "-250px"; // Adjust the distance for the sliding effect
     }
 }
