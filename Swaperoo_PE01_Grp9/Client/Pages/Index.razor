@@ -3,7 +3,7 @@
 @inject IJSRuntime js
 @using Swaperoo_PE01_Grp9.Shared.Domain
 @using Swaperoo_PE01_Grp9.Client.Static
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <PageTitle>Index</PageTitle>
 <head>
     <link href="css/landing.css" rel="stylesheet" />
@@ -56,8 +56,13 @@
         </Authorized>
     </AuthorizeView>
     
+    
 </body>
 @code {
+    
+    private List<User>? users;
+    private string username;
+    public int userId;
     private List<Product>? Products;
 
     protected override async Task OnInitializedAsync()
@@ -66,6 +71,23 @@
         {
             // No need to check authentication state before making the API call
             Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+            users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+            var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authenticationState.User;
+
+            Console.WriteLine($"Username: {user.Identity.Name}");
+            // Get the userId from the user's identity
+            username = user.Identity.Name;
+
+            @foreach (var i in users)
+            {
+                if (i.Email == username)
+                {
+                    userId = i.Id;
+                }
+            }
+            Console.WriteLine($"User ID: {userId}");
+
         }
         catch (AccessTokenNotAvailableException ex)
         {
@@ -73,4 +95,7 @@
             Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
         }
     }
+
+    
+    
 }
