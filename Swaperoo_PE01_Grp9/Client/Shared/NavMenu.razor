@@ -83,37 +83,14 @@
 
 
 @code {
-    public void GotoRegister() { Navigation.NavigateTo("authentication/register"); }
-    public void GotoLogin() { Navigation.NavigateToLogin("authentication/login"); }
-    public void Logout() { Navigation.NavigateToLogout("authentication/logout", "/"); }
-    public void GotoCreateListing() { Navigation.NavigateTo("/CreateListing"); }
-    public void GotoProfile() { Navigation.NavigateTo($"/profile/{userId}"); }
-    public void GotoChat() { Navigation.NavigateTo("/Chat"); }
-    public void GotoAdminMenu() { Navigation.NavigateTo("/users"); }
-
-    public void index() { Navigation.NavigateToLogin("/"); }
-
     private string? searchTerm;
 
     private List<User>? users;
 
     private string userpfp;
     private string username;
-    private int userId;
+    public int userId;
     private string userrole;
-
-    
-
-    private void HandleSearch(string term)
-    {
-        searchTerm = string.IsNullOrEmpty(term) ? string.Empty : term;
-
-        // Navigate to the search page only if the search term is not empty
-        if (!string.IsNullOrEmpty(searchTerm))
-        {
-            Navigation.NavigateTo($"/Search/{Uri.EscapeDataString(searchTerm)}");
-        }
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -141,7 +118,11 @@
                         Console.WriteLine($"UserId: {userId}");
                         break;
                     }
-                    Console.WriteLine("no userid found");
+                    else
+                    {
+                        Console.WriteLine("no userid found");
+                    }
+                    
                 }
 
             }
@@ -150,6 +131,25 @@
                 Console.WriteLine("User not found");
             }
             
+        }
+    }
+    public void index() { Navigation.NavigateTo("/"); }
+    public void GotoRegister() { Navigation.NavigateTo("authentication/register"); }
+    public void GotoLogin() { Navigation.NavigateToLogin("authentication/login"); }
+    public void Logout() { Navigation.NavigateToLogout("authentication/logout", "/"); }
+    public void GotoCreateListing() { Navigation.NavigateTo("/CreateListing"); }
+    public void GotoProfile() { Navigation.NavigateTo($"/profile/{userId}"); }
+    public void GotoChat() { Navigation.NavigateTo("/Chat"); }
+    public void GotoAdminMenu() { Navigation.NavigateTo("/users"); }
+
+    private void HandleSearch(string term)
+    {
+        searchTerm = string.IsNullOrEmpty(term) ? string.Empty : term;
+
+        // Navigate to the search page only if the search term is not empty
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            Navigation.NavigateTo($"/Search/{Uri.EscapeDataString(searchTerm)}");
         }
     }
 
