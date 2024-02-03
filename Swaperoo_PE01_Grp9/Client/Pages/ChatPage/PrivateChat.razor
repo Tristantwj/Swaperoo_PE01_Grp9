@@ -142,12 +142,15 @@
                     <p>No messages available.</p>
                 }
                 <div class="messageinput">
-                    <div class="messageinputbar">
-                        <input class="messageinputbartext" @bind="messageInput" />
+                    <div class="messageinputcontent">
+                        <div class="messageinputbar">
+                            <input class="messageinputbartext" @bind="messageInput" />
+                        </div>
+                        <div class="messageinputbutton">
+                            <button @onclick="SendMessage">Send</button>
+                        </div>
                     </div>
-                    <div class="messageinputbutton">
-                        <button @onclick="SendMessage">Send</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
