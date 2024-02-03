@@ -1,0 +1,31 @@
+﻿@page "/purchases/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3 class="card-title">Create New Purchase</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Purchase" purchase="purchase" OnValidSubmit="@CreatePurchase" />
+
+
+@code {
+    Purchase purchase = new Purchase();
+
+    private IList<User>? Users;
+    private IList<Product>? PurchaseProducts;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        PurchaseProducts = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+    }
+
+    private async Task CreatePurchase()
+    {
+        await _client.PostAsJsonAsync(Endpoints.PurchasesEndpoint, purchase);
+        _navManager.NavigateTo("/purchases/");
+    }
+
+}

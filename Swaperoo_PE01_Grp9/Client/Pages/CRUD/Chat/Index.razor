@@ -1,0 +1,106 @@
+﻿@page "/chats/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+@layout AdminMenuLayout
+
+<h3 class="card-title">Chats</h3>
+<br />
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Crud.css" rel="stylesheet" />
+</head>
+
+<body>
+    <a href="/chats/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New Chat
+    </a>
+    <br />
+    <br />
+
+    @if (Chats == null)
+    {
+        <div class="alert alert-info">Loading Chats...</div>
+    }
+    else
+    {
+        <table class="table table-responsive" id="chatsTable">
+            <thead>
+                <tr>
+                    <th>Chat Id</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var chat in Chats)
+                {
+                    <tr>
+                        <td>@chat.Id</td>
+                        <td>@chat.Name</td>
+                        <td>@chat.DateCreated.Date.ToString("dd MMMM yyyy")</td>
+                        <td>
+                            <a href="/chats/view/@chat.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/chats/edit/@chat.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(chat.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</body>
+
+
+@code {
+
+    private bool collapseNavMenu = true;
+
+    private string? CrudLayoutCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private List<Chat>? Chats;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
+    }
+
+    async Task Delete(int chatId)
+    {
+        if (Chats != null)
+        {
+            var chat = Chats.First(q => q.Id == chatId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {chat.Name}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.ChatsEndpoint}/{chatId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#chatsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#chatsTable");
+    }
+
+}

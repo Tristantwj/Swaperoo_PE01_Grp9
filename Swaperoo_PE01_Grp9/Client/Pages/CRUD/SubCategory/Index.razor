@@ -1,0 +1,91 @@
+﻿@page "/subCategorys/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+@layout AdminMenuLayout
+
+<h3 class="card-title">SubCategorys</h3>
+<br />
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Crud.css" rel="stylesheet" />
+</head>
+
+
+<a href="/subCategorys/create/" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New SubCategorys
+</a>
+<br />
+<br />
+@if (SubCategorys == null)
+{
+    <div class="alert alert-info">Loading SubCategorys....</div>
+}
+else
+{
+    <table class="table table-responsive" id="subCategorysTable">
+        <thead>
+            <tr>
+                <th>SubCategoryId</th>
+                <th>SubCategory</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subCategory in SubCategorys)
+            {
+                <tr>
+                    <td>@subCategory.Id</td>
+                    <td>@subCategory.Name</td>
+                    <td>
+                        <a href="/SubCategorys/view/@subCategory.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/SubCategorys/edit/@subCategory.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(subCategory.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<br />
+@code {
+    private List<SubCategory>? SubCategorys;
+
+    protected async override Task OnInitializedAsync()
+    {
+        SubCategorys = await _client.GetFromJsonAsync<List<SubCategory>>($"{Endpoints.SubCategorysEndpoint}");
+    }
+
+    async Task Delete(int SubCategoryId)
+    {
+        if (SubCategorys != null)
+        {
+            var SubCategory = SubCategorys.First(q => q.Id == SubCategoryId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {SubCategory.Id}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.SubCategorysEndpoint}/{SubCategoryId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#subCategorysTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#subCategorysTable");
+    }
+}
+

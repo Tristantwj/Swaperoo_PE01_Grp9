@@ -1,0 +1,123 @@
+﻿@inject HttpClient _client
+@using Swaperoo_PE01_Grp9.Client.Components
+
+<EditForm Model="@report" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+
+        <div class="form-group">
+            <label>Reported Product: </label>
+            <div>
+                <InputSelect @bind-Value="report.ReportedProductId" class="form-control">
+                    <option value="">-- Select Item To Report --</option>
+                    @if (Products != null)
+                    {
+                        @foreach (var reportProduct in Products)
+                        {
+                            <option value="@reportProduct.Id">@reportProduct.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>report.ReportedProductId)"></ValidationMessage>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Report Type: </label>
+            <div>
+                <InputSelect @bind-Value="@report.ReportType" class="form-control">
+                <option value=""> -- Select Report Type -- </option>
+                <option value="site">site</option>
+                <option value="user">user</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => report.ReportType)" />
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label>Reporter: </label>
+            <div>
+                <InputSelect @bind-Value="report.ReporterUserId" class="form-control">
+                    @if (ReporterUsers != null)
+                    {
+                        @foreach (var buyer in ReporterUsers)
+                        {
+                            <option value="@buyer.Id">@buyer.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>report.ReporterUserId)"></ValidationMessage>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Reported User: </label>
+            <div>
+                <InputSelect @bind-Value="report.ReportedUserId" class="form-control">
+                    @if (ReportedUsers != null)
+                    {
+                        @foreach (var seller in ReportedUsers)
+                        {
+                            <option value="@seller.Id">@seller.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>report.ReportedUserId)"></ValidationMessage>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Status: </label>
+            <div>
+                <InputSelect @bind-Value="@report.status" class="form-control">
+                <option value=""> -- Status Type -- </option>
+                <option value="solved">solved</option>
+                <option value="unsolved">unsolved</option>
+                <ValidationMessage For="@(() => report.status)" />
+                </InputSelect>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Date: </label>
+            <div>
+                <InputDate @bind-Value="@report.DateCreated" class="form-control" />
+                <ValidationMessage For="@(() => report.DateCreated)" />
+            </div>
+        </div>
+
+    </fieldset>
+
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="reports" />
+
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Report? report { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Product>? Products;
+    private IList<User>? ReporterUsers;
+    private IList<User>? ReportedUsers;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        ReporterUsers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        ReportedUsers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+    }
+}
+

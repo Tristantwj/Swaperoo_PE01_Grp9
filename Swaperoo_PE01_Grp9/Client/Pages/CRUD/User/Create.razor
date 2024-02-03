@@ -1,0 +1,21 @@
+﻿@page "/users/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3 class="card-title">Create New User</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create User" user="user" OnValidSubmit="@CreateUser" />
+
+@code {
+    User user = new User();
+
+    private async Task CreateUser()
+    {
+        await _client.PostAsJsonAsync(Endpoints.UsersEndpoint, user);
+        _navManager.NavigateTo("/users/");
+    }
+
+}

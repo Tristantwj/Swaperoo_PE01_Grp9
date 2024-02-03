@@ -1,0 +1,34 @@
+﻿@page "/reports/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3 class="card-title">Create New Report</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create New Report" report="report" OnValidSubmit="@CreateReport" />
+
+@code {
+    Report report = new Report();
+
+    private IList<User>? Users;
+    private IList<Product>? Products;
+    private IList<User>? ReporterUsers;
+    private IList<User>? ReportedUsers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        ReporterUsers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        ReportedUsers = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+    }
+
+    private async Task CreateReport()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, report);
+        _navManager.NavigateTo("/reports/");
+    }
+
+}

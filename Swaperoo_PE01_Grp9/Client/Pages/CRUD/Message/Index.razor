@@ -1,0 +1,106 @@
+﻿@page "/messages/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+@layout AdminMenuLayout
+
+<h3 class="card-title">Messages</h3>
+<br />
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Crud.css" rel="stylesheet" />
+</head>
+
+<body>
+    <a href="/messages/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New Message
+    </a>
+    <br />
+    <br />
+
+    @if (Messages == null)
+    {
+        <div class="alert alert-info">Loading Messages...</div>
+    }
+    else
+    {
+        <table class="table table-responsive" id="messagesTable">
+            <thead>
+                <tr>
+                    <th>Sender</th>
+                    <th>Chat</th>
+                    <th>Message</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var message in Messages)
+                {
+                    <tr>
+                        <td>@message.Sender.Name</td>
+                        <td>@message.Chat.Name</td>
+                        <td>@message.MessageContent</td>
+                        <td>
+                            <a href="/messages/view/@message.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/messages/edit/@message.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(message.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</body>
+
+
+@code {
+
+    private bool collapseNavMenu = true;
+
+    private string? CrudLayoutCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private List<Message>? Messages;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
+    }
+
+    async Task Delete(int messageId)
+    {
+        if (Messages != null)
+        {
+            var message = Messages.First(q => q.Id == messageId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {message.MessageContent}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.MessagesEndpoint}/{messageId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#messagesTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#messagesTable");
+    }
+
+}

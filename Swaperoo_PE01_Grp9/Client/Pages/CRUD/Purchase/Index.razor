@@ -1,0 +1,91 @@
+﻿@page "/purchases/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+@layout AdminMenuLayout
+
+<h3 class="card-title">Purchases</h3>
+<br />
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Crud.css" rel="stylesheet" />
+</head>
+
+
+<a href="/purchases/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Purchases
+</a>
+<br />
+<br />
+@if (Purchases == null)
+{
+    <div class="alert alert-info">Loading Purchases....</div>
+}
+else
+{
+    <table class="table table-responsive" id="purchasesTable">
+        <thead>
+            <tr>
+                <th>PurchaseId</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var purchase in Purchases)
+            {
+                <tr>
+                    <td>@purchase.Id</td>
+                    <td>@purchase.PurchaseProduct.Name</td>
+                    <td>
+                        <a href="/Purchases/view/@purchase.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Purchases/edit/@purchase.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(purchase.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<br />
+@code {
+    private List<Purchase>? Purchases;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
+    }
+
+    async Task Delete(int PurchaseId)
+    {
+        if (Purchases != null)
+        {
+            var Purchase = Purchases.First(q => q.Id == PurchaseId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Purchase.Id}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.PurchasesEndpoint}/{PurchaseId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#purchasesTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#purchasesTable");
+    }
+}
+
