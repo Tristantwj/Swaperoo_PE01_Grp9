@@ -208,7 +208,7 @@ body {
     margin:0;
 }
 .profile-picture {
-    width: 40px;
+    max-height:50px;
     border-radius: 80px;
 }
 
