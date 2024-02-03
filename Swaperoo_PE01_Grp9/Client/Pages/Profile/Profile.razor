@@ -26,6 +26,7 @@
                 </div>
             </div>
             <div class="profileinformation-center">
+                <div>Region: @user.Region</div>
                 <div>About Myself</div>
                 <div>@user.Description</div>
             </div>
@@ -171,11 +172,11 @@
         popupOpacity = "0";
         popupTransform = "translate(-50%, -50%) scale(1.25)";
     }
-    private void editprofile()
+    public async Task editprofile()
     {
         var editeduser = new User()
         {
-            Id = user.Id,
+            Id = id,
             UserId = user.UserId,
             Name = name,
             Region = region,
@@ -187,6 +188,8 @@
             DateUpdated = DateTime.Now
         };
 
-
+        await _client.PutAsJsonAsync($"{Endpoints.UsersEndpoint}/{id}", editeduser);
+        user = await _client.GetFromJsonAsync<User>($"{Endpoints.UsersEndpoint}/{id}");
+        ClosePopup();
     }
 }
