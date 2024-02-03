@@ -53,17 +53,12 @@
         <div class="chatarea">
             <div class="form-group">
                 <label>
-                    User: @userInput
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
                     Message:
                     <input @bind="messageInput" size="50" />
                 </label>
-            </div>
-            <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
 
+                <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+            </div>
             <hr>
             <ul id="messagesList">
                 @foreach (var message in messages)
@@ -83,10 +78,10 @@
     private List<User>? users;
     private string username;
     private int userId;
+    public string name;
 
     private HubConnection? hubConnection;
     private List<string> messages = new List<string>();
-    private string? userInput;
     private string? messageInput;
     private string? receiverId;
 
@@ -121,17 +116,21 @@
             if (i.Email == username)
             {
                 userId = i.Id;
+                name = i.Name;
             }
         }
         Console.WriteLine($"User ID: {userId}");
+
+
     }
 
     private async Task Send()
     {
-        if (hubConnection is not null)
+        if (hubConnection is not null && messageInput != null)
         {
-            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+            await hubConnection.SendAsync("SendMessage", name, messageInput);
         }
+        messageInput = null;
     }
 
     public bool IsConnected =>

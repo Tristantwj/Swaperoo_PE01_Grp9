@@ -78,6 +78,16 @@
 
     private async Task CreateProduct()
     {
+        if (string.IsNullOrWhiteSpace(itemName) ||
+        string.IsNullOrWhiteSpace(itemDescription) ||
+        string.IsNullOrWhiteSpace(itemImage))
+        {
+            // Display an error message or handle the validation error as needed
+            // For example, you can show an alert using JavaScript
+            await js.InvokeVoidAsync("alert", "Please fill in all the required fields with valid values.");
+            return; // Exit the method without proceeding further
+        }
+
         var product = new Product
         {
                 Name = itemName,
@@ -91,7 +101,7 @@
         };
 
     await _client.PostAsJsonAsync(Endpoints.ProductsEndpoint, product);
-
+    Navigation.NavigateTo("/");
     }
 
 }
