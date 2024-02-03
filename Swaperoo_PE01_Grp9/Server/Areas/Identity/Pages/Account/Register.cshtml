@@ -18,7 +18,12 @@
                 <span asp-validation-for="Input.Name" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Region" class="form-control" autocomplete="username" aria-required="true" placeholder="north/south/east/west" />
+                <select asp-for="Input.Region" class="form-control" aria-required="true">
+                    <option value="north">North</option>
+                    <option value="south">South</option>
+                    <option value="east">East</option>
+                    <option value="west">West</option>
+                </select>
                 <label asp-for="Input.Region">Region</label>
                 <span asp-validation-for="Input.Region" class="text-danger"></span>
             </div>
