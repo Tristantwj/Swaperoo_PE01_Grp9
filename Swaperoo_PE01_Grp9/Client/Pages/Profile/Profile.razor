@@ -26,13 +26,14 @@
                 </div>
             </div>
             <div class="profileinformation-center">
+                <div>Region: @user.Region</div>
                 <div>About Myself</div>
                 <div>@user.Description</div>
             </div>
             <div class="profileinformation-right">
-                @if(id == userId)
+                @if(id == user.Id)
                 {
-                    <a @onclick="GotoEditProfile">
+                    <a @onclick="TogglePopUp">
                         <img class="profileoption" src="https://cdn-icons-png.flaticon.com/512/7606/7606176.png" />
                     </a>
                 }
@@ -52,7 +53,7 @@
         {
             @foreach (var product in products)
             {
-                @if (product.UserId == id)
+                @if (product.UserId == user.Id)
                 {
                     <a href="/product/listed/@product.Id" class="Featured">
                         <div class="product_imgrow">
@@ -68,6 +69,41 @@
             }
         }
     </div>
+
+    <div class="popup" style="top: @popupTop; opacity: @popupOpacity; transform: @popupTransform">
+            <div class="close-btn" @onclick="ClosePopup">&times;</div>
+            <div class="sellform">
+                <h2>Edit Profile</h2>
+                <div class="sell-form-element">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="@user.Name" @bind="name">
+                </div>
+                <div class="sell-form-element">
+                    <label for="region">Region</label>
+                    <select id="region" @bind="region">
+                        <option value="North">North</option>
+                        <option value="South">South</option>
+                        <option value="East">East</option>
+                        <option value="West">West</option>
+                    </select>
+                </div>
+                <div class="sell-form-element">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="@user.Email" @bind="email">
+                </div>
+                <div class="sell-form-element">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="@user.Description" @bind="description"></textarea>
+                </div>
+                <div class="sell-form-element">
+                    <label for="profilepicture">Profile Picture</label>
+                    <input type="text" id="profilepicture" placeholder="@user.profilepicture" @bind="profilepicture">
+                </div>
+                <div class="sell-form-element">
+                    <button @onclick="editprofile">Edit Profile</button>
+                </div>
+            </div>
+    </div>
     
 </body>
 
@@ -75,12 +111,22 @@
     [Parameter] public int id { get; set; }
 
     private List<Product>? products;
-
     User? user = new User();
-
     private List<User>? users;
-    private string username;
-    private int userId;
+
+    private string name;
+    private string region;
+    private string email;
+    private string description;
+    private string profilepicture;
+
+    //popup---------------------
+    private bool isPopupVisible = false;
+
+    private string popupTop = "-150%";
+    private string popupOpacity = "0";
+    private string popupTransform = "translate(-50%, -50%) scale(1.25)";   
+    //--------------------------------
 
     protected override async Task OnInitializedAsync()
     {
@@ -88,22 +134,62 @@
         user = await _client.GetFromJsonAsync<User>($"{Endpoints.UsersEndpoint}/{id}");
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
 
-        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var userauth = authenticationState.User;
-
-        Console.WriteLine($"Username: {userauth.Identity.Name}");
-        // Get the userId from the user's identity
-        username = userauth.Identity.Name;
-
-        @foreach (var i in users)
-        {
-            if (i.Email == username)
-            {
-                userId = i.Id;
-            }
-        }
-        Console.WriteLine($"User ID: {userId}");
+        name = user.Name;
+        region = user.Region;
+        email = user.Email;
+        description = user.Description;
+        profilepicture = user.profilepicture;
     }
 
-    private void GotoEditProfile() { Navigation.NavigateTo($"/editprofile/{id}"); }
+    protected override async Task OnParametersSetAsync()
+    {
+        // Call the base implementation
+        await base.OnParametersSetAsync();
+
+        // Trigger a refresh by calling OnInitializedAsync
+        await OnInitializedAsync();
+    }
+
+
+    private void TogglePopUp()
+    {
+        isPopupVisible = !isPopupVisible;
+
+        // Set styles based on popup visibility
+        popupTop = isPopupVisible ? "50%" : "-150%";
+        popupOpacity = isPopupVisible ? "1" : "0";
+        popupTransform = isPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+
+
+
+    private void ClosePopup()
+    {
+        isPopupVisible = false;
+
+        // Reset styles to hide the popup
+        popupTop = "-150%";
+        popupOpacity = "0";
+        popupTransform = "translate(-50%, -50%) scale(1.25)";
+    }
+    public async Task editprofile()
+    {
+        var editeduser = new User()
+        {
+            Id = id,
+            UserId = user.UserId,
+            Name = name,
+            Region = region,
+            Email = email,
+            Description = description,
+            profilepicture = profilepicture,
+            Role = user.Role,
+            DateCreated = user.DateCreated,
+            DateUpdated = DateTime.Now
+        };
+
+        await _client.PutAsJsonAsync($"{Endpoints.UsersEndpoint}/{id}", editeduser);
+        user = await _client.GetFromJsonAsync<User>($"{Endpoints.UsersEndpoint}/{id}");
+        ClosePopup();
+    }
 }
