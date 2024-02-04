@@ -51,7 +51,6 @@
                 <ValidationMessage For="@(()=>message.ChatId)"></ValidationMessage>
             </div>
         </div>
-
     </fieldset>
 
 
@@ -79,7 +78,6 @@
     {
         Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
         Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
-        message.DateCreated = DateTime.Now;
     }
 }
 
