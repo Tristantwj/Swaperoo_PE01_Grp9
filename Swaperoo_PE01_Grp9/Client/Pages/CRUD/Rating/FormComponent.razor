@@ -55,13 +55,30 @@
                 <InputSelect @bind-Value="rating.PurchaseId" class="form-control">
                     @if (Purchases != null)
                     {
+                        <option value=""> Choose Option</option>
                         @foreach (var purchase in Purchases)
                         {
-                            <option value="@purchase.Id">@rating.Purchase</option>
+                            <option value="@purchase.Id">@purchase.Id</option>
                         }
                     }
                 </InputSelect>
                 <ValidationMessage For="@(()=>rating.PurchaseId)"></ValidationMessage>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Swaps: </label>
+            <div>
+                <InputSelect @bind-Value="rating.SwapId" class="form-control">
+                    @if (Swaps != null)
+                    {
+                        <option value=""> Choose Option</option>
+                        @foreach (var swap in Swaps)
+                        {
+                            <option value="@swap.Id">@swap.Id</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>rating.SwapId)"></ValidationMessage>
             </div>
         </div>
 

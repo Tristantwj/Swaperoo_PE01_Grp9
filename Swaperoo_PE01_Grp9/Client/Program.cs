@@ -16,9 +16,11 @@ builder.Services.AddHttpClient("Swaperoo_PE01_Grp9.ServerAPI", (sp, client) => {
 // Supply HttpClient instances that include access tokens when making requests to the server project
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Swaperoo_PE01_Grp9.ServerAPI"));
 
-builder.Services.AddApiAuthorization();
-
 builder.Services.AddHttpClientInterceptor();
 builder.Services.AddScoped<HttpInterceptorService>();
+
+builder.Services.AddApiAuthorization();
+
+
 
 await builder.Build().RunAsync();

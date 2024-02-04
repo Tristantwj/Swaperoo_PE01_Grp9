@@ -2,15 +2,12 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject HttpInterceptorService _interceptor
 @implements IDisposable
 @layout AdminMenuLayout
 
 <h3 class="card-title">Chats</h3>
 <br />
-<head>
-    <link href="css/landing.css" rel="stylesheet" />
-    <link href="css/Crud.css" rel="stylesheet" />
-</head>
 
 <body>
     <a href="/chats/create" class="btn btn-secondary">
@@ -31,6 +28,8 @@
                 <tr>
                     <th>Chat Id</th>
                     <th>Name</th>
+                    <th>User1</th>
+                    <th>User2</th>
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
@@ -41,6 +40,16 @@
                     <tr>
                         <td>@chat.Id</td>
                         <td>@chat.Name</td>
+                        @if(chat.Purchase != null)
+                        {
+                            <td>@chat.Purchase.User.Name</td>
+                            <td>@chat.Purchase.PurchaseProduct.User.Name</td>
+                        }
+                        else
+                        {
+                            <td>@chat.Swap.SwapProduct.User.Name</td>
+                            <td>@chat.Swap.OfferItem.User.Name</td>
+                        }
                         <td>@chat.DateCreated.Date.ToString("dd MMMM yyyy")</td>
                         <td>
                             <a href="/chats/view/@chat.Id" class="btn btn-primary">
@@ -76,6 +85,7 @@
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
     }
 

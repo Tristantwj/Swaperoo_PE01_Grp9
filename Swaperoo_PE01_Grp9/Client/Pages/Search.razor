@@ -4,7 +4,7 @@
 @using Swaperoo_PE01_Grp9.Shared.Domain
 @using Swaperoo_PE01_Grp9.Client.Static
 @inject NavigationManager Navigation
-
+@inject HttpInterceptorService _interceptor
 
 <PageTitle>Search</PageTitle>
 <head>
@@ -64,6 +64,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        _interceptor.MonitorEvent();
         await LoadProductsAsync();
     }
 

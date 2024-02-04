@@ -4,6 +4,7 @@
 @using Swaperoo_PE01_Grp9.Shared.Domain
 @using Swaperoo_PE01_Grp9.Client.Static
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpInterceptorService _interceptor
 <PageTitle>Index</PageTitle>
 <head>
     <link href="css/landing.css" rel="stylesheet" />
@@ -74,6 +75,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         try
         {
             // No need to check authentication state before making the API call
