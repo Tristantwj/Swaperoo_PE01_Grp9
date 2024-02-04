@@ -74,7 +74,7 @@
                         <option value=""> Choose Option</option>
                         @foreach (var swap in Swaps)
                         {
-                            <option value="@swap.Id">@swap.SwapProduct.Name</option>
+                            <option value="@swap.Id">@swap.OfferItem.Name -> @swap.SwapProduct.Name</option>
                         }
                     }
                 </InputSelect>
@@ -110,7 +110,7 @@
     {
         Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
-        Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.UsersEndpoint}");
+        Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
     }
 }
 
