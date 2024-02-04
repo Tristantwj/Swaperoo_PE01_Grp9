@@ -52,7 +52,15 @@
                 @if(IndivChat.Purchase?.PurchaseProduct?.status == "sold" || IndivChat.Swap?.SwapProduct?.status =="sold" || IndivChat.Swap?.OfferItem?.status == "sold")
                 {
                     <div class="productssold">
-                        PRODUCT SOLD 
+                        PRODUCT SOLD
+                        @if (IndivChat.Purchase?.Status == "Confirmed" || IndivChat.Swap?.Status == "Confirmed" || IndivChat.Purchase?.Status == "Rated" || IndivChat.Swap?.Status == "Rated")
+                        {
+                            <div style="display:inline">
+                                | <button class="product_button" @onclick="ToggleRatingPopUp" style="width:180px; font-size:20px">Leave a Rating</button>
+
+                            </div>
+                        }
+                        
                     </div>
                 }
                 else
@@ -224,6 +232,44 @@
             }
         </div>
     </div>
+
+    <div class="popup" style="top: @ratingpopupTop; opacity: @ratingpopupOpacity; transform: @ratingpopupTransform">
+        <div class="close-btn" @onclick="CloseRatingPopup">&times;</div>
+        <div class="sellform">
+            <h2>Rating</h2>
+                <div class="sell-form-element">
+                    <label for="ratingvalue">Rating</label>
+                    <select id="ratingvalue" @bind="ratingvalue">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="sell-form-element">
+                    <label for="desc">Description</label>
+                    <textarea id="desc" @bind="desc"></textarea>
+                </div>
+            @if (IndivChat.Purchase != null)
+            {
+                <div class="sell-form-element">
+                    <button @onclick="CreatePurchaseRating">Confirm Offer</button>
+                </div>
+
+            }
+            else
+            {
+                @if (IndivChat.Swap != null)
+                {
+                    
+                    <div class="sell-form-element">
+                        <button @onclick="CreateSwapRating">Confirm Offer</button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </body>
 
 @code {
@@ -246,9 +292,16 @@
     private int offerProductId;
 
     private int? purchaseid;
+
+    private string ratingstatus;
+    //RATING---------------------
+    public int ratingvalue;
+    public string desc;
+
     //popup---------------------
     private bool isEditPopupVisible = false;
     private bool isConfirmPopupVisible = false;
+    private bool isRatingPopupVisible = false;
 
     private string editpopupTop = "-150%";
     private string editpopupOpacity = "0";
@@ -257,6 +310,10 @@
     private string confirmpopupTop = "-150%";
     private string confirmpopupOpacity = "0";
     private string confirmpopupTransform = "translate(-50%, -50%) scale(1.25)";
+
+    private string ratingpopupTop = "-150%";
+    private string ratingpopupOpacity = "0";
+    private string ratingpopupTransform = "translate(-50%, -50%) scale(1.25)";
     //--------------------------------
 
     protected override async Task OnInitializedAsync()
@@ -314,7 +371,7 @@
 
         await _client.PostAsJsonAsync(Endpoints.MessagesEndpoint, message);
         Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
-        messageInput = string.Empty;
+        messageInput = null;
         }
         await ScrollToBottom();
     }
@@ -435,6 +492,101 @@
 
     }
 
+    public async Task CreatePurchaseRating()
+    {
+        if (string.IsNullOrWhiteSpace(desc) || ratingvalue == 0)
+        {
+            // Display an error message or handle the validation error as needed
+            // For example, you can show an alert using JavaScript
+            await js.InvokeVoidAsync("alert", "Please fill in all the required fields with valid values.");
+            return; // Exit the method without proceeding further
+        }
+        var rating = new Rating()
+            {
+                RatingValue = ratingvalue,
+                Description = desc,
+                DateCreated = DateTime.Now,
+                UserId = IndivChat.Purchase.PurchaseProduct.User.Id,
+                PurchaseId = IndivChat.PurchaseId,
+                SwapId = null,
+            };
+
+        var product = new Product()
+            {
+                Id = IndivChat.Purchase.PurchaseProduct.Id,
+                Name = IndivChat.Purchase.PurchaseProduct.Name,
+                DateCreated = IndivChat.Purchase.PurchaseProduct.DateCreated,
+                Description = IndivChat.Purchase.PurchaseProduct.Description,
+                imagepath = IndivChat.Purchase.PurchaseProduct.imagepath,
+                price = IndivChat.Purchase.OfferPrice,
+                status = "Rated",
+                UserId = IndivChat.Purchase.PurchaseProduct.UserId,
+                SubCategoryId = IndivChat.Purchase.PurchaseProduct.SubCategoryId
+            };
+
+        await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
+        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Purchase.PurchaseProduct.Id}", product);
+    }
+
+    public async Task CreateSwapRating()
+    {
+        if (string.IsNullOrWhiteSpace(desc) || ratingvalue == 0)
+        {
+            // Display an error message or handle the validation error as needed
+            // For example, you can show an alert using JavaScript
+            await js.InvokeVoidAsync("alert", "Please fill in all the required fields with valid values.");
+            return; // Exit the method without proceeding further
+        }
+
+        var rating = new Rating()
+            {
+                RatingValue = ratingvalue,
+                Description = desc,
+                DateCreated = DateTime.Now,
+                UserId = IndivChat.Swap.OfferItem.User.Id,
+                PurchaseId = null,
+                SwapId = IndivChat.SwapId
+            };
+
+
+        if (userId == IndivChat.Swap?.SwapProduct.User.Id)
+        {
+            var swapproduct = new Product()
+            {
+                Id = IndivChat.Swap.SwapProduct.Id,
+                Name = IndivChat.Swap.SwapProduct.Name,
+                DateCreated = IndivChat.Swap.SwapProduct.DateCreated,
+                Description = IndivChat.Swap.SwapProduct.Description,
+                imagepath = IndivChat.Swap.SwapProduct.imagepath,
+                price = IndivChat.Swap.SwapProduct.price,
+                status = "Rated",
+                UserId = IndivChat.Swap.SwapProduct.UserId,
+                SubCategoryId = IndivChat.Swap.SwapProduct.SubCategoryId
+            };
+            await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.SwapProduct.Id}", swapproduct);
+
+        }
+        else
+        { 
+        var offerproduct = new Product()
+            {
+                Id = IndivChat.Swap.OfferItem.Id,
+                Name = IndivChat.Swap.OfferItem.Name,
+                DateCreated = IndivChat.Swap.OfferItem.DateCreated,
+                Description = IndivChat.Swap.OfferItem.Description,
+                imagepath = IndivChat.Swap.OfferItem.imagepath,
+                price = IndivChat.Swap.OfferItem.price,
+                status = "Rated",
+                UserId = IndivChat.Swap.OfferItem.UserId,
+                SubCategoryId = IndivChat.Swap.OfferItem.SubCategoryId
+            };
+        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.OfferItem.Id}", offerproduct);
+        }
+
+        await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
+        CloseRatingPopup();
+    }
+
     //----------------POPUP---------------//
     private void ToggleEditPopUp()
     {
@@ -471,6 +623,24 @@
         confirmpopupTop = "-150%";
         confirmpopupOpacity = "0";
         confirmpopupTransform = "translate(-50%, -50%) scale(1.25)";
+    }
+    private void ToggleRatingPopUp()
+    {
+        isRatingPopupVisible = !isRatingPopupVisible;
+
+        // Set styles based on popup visibility
+        ratingpopupTop = isRatingPopupVisible ? "50%" : "-150%";
+        ratingpopupOpacity = isRatingPopupVisible ? "1" : "0";
+        ratingpopupTransform = isRatingPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+    private void CloseRatingPopup()
+    {
+        isRatingPopupVisible = false;
+
+        // Reset styles to hide the popup
+        ratingpopupTop = "-150%";
+        ratingpopupOpacity = "0";
+        ratingpopupTransform = "translate(-50%, -50%) scale(1.25)";
     }
 }
 

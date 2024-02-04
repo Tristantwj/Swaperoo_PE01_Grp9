@@ -43,6 +43,7 @@
     border-color: black;
     border-width: 1px;
     align-items: center;    
+    justify-content:space-around;
 }
 
 .productssold{
@@ -125,7 +126,11 @@
 .messageinputbutton {
     flex: 1;
 }
+/*-----------------------------*/
+.form-group{
+    display:inline-block;
 
+}
 
 /*------POPUP---------*/
 .popup {

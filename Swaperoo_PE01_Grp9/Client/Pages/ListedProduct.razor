@@ -18,14 +18,14 @@
         </div>
         <div class="productinfo">
             <div class="productname">
-             @product.Name
-         </div>
-         <div class="productprice">
-             S$@product.price
-         </div>
-         <div class="productdescription">
-             @product.Description
-         </div>
+                @product.Name
+            </div>
+            <div class="productprice">
+                S$@product.price
+            </div>
+            <div class="productdescription">
+                @product.Description
+            </div>
         </div>
         <div class="seller">
             <div class="sellerinfo">
@@ -69,15 +69,13 @@
                         {
                             @foreach (var p in products)
                             {
-                                Console.WriteLine($"Product: {p.Name}");
-                                if(p.UserId == userId)
-                                {
-                                    Console.WriteLine($"Product-Linked: {p.Name}");
+                                if (p.UserId == userId && p.status != "sold")
+                                {  
                                     <option value="@p.Id">@p.Name</option>
                                 }
                             }
                         }
-                        
+
                     </select>
                 </div>
                 <div class="sell-form-element">
@@ -86,7 +84,7 @@
             </div>
         </div>
 
-     }
+    }
 </body>
 
 
@@ -138,6 +136,9 @@
             }
         }
         Console.WriteLine($"User ID: {userId}");
+
+        offervalue = product.price;
+
     }
 
     private void ToggleSellPopUp()
@@ -149,7 +150,6 @@
         sellpopupOpacity = isSellPopupVisible ? "1" : "0";
         sellpopupTransform = isSellPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
     }
-
     private void ToggleSwapPopUp()
     {
         isSwapPopupVisible = !isSwapPopupVisible;
@@ -159,7 +159,6 @@
         swappopupOpacity = isSwapPopupVisible ? "1" : "0";
         swappopupTransform = isSwapPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
     }
-
     private void CloseSellPopup()
     {
         isSellPopupVisible = false;
@@ -181,7 +180,6 @@
 
     private async Task makepurchase()
     {
-
         var purchase = new Purchase
             {
                 SellDate = DateTime.Now,

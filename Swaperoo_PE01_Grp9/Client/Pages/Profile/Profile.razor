@@ -22,7 +22,7 @@
                     <img src="@user.profilepicture" alt="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="profilepic">
                 </div>
                 <div class="rating">
-                    Rating
+                    Rating: @ratingString / 5
                 </div>
             </div>
             <div class="profileinformation-center">
@@ -120,6 +120,7 @@
     private List<Product>? products;
     User? user = new User();
     private List<User>? users;
+    private List<Rating>? ratings;
 
     private string name;
     private string region;
@@ -127,6 +128,9 @@
     private string description;
     private string profilepicture;
 
+    private double rating;
+    private string ratingString;
+    private int count = 0;
     //popup---------------------
     private bool isPopupVisible = false;
 
@@ -140,12 +144,25 @@
         products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
         user = await _client.GetFromJsonAsync<User>($"{Endpoints.UsersEndpoint}/{id}");
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        ratings = await _client.GetFromJsonAsync<List<Rating>>($"{Endpoints.RatingsEndpoint}");
 
         name = user.Name;
         region = user.Region;
         email = user.Email;
         description = user.Description;
         profilepicture = user.profilepicture;
+
+
+        @foreach (var i in ratings){
+            if(i.UserId == id)
+            {
+                rating += i.RatingValue;
+                count += 1;
+            }
+        }
+        rating = rating / count;
+        ratingString = rating.ToString("F2");
+        Console.WriteLine($"Rating: {ratingString}");
     }
 
     protected override async Task OnParametersSetAsync()
