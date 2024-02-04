@@ -80,10 +80,13 @@
             <h2>Reviews</h2>
             @foreach (var r in ratings)
             {
+                
                 @if(r.User.Id != id)
                 {
+                    
                     @if(r.Purchase?.User?.Id == id || r.Purchase?.PurchaseProduct?.User?.Id == id)
-                    { 
+                    {
+                        Console.WriteLine(r.Description);
                         <div class="reviewcontent">
                             @if (r.Purchase?.PurchaseProduct?.User?.Id != id)
                             {

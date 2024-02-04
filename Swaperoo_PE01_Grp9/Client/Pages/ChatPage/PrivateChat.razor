@@ -56,14 +56,26 @@
                 {
                     <div class="productssold">
                         PRODUCT SOLD
-                        @if (IndivChat.Purchase?.Status == "Confirmed" || IndivChat.Swap?.BuyerStatus== "Confirmed" || IndivChat.Swap?.SellerStatus == "Confirmed")
+                        @if (IndivChat.Purchase?.Status == "Confirmed" || IndivChat.Purchase?.Status == "Rated")
                         {
                             <div style="display:inline">
                                 | <button class="product_button" @onclick="ToggleRatingPopUp" style="width:180px; font-size:20px">Leave a Rating</button>
 
                             </div>
                         }
-                        
+                        @if (IndivChat.Swap?.BuyerStatus == "Confirmed" && IndivChat.Swap?.OfferItem?.User?.Id == userId)
+                        {
+                            <div style="display:inline">
+                                | <button class="product_button" @onclick="ToggleRatingPopUp" style="width:180px; font-size:20px">Leave a Rating</button>
+                            </div>
+                        }
+                        @if (IndivChat.Swap?.SellerStatus == "Confirmed" && IndivChat.Swap?.SwapProduct?.User?.Id == userId)
+                        {
+                            <div style="display:inline">
+                                | <button class="product_button" @onclick="ToggleRatingPopUp" style="width:180px; font-size:20px">Leave a Rating</button>
+                            </div>
+                        }
+
                     </div>
                 }
                 else
@@ -562,7 +574,7 @@
                     OfferItemId = IndivChat.Swap.OfferItemId,
                     SwapProductId = IndivChat.Swap.SwapProductId
                 };
-            await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.SwapProduct.Id}", swapRated);
+            await _client.PutAsJsonAsync($"{Endpoints.SwapsEndpoint}/{IndivChat.Swap.Id}", swapRated);
 
         }
         else
@@ -576,7 +588,7 @@
                     OfferItemId = IndivChat.Swap.OfferItemId,
                     SwapProductId = IndivChat.Swap.SwapProductId
                 };
-            await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.SwapProduct.Id}", swapRated);
+            await _client.PutAsJsonAsync($"{Endpoints.SwapsEndpoint}/{IndivChat.Swap.Id}", swapRated);
         }
 
         await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
