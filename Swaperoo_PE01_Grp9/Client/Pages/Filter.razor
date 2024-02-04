@@ -1,0 +1,77 @@
+﻿@page "/filter"
+@inject HttpClient _client
+@using Swaperoo_PE01_Grp9.Shared.Domain
+@using Swaperoo_PE01_Grp9.Client.Static
+@inject NavigationManager Navigation
+
+<PageTitle>Filter</PageTitle>
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="Featured_grid">
+        @if (Products != null)
+        {
+            @foreach (var product in Products)
+            {
+                <!-- Your existing product display logic here -->
+                <!-- ... -->
+            }
+        }
+    </div>
+</body>
+
+@code {
+    private List<Product>? Products;
+    [Parameter]
+    public string CategoryId { get; set; }
+    [Parameter]
+    public string SubCategoryId { get; set; }
+    [Parameter]
+    public string Status { get; set; }
+    [Parameter]
+    public string SearchTerm { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadProductsAsync();
+    }
+
+    private async Task LoadProductsAsync()
+    {
+        try
+        {
+            // Define the endpoint based on the provided parameters
+            var endpoint = Endpoints.ProductsEndpoint;
+
+            if (!string.IsNullOrWhiteSpace(CategoryId))
+            {
+                endpoint += $"/ByCategory/{CategoryId}";
+            }
+            else if (!string.IsNullOrWhiteSpace(SubCategoryId))
+            {
+                endpoint += $"/BySubCategory/{SubCategoryId}";
+            }
+            else if (!string.IsNullOrWhiteSpace(Status))
+            {
+                endpoint += $"/ByStatus/{Status}";
+            }
+            else if (!string.IsNullOrWhiteSpace(SearchTerm))
+            {
+                endpoint += $"/Index?id={SearchTerm}";
+            }
+
+            // Load products based on the endpoint
+            Products = await _client.GetFromJsonAsync<List<Product>>(endpoint);
+
+            // Notify Blazor to re-render the component
+            StateHasChanged();
+        }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            // Handle exception if necessary
+            Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
+        }
+    }
+}
