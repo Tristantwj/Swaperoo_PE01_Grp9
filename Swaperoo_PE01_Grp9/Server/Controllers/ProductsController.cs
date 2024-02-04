@@ -64,6 +64,62 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
             return Ok(products);
         }
 
+        // GET: api/Products/ByCategory/{categoryId}
+        [HttpGet("ByCategory/{categoryId}")]
+        public async Task<IActionResult> ByCategory(int categoryId)
+        {
+            if (_unitOfWork.Products == null)
+            {
+                return Problem("Entity set 'Products' is null.");
+            }
+
+            var products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.User).Include(x => x.SubCategory));
+
+            if (categoryId != 0)
+            {
+                products = products.Where(p => p.SubCategory.CategoryId == categoryId).ToList();
+            }
+
+            return Ok(products);
+        }
+
+        // GET: api/Products/BySubCategory/{subCategoryId}
+        [HttpGet("BySubCategory/{subCategoryId}")]
+        public async Task<IActionResult> BySubCategory(int subCategoryId)
+        {
+            if (_unitOfWork.Products == null)
+            {
+                return Problem("Entity set 'Products' is null.");
+            }
+
+            var products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.User).Include(x => x.SubCategory));
+
+            if (subCategoryId != 0)
+            {
+                products = products.Where(p => p.SubCategoryId == subCategoryId).ToList();
+            }
+
+            return Ok(products);
+        }
+
+        // GET: api/Products/ByStatus/{status}
+        [HttpGet("ByStatus/{status}")]
+        public async Task<IActionResult> ByStatus(string status)
+        {
+            if (_unitOfWork.Products == null)
+            {
+                return Problem("Entity set 'Products' is null.");
+            }
+
+            var products = await _unitOfWork.Products.GetAll(includes: q => q.Include(x => x.User).Include(x => x.SubCategory));
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                products = products.Where(p => p.status == status).ToList();
+            }
+
+            return Ok(products);
+        }
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
