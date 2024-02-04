@@ -31,7 +31,7 @@
                 <div>@user.Description</div>
             </div>
             <div class="profileinformation-right">
-                @if(id == user.Id)
+                @if(id == userId)
                 {
                     <a @onclick="TogglePopUp">
                         <img class="profileoption" src="https://cdn-icons-png.flaticon.com/512/7606/7606176.png" />
@@ -201,6 +201,9 @@
     private double rating;
     private string ratingString;
     private int count = 0;
+
+    private string username;
+    private int userId;
     //popup---------------------
     private bool isPopupVisible = false;
 
@@ -222,6 +225,21 @@
         description = user.Description;
         profilepicture = user.profilepicture;
 
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userauth = authenticationState.User;
+
+        Console.WriteLine($"Username: {userauth.Identity.Name}");
+        // Get the userId from the user's identity
+        username = userauth.Identity.Name;
+
+        @foreach (var i in users)
+        {
+            if (i.Email == username)
+            {
+                userId = i.Id;
+            }
+        }
+        Console.WriteLine($"User ID: {userId}");
 
         @foreach (var i in ratings){
             if(i.UserId == id)
