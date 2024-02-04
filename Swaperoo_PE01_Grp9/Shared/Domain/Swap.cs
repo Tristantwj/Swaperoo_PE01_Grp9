@@ -16,9 +16,5 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public virtual Product? OfferItem { get; set; }
         public int? SwapProductId { get; set; }
         public virtual Product? SwapProduct { get; set; }
-        public int? BuyerId { get; set; }
-        public virtual User? Buyer { get; set; }
-        public int? SellerId { get; set; }
-        public virtual User? Seller { get; set; }
     }
 }

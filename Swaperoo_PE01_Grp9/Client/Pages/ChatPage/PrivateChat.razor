@@ -4,6 +4,8 @@
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpInterceptorService _interceptor
+@attribute [Authorize]
+
 <PageTitle>PrivateChat</PageTitle>
 
 <head>
@@ -441,9 +443,7 @@
                 SwapDate = IndivChat.Swap.SwapDate,
                 Status = IndivChat.Swap.Status,
                 OfferItemId = offerProductId,
-                SwapProductId = IndivChat.Swap.SwapProductId,
-                BuyerId = IndivChat.Swap.BuyerId,
-                SellerId = IndivChat.Swap.SellerId
+                SwapProductId = IndivChat.Swap.SwapProductId
             };
         await _client.PutAsJsonAsync($"{Endpoints.SwapsEndpoint}/{IndivChat.Swap.Id}", swap);
         IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
@@ -458,9 +458,7 @@
                 SwapDate = IndivChat.Swap.SwapDate,
                 Status = "Confirmed",
                 OfferItemId = IndivChat.Swap.OfferItemId,
-                SwapProductId = IndivChat.Swap.SwapProductId,
-                BuyerId = IndivChat.Swap.BuyerId,
-                SellerId = IndivChat.Swap.SellerId
+                SwapProductId = IndivChat.Swap.SwapProductId
             };
         var swapproduct = new Product()
             {
