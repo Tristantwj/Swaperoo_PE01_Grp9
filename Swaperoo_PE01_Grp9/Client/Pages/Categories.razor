@@ -79,7 +79,7 @@
             else
             {
                 // Filter based on the category term
-                var categoryEndpoint = $"{Endpoints.ProductsEndpoint}/Index?id={term}";
+                var categoryEndpoint = $"{Endpoints.ProductsEndpoint}/ByCategory/{term}";
                 Products = await _client.GetFromJsonAsync<List<Product>>(categoryEndpoint);
             }
 
@@ -92,4 +92,5 @@
             Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
         }
     }
+
 }

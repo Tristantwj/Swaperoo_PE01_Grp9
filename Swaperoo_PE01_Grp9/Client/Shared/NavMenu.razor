@@ -78,7 +78,6 @@
         <div class="slide-content">
             <label for="category">Category:</label>
             <select id="category" @bind="selectedCategory">
-                <option value="">All Category</option>
                 @if (Categorys != null)
                 {
                     @foreach (var category in Categorys)
@@ -90,7 +89,6 @@
 
             <label for="subCategory">SubCategory:</label>
             <select id="subCategory" @bind="selectedSubCategory">
-                <option value="">All SubCategorys</option>
                 @if (SubCategorys != null)
                 {
                     @foreach (var subCategory in SubCategorys)
@@ -99,7 +97,11 @@
                     }
                 }
             </select>
-
+            <label for="status">Status:</label>
+            <select id="status" @bind="selectedStatus">
+                <option value="sold">Sold</option>
+                <option value="ongoing">Ongoing</option>
+            </select>
             <button @onclick="FilterProducts">Filter Products</button>
         </div>
     </div>
@@ -119,9 +121,7 @@
 
     private string selectedCategory;
     private string selectedSubCategory;
-    private List<Product> FilteredProducts { get; set; } = new List<Product>();
-    private List<Product> Products { get; set; } = new List<Product>();
-
+    private string selectedStatus;
 
     private IList<Category>? Categorys;
     private IList<SubCategory>? SubCategorys;
@@ -133,9 +133,6 @@
             // Fetch categories and subcategories
             Categorys = await _client.GetFromJsonAsync<List<Category>>(Endpoints.CategorysEndpoint);
             SubCategorys = await _client.GetFromJsonAsync<List<SubCategory>>(Endpoints.SubCategorysEndpoint);
-
-            // Fetch products
-            Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
 
             var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             if (authenticationState.User.Identity.IsAuthenticated)
@@ -218,7 +215,7 @@
             // Reset filters when sliding box is closed
             selectedCategory = null;
             selectedSubCategory = null;
-            FilteredProducts = Products;
+            selectedStatus = null;
         }
 
         slidebox = isSlideBoxVisible ? "0px" : "-250px";
@@ -236,12 +233,11 @@
             // Navigate to the subcategory page with the selected subcategory
             Navigation.NavigateTo($"/subcategories/{Uri.EscapeDataString(selectedSubCategory)}");
         }
-        else
+        else if (!string.IsNullOrEmpty(selectedStatus) && selectedStatus != "All Status")
         {
-            // Reset to all products if no category or subcategory is selected
-            // Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+            // Navigate to the status page with the selected status
+            Navigation.NavigateTo($"/status/{Uri.EscapeDataString(selectedStatus)}");
         }
+        
     }
-
-
 }
