@@ -506,7 +506,7 @@
                 RatingValue = ratingvalue,
                 Description = desc,
                 DateCreated = DateTime.Now,
-                UserId = IndivChat.Purchase.PurchaseProduct.User.Id,
+                UserId = userId,
                 PurchaseId = IndivChat.PurchaseId,
                 SwapId = null,
             };
@@ -526,6 +526,7 @@
 
         await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
         await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Purchase.PurchaseProduct.Id}", product);
+        CloseRatingPopup();
     }
 
     public async Task CreateSwapRating()
@@ -543,7 +544,7 @@
                 RatingValue = ratingvalue,
                 Description = desc,
                 DateCreated = DateTime.Now,
-                UserId = IndivChat.Swap.OfferItem.User.Id,
+                UserId = userId,
                 PurchaseId = null,
                 SwapId = IndivChat.SwapId
             };

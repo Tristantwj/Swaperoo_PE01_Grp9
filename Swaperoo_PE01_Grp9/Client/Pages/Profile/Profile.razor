@@ -40,14 +40,10 @@
                 else
                 {
                     Console.WriteLine("NOT U");
-                }
-
-                
-            </div>
-            
+                }  
+            </div> 
         </div>
     </div>
-
     <div class="Featured_grid">
         @if (products != null)
         {
@@ -75,6 +71,80 @@
                 }
             }
         }
+    </div>
+
+    <div class="reviews">
+        <h2>Reviews</h2>
+        @if (ratings != null)
+        {
+            @foreach (var r in ratings)
+            {
+                @if(r.User.Id != id)
+                {
+                    @if(r.Purchase?.User?.Id == id || r.Purchase?.PurchaseProduct?.User?.Id == id)
+                    { 
+                        <div class="reviewcontent">
+                            @if (r.Purchase?.PurchaseProduct?.User?.Id != id)
+                            {
+                                <div class="reviewcontent-top">
+                                    @r.User.Name | 
+                                    Rating: @r.RatingValue | 
+                                    Review from seller
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="reviewcontent-top">
+                                    @r.User.Name |
+                                    Rating: @r.RatingValue |
+                                    Review from buyer
+                                </div>
+                            }
+                            <div class="reviewcontent-middle">
+                                <img src="@r.Purchase.PurchaseProduct.imagepath" style="width: 40px"/>
+                                @r.Purchase.PurchaseProduct.Name
+                            </div>
+                            <div class="reviewcontent-bottom">
+                                Description: @r.Description
+                            </div>
+                        </div>
+                    }
+                    @if (r.Swap?.SwapProduct?.User?.Id == id || r.Swap?.OfferItem?.User?.Id == id)
+                    {
+                        <div class="reviewcontent">
+                            @if(r.Swap?.SwapProduct?.User.Id != id)
+                            {
+                                <div class="reviewcontent-top">
+                                    @r.User.Name |
+                                    Rating: @r.RatingValue |
+                                    Review from seller
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="reviewcontent-top">
+                                    @r.User.Name |
+                                    Rating: @r.RatingValue |
+                                    Review from buyers
+                                </div>
+                            }
+                            <div class="reviewcontent-middle">
+                                Swap:
+                                <img src="@r.Swap.OfferItem.imagepath" style="width: 40px" />
+                                For:
+                                <img src="@r.Swap.SwapProduct.imagepath" style="width: 40px" />
+                            </div>
+
+                            <div class="reviewcontent-bottom">
+                                Description: @r.Description
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        }
+        
+        
     </div>
 
     <div class="popup" style="top: @popupTop; opacity: @popupOpacity; transform: @popupTransform">

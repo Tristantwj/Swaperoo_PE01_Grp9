@@ -27,7 +27,7 @@ namespace Swaperoo_PE01_Grp9.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRatings()
         {
-            var ratings = await _unitOfWork.Ratings.GetAll(includes: q => q.Include(x => x.User).Include(x => x.Purchase).Include(x => x.Swap));
+            var ratings = await _unitOfWork.Ratings.GetAll(includes: q => q.Include(x => x.User).Include(x => x.Purchase).ThenInclude(y => y.PurchaseProduct).ThenInclude(z => z.User).Include(x => x.Swap).ThenInclude(y => y.SwapProduct).ThenInclude(z => z.User).Include(x => x.Swap).ThenInclude(y => y.OfferItem).ThenInclude(z => z.User));
             return Ok(ratings);
         }
 
