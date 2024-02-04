@@ -73,9 +73,10 @@
                 <select id="ReportUserId" @bind="ReportUserId">
                     @if (users != null)
                     {
+                        <option value="" disabled selected>Select an option</option>
                         @foreach (var u in users)
                         {
-                            <option value="" disabled selected>Select an option</option>
+                           
                             if (u.Id != userId)
                             {
                                 <option value="@u.Id">@u.Name</option>
