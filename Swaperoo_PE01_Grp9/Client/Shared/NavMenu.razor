@@ -1,4 +1,5 @@
-﻿@inject HttpClient _client
+﻿
+@inject HttpClient _client
 @inject IJSRuntime js
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -73,10 +74,33 @@
         </div>
     </div>
     <div id="slideBox" class="slide-box" style="left: @slidebox">
+        <!-- Add category and subCategory filter options within the sliding box content -->
         <div class="slide-content">
-            <!-- Your sliding box content goes here -->
-            <!-- Example: -->
-            <p>This is the sliding box content.</p>
+            <label for="category">Category:</label>
+            <select id="category" @bind="selectedCategory">
+                <option value="">All Category</option>
+                @if (Categorys != null)
+                {
+                    @foreach (var category in Categorys)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                }
+            </select>
+
+            <label for="subCategory">SubCategory:</label>
+            <select id="subCategory" @bind="selectedSubCategory">
+                <option value="">All SubCategorys</option>
+                @if (SubCategorys != null)
+                {
+                    @foreach (var subCategory in SubCategorys)
+                    {
+                        <option value="@subCategory.Id">@subCategory.Name</option>
+                    }
+                }
+            </select>
+
+            <button @onclick="FilterProducts">Filter Products</button>
         </div>
     </div>
 </div>
@@ -92,47 +116,57 @@
     public int userId;
     private string userrole;
 
+
+    private string selectedCategory;
+    private string selectedSubCategory;
+    private List<Product> FilteredProducts { get; set; } = new List<Product>();
+    private List<Product> Products { get; set; } = new List<Product>();
+
+
+    private IList<Category>? Categorys;
+    private IList<SubCategory>? SubCategorys;
+
     protected override async Task OnInitializedAsync()
     {
-        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        if (authenticationState.User.Identity.IsAuthenticated)
+        try
         {
+            // Fetch categories and subcategories
+            Categorys = await _client.GetFromJsonAsync<List<Category>>(Endpoints.CategorysEndpoint);
+            SubCategorys = await _client.GetFromJsonAsync<List<SubCategory>>(Endpoints.SubCategorysEndpoint);
 
-            users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+            // Fetch products
+            Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
 
-
+            var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             var user = authenticationState.User;
 
             Console.WriteLine($"Username: {user.Identity.Name}");
             // Get the userId from the user's identity
             username = user.Identity.Name;
-            if (users != null)
+
+            @if (users != null)
             {
                 @foreach (var i in users)
                 {
                     if (i.Email == username)
                     {
-                        userpfp = i.profilepicture;
                         userId = i.Id;
-                        userrole = i.Role;
-                        Console.WriteLine($"UserId: {userId}");
-                        break;
                     }
-                    else
-                    {
-                        Console.WriteLine("no userid found");
-                    }
-                    
                 }
+            }
 
-            }
-            else
-            {
-                Console.WriteLine("User not found");
-            }
+            Console.WriteLine($"User ID: {userId}");
 
         }
+        catch (AccessTokenNotAvailableException ex)
+        {
+            // Handle exception if necessary
+            Console.WriteLine($"AccessTokenNotAvailableException: {ex.Message}");
+        }
     }
+
+
+
     public void index() { Navigation.NavigateTo("/"); }
     public void GotoRegister() { Navigation.NavigateTo("authentication/register"); }
     public void GotoLogin() { Navigation.NavigateToLogin("authentication/login"); }
@@ -160,6 +194,36 @@
     private void ToggleSlideBox()
     {
         isSlideBoxVisible = !isSlideBoxVisible;
-        slidebox = isSlideBoxVisible ? "0px" : "-250px"; // Adjust the distance for the sliding effect
+
+        if (!isSlideBoxVisible)
+        {
+            // Reset filters when sliding box is closed
+            selectedCategory = null;
+            selectedSubCategory = null;
+            FilteredProducts = Products;
+        }
+
+        slidebox = isSlideBoxVisible ? "0px" : "-250px";
     }
+
+    private void FilterProducts()
+    {
+        if (!string.IsNullOrEmpty(selectedCategory) && selectedCategory != "All Category")
+        {
+            // Navigate to the category page with the selected category
+            Navigation.NavigateTo($"/categories/{Uri.EscapeDataString(selectedCategory)}");
+        }
+        else if (!string.IsNullOrEmpty(selectedSubCategory) && selectedSubCategory != "All SubCategorys")
+        {
+            // Navigate to the subcategory page with the selected subcategory
+            Navigation.NavigateTo($"/subcategories/{Uri.EscapeDataString(selectedSubCategory)}");
+        }
+        else
+        {
+            // Reset to all products if no category or subcategory is selected
+            // Products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+        }
+    }
+
+
 }

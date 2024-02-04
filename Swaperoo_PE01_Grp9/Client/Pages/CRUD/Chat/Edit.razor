@@ -1,6 +1,7 @@
 ﻿@page "/chats/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Chats</h3>
@@ -12,8 +13,6 @@
     Chat? chat = new Chat();
     private IList<Purchase>? Purchases;
     private IList<Swap>? Swaps;
-    private int? selectedPurchaseId;
-    private int? selectedSwapId;
 
     protected async override Task OnParametersSetAsync()
     {
@@ -21,28 +20,25 @@
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
         Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
 
-        // Set the selected values
-        selectedPurchaseId = chat.PurchaseId;
-        selectedSwapId = chat.SwapId;
     }
 
     async Task EditChats()
     {
-        // Update the chat object with selected values
-        chat.PurchaseId = selectedPurchaseId;
-        chat.SwapId = selectedSwapId;
+        if (string.IsNullOrWhiteSpace(chat.Name))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a chat name.");
+            return;
+        }
 
-        await _client.PutAsJsonAsync($"{Endpoints.ChatsEndpoint}/{id}", chat);
-        _navManager.NavigateTo("/chats/");
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.CategorysEndpoint}/{id}", chat);
+            _navManager.NavigateTo("/chats/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating chat: {ex.Message}");
+        }
     }
 
-    private void OnPurchaseSelected(ChangeEventArgs args)
-    {
-        selectedSwapId = null;
-    }
-
-    private void OnSwapSelected(ChangeEventArgs args)
-    {
-        selectedPurchaseId = null;
-    }
 }

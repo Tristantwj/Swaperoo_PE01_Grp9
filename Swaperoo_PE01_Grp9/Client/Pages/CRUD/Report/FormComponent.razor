@@ -7,7 +7,7 @@
 
     <fieldset disabled="@Disabled">
 
-        <div class="form-group">
+        <div class="form-group mb-4">
             <label>Reported Product: </label>
             <div>
                 <InputSelect @bind-Value="report.ReportedProductId" class="form-control">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-4">
             <label>Report Type: </label>
             <div>
                 <InputSelect @bind-Value="@report.ReportType" class="form-control">
@@ -38,7 +38,7 @@
 
 
 
-        <div class="form-group">
+        <div class="form-group mb-4">
             <label>Reporter: </label>
             <div>
                 <InputSelect @bind-Value="report.ReporterUserId" class="form-control">
@@ -53,7 +53,7 @@
                 <ValidationMessage For="@(()=>report.ReporterUserId)"></ValidationMessage>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-4">
             <label>Reported User: </label>
             <div>
                 <InputSelect @bind-Value="report.ReportedUserId" class="form-control">
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-4">
             <label>Status: </label>
             <div>
                 <InputSelect @bind-Value="@report.status" class="form-control">
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-4">
             <label>Date: </label>
             <div>
                 <InputDate @bind-Value="@report.DateCreated" class="form-control" />
