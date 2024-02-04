@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="popup" style="top: @productpopupTop; opacity: @productpopupOpacity; transform: @productpopupTransform">
+    <!--<div class="popup" style="top: @productpopupTop; opacity: @productpopupOpacity; transform: @productpopupTransform">
         <div class="close-btn" @onclick="ToggleProductPopUp">&times;</div>
         <div class="sellform">
             <h2>Report Product</h2>
@@ -57,6 +57,7 @@
             </div>
         </div>
     </div>
+    -->
     <div class="popup" style="top: @userpopupTop; opacity: @userpopupOpacity; transform: @userpopupTransform">
         <div class="close-btn" @onclick="ToggleUserPopUp">&times;</div>
         <div class="sellform">
@@ -72,6 +73,7 @@
                     {
                         @foreach (var u in users)
                         {
+                            <option value="" disabled selected>Select an option</option>
                             if (u.Id != userId)
                             {
                                 <option value="@u.Id">@u.Name</option>
@@ -117,13 +119,13 @@
     private int ReportUserId;
 
     //popup---------------------
-    private bool isProductPopupVisible = false;
+    //private bool isProductPopupVisible = false;
     private bool isUserPopupVisible = false;
     private bool isSitePopupVisible = false;
 
-    private string productpopupTop = "-150%";
-    private string productpopupOpacity = "0";
-    private string productpopupTransform = "translate(-50%, -50%) scale(1.25)";
+    //private string productpopupTop = "-150%";
+    //private string productpopupOpacity = "0";
+    //private string productpopupTransform = "translate(-50%, -50%) scale(1.25)";
 
     private string userpopupTop = "-150%";
     private string userpopupOpacity = "0";
@@ -154,23 +156,24 @@
         }
         Console.WriteLine($"User ID: {userId}");
     }
-    
-    public async Task makeproductreport()
-    {
-        var ProductReport = new Report
-            {
-                ReportType = "Product",
-                Description = ReportDescription,
-                DateCreated = DateTime.Now,
-                status = "Unresolved",
-                ReporterUserId = userId,
-                ReportedUserId = null,
-                ReportedProductId = ReportProductId
-            };
 
-        await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, ProductReport);
-        ToggleProductPopUp();
+    /*public async Task makeproductreport()
+            {
+            var ProductReport = new Report
+            {
+            ReportType = "Product",
+            Description = ReportDescription,
+            DateCreated = DateTime.Now,
+            status = "Unresolved",
+            ReporterUserId = userId,
+            ReportedUserId = null,
+            ReportedProductId = ReportProductId
+        };
+
+    await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, ProductReport);
+    ToggleProductPopUp();
     }
+    */
     public async Task makeuserreport()
     {
         var UserReport = new Report
@@ -203,9 +206,9 @@
         await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, SiteReport);
         ToggleSitePopUp();
     }
-    
-    private void ToggleProductPopUp()
-    {
+    /*
+        private void ToggleProductPopUp()
+        {
         isProductPopupVisible = !isProductPopupVisible;
 
         // Set styles based on popup visibility
@@ -213,6 +216,7 @@
         productpopupOpacity = isProductPopupVisible ? "1" : "0";
         productpopupTransform = isProductPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
     }
+    */
     private void ToggleUserPopUp()
     {
         isUserPopupVisible = !isUserPopupVisible;
@@ -221,6 +225,7 @@
         userpopupTop = isUserPopupVisible ? "50%" : "-150%";
         userpopupOpacity = isUserPopupVisible ? "1" : "0";
         userpopupTransform = isUserPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+        CloseSitePopup();
     }
     private void ToggleSitePopUp()
     {
@@ -230,5 +235,25 @@
         sitepopupTop = isSitePopupVisible ? "50%" : "-150%";
         sitepopupOpacity = isSitePopupVisible ? "1" : "0";
         sitepopupTransform = isSitePopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+        CloseUserPopup();
+    }
+
+    private void CloseUserPopup()
+    {
+        isUserPopupVisible = false;
+
+        // Reset styles to hide the popup
+        userpopupTop = "-150%";
+        userpopupOpacity = "0";
+        userpopupTransform = "translate(-50%, -50%) scale(1.25)";
+    }
+    private void CloseSitePopup()
+    {
+        isSitePopupVisible = false;
+
+        // Reset styles to hide the popup
+        sitepopupTop = "-150%";
+        sitepopupOpacity = "0";
+        sitepopupTransform = "translate(-50%, -50%) scale(1.25)";
     }
 }

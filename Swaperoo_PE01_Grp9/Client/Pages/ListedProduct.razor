@@ -67,6 +67,7 @@
                     <select id="swapoffer" @bind="offerProductId">
                         @if (products != null)
                         {
+                            <option value="" disabled selected>Select an option</option>
                             @foreach (var p in products)
                             {
                                 if (p.UserId == userId && p.status != "sold")
@@ -143,21 +144,25 @@
 
     private void ToggleSellPopUp()
     {
+        Console.WriteLine("ToggleSellPopUp");
         isSellPopupVisible = !isSellPopupVisible;
 
         // Set styles based on popup visibility
         sellpopupTop = isSellPopupVisible ? "50%" : "-150%";
         sellpopupOpacity = isSellPopupVisible ? "1" : "0";
         sellpopupTransform = isSellPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+        CloseSwapPopup();
     }
     private void ToggleSwapPopUp()
     {
+        Console.WriteLine("ToggleSwapPopUp");
         isSwapPopupVisible = !isSwapPopupVisible;
 
         // Set styles based on popup visibility
         swappopupTop = isSwapPopupVisible ? "50%" : "-150%";
         swappopupOpacity = isSwapPopupVisible ? "1" : "0";
         swappopupTransform = isSwapPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+        CloseSellPopup();
     }
     private void CloseSellPopup()
     {
@@ -214,6 +219,13 @@
 
     private async Task makeswap()
     {
+        if (offerProductId == 0)
+        {
+            // Display an error message or handle the validation error as needed
+            // For example, you can show an alert using JavaScript
+            await js.InvokeVoidAsync("alert", "Please select an option.");
+            return; // Exit the method without proceeding further
+        }
         var swap = new Swap
             {
                 SwapDate = DateTime.Now,
