@@ -13,8 +13,8 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public string? Description { get; set; }
         public string profilepicture { get; set; }
         public string Role { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime DateUpdated { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
         
     }
 }

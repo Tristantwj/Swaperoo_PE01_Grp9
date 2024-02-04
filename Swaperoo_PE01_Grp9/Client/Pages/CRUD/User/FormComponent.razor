@@ -54,6 +54,14 @@
                 <ValidationMessage For="@(()=>user.Role)"></ValidationMessage>
             </div>
         </div>
+        <div class="form-group">
+            <label>Created Date: </label>
+            <div>
+                <InputDate @bind-Value="@user.DateCreated" class="form-control" />
+                <ValidationMessage For="@(() => user.DateCreated)" />
+            </div>
+        </div>
+
     </fieldset>
 
 
@@ -73,4 +81,10 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
+
+    protected async override Task OnInitializedAsync()
+    {
+        user.DateUpdated = DateTime.Now;
+    }
 }
+

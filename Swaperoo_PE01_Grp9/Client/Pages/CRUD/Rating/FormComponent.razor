@@ -58,7 +58,7 @@
                         <option value=""> Choose Option</option>
                         @foreach (var purchase in Purchases)
                         {
-                            <option value="@purchase.Id">@purchase.Id</option>
+                            <option value="@purchase.Id">@purchase.PurchaseProduct.Name</option>
                         }
                     }
                 </InputSelect>
@@ -74,7 +74,7 @@
                         <option value=""> Choose Option</option>
                         @foreach (var swap in Swaps)
                         {
-                            <option value="@swap.Id">@swap.Id</option>
+                            <option value="@swap.Id">@swap.SwapProduct.Name</option>
                         }
                     }
                 </InputSelect>

@@ -228,16 +228,22 @@
             // Navigate to the category page with the selected category
             Navigation.NavigateTo($"/categories/{Uri.EscapeDataString(selectedCategory)}");
         }
-        else if (!string.IsNullOrEmpty(selectedSubCategory) && selectedSubCategory != "All SubCategorys")
+        if (!string.IsNullOrEmpty(selectedSubCategory) && selectedSubCategory != "All SubCategorys")
         {
             // Navigate to the subcategory page with the selected subcategory
             Navigation.NavigateTo($"/subcategories/{Uri.EscapeDataString(selectedSubCategory)}");
         }
-        else if (!string.IsNullOrEmpty(selectedStatus) && selectedStatus != "All Status")
+        if (!string.IsNullOrEmpty(selectedStatus) && selectedStatus != "All Status")
         {
             // Navigate to the status page with the selected status
             Navigation.NavigateTo($"/status/{Uri.EscapeDataString(selectedStatus)}");
         }
-        
+        // Close the sliding box after filtering
+        isSlideBoxVisible = false;
+        slidebox = "-250px";
+        selectedCategory = null;
+        selectedSubCategory = null;
+        selectedStatus = null;
     }
 }
+
