@@ -28,6 +28,7 @@ else
                 <th>PurchaseId</th>
                 <th>Name</th>
                 <th>Offer Price</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -38,6 +39,7 @@ else
                     <td>@purchase.Id</td>
                     <td>@purchase.PurchaseProduct.Name</td>
                     <td>@purchase.OfferPrice</td>
+                    <td>@purchase.Status</td>
                     <td>
                         <a href="/Purchases/view/@purchase.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>

@@ -28,6 +28,8 @@ else
                 <th>SwapId</th>
                 <th>Offered Item</th>
                 <th>Product</th>
+                <th>Buyer Status</th>
+                <th>Seller Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -38,6 +40,8 @@ else
                     <td>@swap.Id</td>
                     <td>@swap.OfferItem.Name</td>
                     <td>@swap.SwapProduct.Name</td>
+                    <td>@swap.BuyerStatus</td>
+                    <td>@swap.SellerStatus</td>
                     <td>
                         <a href="/Swaps/view/@swap.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>

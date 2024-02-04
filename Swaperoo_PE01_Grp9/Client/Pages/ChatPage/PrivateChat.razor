@@ -52,11 +52,11 @@
         </div>
         <div class="chatarea">
             <div class="productdisplaybar">
-                @if(IndivChat.Purchase?.PurchaseProduct?.status == "sold" || IndivChat.Swap?.SwapProduct?.status =="sold" || IndivChat.Swap?.OfferItem?.status == "sold")
+                @if (IndivChat.Purchase?.PurchaseProduct?.status == "Sold" || IndivChat.Swap?.SwapProduct?.status == "Sold" || IndivChat.Swap?.OfferItem?.status == "Sold")
                 {
                     <div class="productssold">
                         PRODUCT SOLD
-                        @if (IndivChat.Purchase?.Status == "Confirmed" || IndivChat.Swap?.Status == "Confirmed" || IndivChat.Purchase?.Status == "Rated" || IndivChat.Swap?.Status == "Rated")
+                        @if (IndivChat.Purchase?.Status == "Confirmed" || IndivChat.Swap?.BuyerStatus== "Confirmed" || IndivChat.Swap?.SellerStatus == "Confirmed")
                         {
                             <div style="display:inline">
                                 | <button class="product_button" @onclick="ToggleRatingPopUp" style="width:180px; font-size:20px">Leave a Rating</button>
@@ -424,7 +424,7 @@
                 Description = IndivChat.Purchase.PurchaseProduct.Description,
                 imagepath = IndivChat.Purchase.PurchaseProduct.imagepath,
                 price = IndivChat.Purchase.OfferPrice,
-                status = "sold",
+                status = "Sold",
                 UserId = IndivChat.Purchase.PurchaseProduct.UserId,
                 SubCategoryId = IndivChat.Purchase.PurchaseProduct.SubCategoryId
             };
@@ -441,7 +441,8 @@
             {
                 Id = IndivChat.Swap.Id,
                 SwapDate = IndivChat.Swap.SwapDate,
-                Status = IndivChat.Swap.Status,
+                BuyerStatus = IndivChat.Swap.BuyerStatus,
+                SellerStatus = IndivChat.Swap.SellerStatus,
                 OfferItemId = offerProductId,
                 SwapProductId = IndivChat.Swap.SwapProductId
             };
@@ -456,7 +457,8 @@
             {
                 Id = IndivChat.Swap.Id,
                 SwapDate = IndivChat.Swap.SwapDate,
-                Status = "Confirmed",
+                BuyerStatus = "Confirmed",
+                SellerStatus = "Confirmed",
                 OfferItemId = IndivChat.Swap.OfferItemId,
                 SwapProductId = IndivChat.Swap.SwapProductId
             };
@@ -468,7 +470,7 @@
                 Description = IndivChat.Swap.SwapProduct.Description,
                 imagepath = IndivChat.Swap.SwapProduct.imagepath,
                 price = IndivChat.Swap.SwapProduct.price,
-                status = "sold",
+                status = "Sold",
                 UserId = IndivChat.Swap.SwapProduct.UserId,
                 SubCategoryId = IndivChat.Swap.SwapProduct.SubCategoryId
             };
@@ -480,7 +482,7 @@
                 Description = IndivChat.Swap.OfferItem.Description,
                 imagepath = IndivChat.Swap.OfferItem.imagepath,
                 price = IndivChat.Swap.OfferItem.price,
-                status = "sold",
+                status = "Sold",
                 UserId = IndivChat.Swap.OfferItem.UserId,
                 SubCategoryId = IndivChat.Swap.OfferItem.SubCategoryId
             };
@@ -512,21 +514,19 @@
                 SwapId = null,
             };
 
-        var product = new Product()
+        var purchaserated = new Purchase()
             {
-                Id = IndivChat.Purchase.PurchaseProduct.Id,
-                Name = IndivChat.Purchase.PurchaseProduct.Name,
-                DateCreated = IndivChat.Purchase.PurchaseProduct.DateCreated,
-                Description = IndivChat.Purchase.PurchaseProduct.Description,
-                imagepath = IndivChat.Purchase.PurchaseProduct.imagepath,
-                price = IndivChat.Purchase.OfferPrice,
-                status = "Rated",
-                UserId = IndivChat.Purchase.PurchaseProduct.UserId,
-                SubCategoryId = IndivChat.Purchase.PurchaseProduct.SubCategoryId
+                Id = IndivChat.Purchase.Id,
+                SellDate = IndivChat.Purchase.SellDate,
+                OfferPrice = IndivChat.Purchase.OfferPrice,
+                Status = "Rated",
+                UserId = IndivChat.Purchase.UserId,
+                PurchaseProductId = IndivChat.Purchase.PurchaseProductId
             };
+        
 
         await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
-        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Purchase.PurchaseProduct.Id}", product);
+        await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{IndivChat.Purchase.Id}", purchaserated);
         CloseRatingPopup();
     }
 
@@ -553,36 +553,30 @@
 
         if (userId == IndivChat.Swap?.SwapProduct.User.Id)
         {
-            var swapproduct = new Product()
-            {
-                Id = IndivChat.Swap.SwapProduct.Id,
-                Name = IndivChat.Swap.SwapProduct.Name,
-                DateCreated = IndivChat.Swap.SwapProduct.DateCreated,
-                Description = IndivChat.Swap.SwapProduct.Description,
-                imagepath = IndivChat.Swap.SwapProduct.imagepath,
-                price = IndivChat.Swap.SwapProduct.price,
-                status = "Rated",
-                UserId = IndivChat.Swap.SwapProduct.UserId,
-                SubCategoryId = IndivChat.Swap.SwapProduct.SubCategoryId
-            };
-            await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.SwapProduct.Id}", swapproduct);
+            var swapRated = new Swap()
+                {
+                    Id = IndivChat.Swap.Id,
+                    SwapDate = IndivChat.Swap.SwapDate,
+                    BuyerStatus = IndivChat.Swap.BuyerStatus,
+                    SellerStatus = "Rated",
+                    OfferItemId = IndivChat.Swap.OfferItemId,
+                    SwapProductId = IndivChat.Swap.SwapProductId
+                };
+            await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.SwapProduct.Id}", swapRated);
 
         }
         else
         { 
-        var offerproduct = new Product()
-            {
-                Id = IndivChat.Swap.OfferItem.Id,
-                Name = IndivChat.Swap.OfferItem.Name,
-                DateCreated = IndivChat.Swap.OfferItem.DateCreated,
-                Description = IndivChat.Swap.OfferItem.Description,
-                imagepath = IndivChat.Swap.OfferItem.imagepath,
-                price = IndivChat.Swap.OfferItem.price,
-                status = "Rated",
-                UserId = IndivChat.Swap.OfferItem.UserId,
-                SubCategoryId = IndivChat.Swap.OfferItem.SubCategoryId
-            };
-        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.OfferItem.Id}", offerproduct);
+            var swapRated = new Swap()
+                {
+                    Id = IndivChat.Swap.Id,
+                    SwapDate = IndivChat.Swap.SwapDate,
+                    BuyerStatus = "Rated",
+                    SellerStatus = IndivChat.Swap.SellerStatus,
+                    OfferItemId = IndivChat.Swap.OfferItemId,
+                    SwapProductId = IndivChat.Swap.SwapProductId
+                };
+            await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{IndivChat.Swap.SwapProduct.Id}", swapRated);
         }
 
         await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
