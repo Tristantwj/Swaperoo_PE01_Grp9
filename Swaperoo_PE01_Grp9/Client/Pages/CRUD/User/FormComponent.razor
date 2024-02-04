@@ -14,8 +14,13 @@
         <div class="form-group">
             <label>Region: </label>
             <div>
-                <InputText @bind-Value="@user.Region" class="form-control" />
-                <ValidationMessage For="@(() => user.Region)" />
+                <InputSelect @bind-Value="user.Region" class="form-control">
+                <option value="north">North</option>
+                <option value="south">South</option>
+                <option value="east">East</option>
+                <option value="west">West</option>
+                </InputSelect>
+                <ValidationMessage For="@(()=>user.Region)"></ValidationMessage>
             </div>
         </div>
         <div class="form-group">

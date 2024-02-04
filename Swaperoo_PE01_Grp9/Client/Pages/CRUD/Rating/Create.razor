@@ -1,5 +1,32 @@
-﻿<h3>Create</h3>
+﻿@page "/ratings/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@layout NoMenuLayout
+
+<h3 class="card-title">Create New Rating</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create New Rating" rating="rating" OnValidSubmit="@CreateRating" />
 
 @code {
+    Rating rating = new Rating();
+
+    private IList<User>? Users;
+    private IList<Purchase>? Purchases;
+    private IList<Swap>? Swaps;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
+        Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.UsersEndpoint}");
+    }
+
+    private async Task CreateRating()
+    {
+        await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
+        _navManager.NavigateTo("/ratings/");
+    }
 
 }

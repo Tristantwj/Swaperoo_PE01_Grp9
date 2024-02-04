@@ -1,6 +1,7 @@
 ﻿@page "/categorys/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Categorys</h3>
@@ -18,7 +19,20 @@
 
     async Task EditCategorys()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.CategorysEndpoint}/{id}", category);
-        _navManager.NavigateTo("/categorys/");
+        if (string.IsNullOrWhiteSpace(category.Name))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a category name.");
+            return;
+        }
+
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.CategorysEndpoint}/{id}", category);
+            _navManager.NavigateTo("/categorys/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating category: {ex.Message}");
+        }
     }
 }

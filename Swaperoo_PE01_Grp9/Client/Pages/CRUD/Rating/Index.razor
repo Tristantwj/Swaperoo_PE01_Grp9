@@ -5,85 +5,76 @@
 @implements IDisposable
 @layout AdminMenuLayout
 
-<h3 class="card-title">Users</h3>
+<h3 class="card-title">Ratings</h3>
 <br />
 <head>
     <link href="css/landing.css" rel="stylesheet" />
     <link href="css/Crud.css" rel="stylesheet" />
 </head>
 
-<body>
-    <a href="/users/create" class="btn btn-secondary">
-        <span class="oi oi-plus"></span>
-        Create New User
-    </a>
-    <br />
-    <br />
 
-    @if (Users == null)
-    {
-        <div class="alert alert-info">Loading Users...</div>
-    }
-    else
-    {
-        <table class="table table-responsive" id="usersTable">
-            <thead>
+<a href="/ratings/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Ratings
+</a>
+<br />
+<br />
+@if (Ratings == null)
+{
+    <div class="alert alert-info">Loading Ratings....</div>
+}
+else
+{
+    <table class="table table-responsive" id="ratingsTable">
+        <thead>
+            <tr>
+                <th>RatingId</th>
+                <th>RatingValue</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rating in Ratings)
+            {
                 <tr>
-                    <th>Name</th>
-                    <th>Actions</th>
+                    <td>@rating.Id</td>
+                    <td>@rating.RatingValue</td>
+                    <td>@rating.DateCreated.Date.ToString("dd MMMM yyyy")</td>
+                    <td>
+                        <a href="/Ratings/view/@rating.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Ratings/edit/@rating.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(rating.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var user in Users)
-                {
-                    <tr>
-                        <td>@user.Name</td>
-                        <td>
-                            <a href="/users/view/@user.Id" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                            <a href="/users/edit/@user.Id" class="btn btn-warning">
-                                <span class="oi oi-pencil"></span>
-                            </a>
-                            <button class="btn btn-danger" @onclick="@(()=>Delete(user.Id))">
-                                <span class="oi oi-delete"></span>
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-</body>
-
-
+            }
+        </tbody>
+    </table>
+}
+<br />
 @code {
-
-    private bool collapseNavMenu = true;
-
-    private string? CrudLayoutCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
-    private List<User>? Users;
+    private List<Rating>? Ratings;
 
     protected async override Task OnInitializedAsync()
     {
-        Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+        Ratings = await _client.GetFromJsonAsync<List<Rating>>($"{Endpoints.RatingsEndpoint}");
     }
 
-    async Task Delete(int userId)
+    async Task Delete(int RatingId)
     {
-        if (Users != null)
+        if (Ratings != null)
         {
-            var user = Users.First(q => q.Id == userId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {user.Name}?");
+            var Rating = Ratings.First(q => q.Id == RatingId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Rating.Id}?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.UsersEndpoint}/{userId}");
+                await _client.DeleteAsync($"{Endpoints.RatingsEndpoint}/{RatingId}");
                 await OnInitializedAsync();
             }
         }
@@ -91,12 +82,12 @@
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("AddDataTable", "#usersTable");
+        await js.InvokeVoidAsync("AddDataTable", "#ratingsTable");
     }
 
     public void Dispose()
     {
-        js.InvokeVoidAsync("DataTablesDispose", "#usersTable");
+        js.InvokeVoidAsync("DataTablesDispose", "#ratingsTable");
     }
-
 }
+
