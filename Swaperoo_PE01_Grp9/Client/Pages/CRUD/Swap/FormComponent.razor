@@ -37,36 +37,6 @@
                 <ValidationMessage For="@(()=>swap.SwapProductId)"></ValidationMessage>
             </div>
         </div>
-        <div class="form-group">
-            <label>Buyer: </label>
-            <div>
-                <InputSelect @bind-Value="swap.BuyerId" class="form-control">
-                    @if (Buyers != null)
-                    {
-                        @foreach (var buyer in Buyers)
-                        {
-                            <option value="@buyer.Id">@buyer.Name</option>
-                        }
-                    }
-                </InputSelect>
-                <ValidationMessage For="@(()=>swap.BuyerId)"></ValidationMessage>
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Seller: </label>
-            <div>
-                <InputSelect @bind-Value="swap.SellerId" class="form-control">
-                    @if (Sellers != null)
-                    {
-                        @foreach (var seller in Sellers)
-                        {
-                            <option value="@seller.Id">@seller.Name</option>
-                        }
-                    }
-                </InputSelect>
-                <ValidationMessage For="@(()=>swap.SellerId)"></ValidationMessage>
-            </div>
-        </div>
 
     </fieldset>
 

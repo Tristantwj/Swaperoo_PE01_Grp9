@@ -258,9 +258,7 @@
                 SwapDate = DateTime.Now,
                 Status = null,
                 OfferItemId = offerProductId,
-                SwapProductId = product.Id,
-                BuyerId = userId,
-                SellerId = product.UserId
+                SwapProductId = product.Id
             };
 
         var responseS = await _client.PostAsJsonAsync(Endpoints.SwapsEndpoint, swap);
