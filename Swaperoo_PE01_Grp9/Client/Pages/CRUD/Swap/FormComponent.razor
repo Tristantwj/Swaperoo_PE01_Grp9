@@ -37,6 +37,28 @@
                 <ValidationMessage For="@(()=>swap.SwapProductId)"></ValidationMessage>
             </div>
         </div>
+        <div class="form-group">
+            <label>Buyer Status: </label>
+            <div>
+                <InputSelect @bind-Value="@swap.BuyerStatus" class="form-control">
+                    <option value="">Null</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Rated">Rated</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => swap.BuyerStatus)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Seller Status: </label>
+            <div>
+                <InputSelect @bind-Value="@swap.SellerStatus" class="form-control">
+                    <option value="">Null</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Rated">Rated</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => swap.SellerStatus)" />
+            </div>
+        </div>
 
     </fieldset>
 

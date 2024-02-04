@@ -14,7 +14,8 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                 {
                     Id = 1,
                     SwapDate = DateTime.Now,
-                    Status = null,
+                    BuyerStatus = null,
+                    SellerStatus = null,
                     OfferItemId = 3,
                     SwapProductId = 4
                 }
