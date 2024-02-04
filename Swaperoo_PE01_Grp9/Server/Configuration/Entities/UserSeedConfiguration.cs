@@ -18,7 +18,7 @@ namespace Swaperoo_PE01_Grp9.Server.Configuration.Entities
                     Region = "North",
                     Description = "empty",
                     profilepicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-                    Role = "User",
+                    Role = "Admin",
                     DateCreated = DateTime.Now,
                     DateUpdated = DateTime.Now
                 },
