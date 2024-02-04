@@ -13,13 +13,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Chat Id: </label>
-            <div>
-                <InputNumber @bind-Value="@chat.Id" class="form-control" />
-                <ValidationMessage For="@(() => chat.Id)" />
-            </div>
-        </div>
-        <div class="form-group">
             <label>Chat Name: </label>
             <div>
                 <InputText @bind-Value="@chat.Name" class="form-control" />
@@ -33,10 +26,11 @@
                 <ValidationMessage For="@(() => chat.DateCreated)" />
             </div>
         </div>
+
         <div class="form-group">
             <label>Purchase: </label>
             <div>
-                <InputSelect @bind-Value="chat.PurchaseId" class="form-control">
+                <InputSelect @bind-Value="chat.PurchaseId" class="form-control" @oninput="HandlePurchaseInput">
                     <option value="">-- Select Purchase --</option>
                     @if (Purchases != null)
                     {
@@ -52,7 +46,7 @@
         <div class="form-group">
             <label>Swap: </label>
             <div>
-                <InputSelect @bind-Value="chat.SwapId" class="form-control">
+                <InputSelect @bind-Value="chat.SwapId" class="form-control" @oninput="HandleSwapInput">
                     <option value="">-- Select Swap --</option>
                     @if (Swaps != null)
                     {
@@ -87,11 +81,28 @@
 
     private IList<Purchase>? Purchases;
     private IList<Swap>? Swaps;
-
+        private string selectedTransactionType = "Purchases";
 
     protected async override Task OnInitializedAsync()
     {
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
         Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
+    }
+    private void HandleSwapInput(ChangeEventArgs args)
+    {
+        if (args.Value != null && !string.IsNullOrWhiteSpace(args.Value.ToString()))
+        {
+            // If Swap input is selected, clear Purchase input
+            chat.PurchaseId = null;
+        }
+    }
+
+    private void HandlePurchaseInput(ChangeEventArgs args)
+    {
+        if (args.Value != null && !string.IsNullOrWhiteSpace(args.Value.ToString()))
+        {
+            // If Purchase input is selected, clear Swap input
+            chat.SwapId = null;
+        }
     }
 }

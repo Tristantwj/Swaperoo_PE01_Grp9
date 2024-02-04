@@ -36,7 +36,13 @@
             </div>
         </div>
 
-
+        <div class="form-group">
+            <label>Description: </label>
+            <div>
+                <InputText @bind-Value="@report.Description" class="form-control" />
+                <ValidationMessage For="@(()=>report.Description)" />
+            </div>
+        </div>
 
         <div class="form-group">
             <label>Reporter: </label>
