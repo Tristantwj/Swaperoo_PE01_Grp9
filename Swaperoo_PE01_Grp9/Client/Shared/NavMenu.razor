@@ -19,7 +19,7 @@
                 </NotAuthorized>
                 <Authorized>
                     <button class="header_buttons" type="button" @onclick="GotoCreateListing">Sell on Swaperoo</button>
-                    <button class="header_buttons" type="button">Help & Services</button>
+                    <button class="header_buttons" type="button" @onclick="GotoHelp">Help & Services</button>
                 </Authorized>
             </AuthorizeView>
             
@@ -130,7 +130,7 @@
             {
                 Console.WriteLine("User not found");
             }
-            
+
         }
     }
     public void index() { Navigation.NavigateTo("/"); }
@@ -141,6 +141,7 @@
     public void GotoProfile() { Navigation.NavigateTo($"/profile/{userId}"); }
     public void GotoChat() { Navigation.NavigateTo("/Chat"); }
     public void GotoAdminMenu() { Navigation.NavigateTo("/users"); }
+    public void GotoHelp() { Navigation.NavigateTo("/help"); }
 
     private void HandleSearch(string term)
     {

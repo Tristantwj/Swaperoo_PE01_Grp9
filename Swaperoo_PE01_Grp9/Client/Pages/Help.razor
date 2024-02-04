@@ -1,0 +1,234 @@
+﻿@page "/help"
+@inject HttpClient _client
+@inject IJSRuntime js
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Help</PageTitle>
+
+<head>
+    <link href="css/landing.css" rel="stylesheet" />
+    <link href="css/Help.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h1>Help Centre</h1>
+    <div class="imagearea">
+        <div class="imagecontent">
+            <div class="contentimage">
+                <img src="https://www.mypaperlessoffice.com/images/Cafeteria-Plan-Administration.png" @onclick="ToggleSitePopUp" />
+            </div>
+            <div class="imagereporttext">Report Bugs</div>
+        </div>
+        <div class="imagecontent">
+            <div>
+                <img src="images/reportuser.png" @onclick="ToggleUserPopUp" />
+            </div>
+            <div class="imagereporttext">Report User</div>
+        </div>
+    </div>
+
+    <div class="popup" style="top: @productpopupTop; opacity: @productpopupOpacity; transform: @productpopupTransform">
+        <div class="close-btn" @onclick="ToggleProductPopUp">&times;</div>
+        <div class="sellform">
+            <h2>Report Product</h2>
+            <div class="sell-form-element">
+                <label for="ReportDescription">Description:</label><br>
+                <textarea id="ReportDescription" name="ReportDescription" @bind="ReportDescription"></textarea><br>
+            </div>
+            <div class="sell-form-element">
+                <label for="ReportProductId">Product:</label><br>
+                <select id="ReportProductId" @bind="ReportProductId">
+                    @if (products != null)
+                    {
+                        @foreach (var p in products)
+                        {
+                            if (p.UserId != userId)
+                            {
+                                <option value="@p.Id">@p.Name</option>
+                            }
+                        }
+                    }
+
+                </select>
+            </div>
+            <div class="sell-form-element">
+                <button @onclick="makeproductreport">Make Report</button>
+            </div>
+        </div>
+    </div>
+    <div class="popup" style="top: @userpopupTop; opacity: @userpopupOpacity; transform: @userpopupTransform">
+        <div class="close-btn" @onclick="ToggleUserPopUp">&times;</div>
+        <div class="sellform">
+            <h2>Report User</h2>
+            <div class="sell-form-element">
+                <label for="ReportUserDescription">Description:</label><br>
+                <textarea id="ReportUserDescription" name="ReportUserDescription" @bind="ReportUserDescription"></textarea><br>
+            </div>
+            <div class="sell-form-element">
+                <label for="ReportUserId">Product:</label><br>
+                <select id="ReportUserId" @bind="ReportUserId">
+                    @if (users != null)
+                    {
+                        @foreach (var u in users)
+                        {
+                            if (u.Id != userId)
+                            {
+                                <option value="@u.Id">@u.Name</option>
+                            }
+                        }
+                    }
+
+                </select>
+            </div>
+            <div class="sell-form-element">
+                <button @onclick="makeuserreport">Make Report</button>
+            </div>
+        </div>
+    </div>
+    <div class="popup" style="top: @sitepopupTop; opacity: @sitepopupOpacity; transform: @sitepopupTransform">
+        <div class="close-btn" @onclick="ToggleSitePopUp">&times;</div>
+        <div class="sellform">
+            <h2>Report Website</h2>
+            <div class="sell-form-element">
+                <label for="ReportSiteDescription">Description:</label><br>
+                <textarea id="ReportSiteDescription" name="ReportSiteDescription" @bind="ReportSiteDescription"></textarea><br>
+            </div>
+            
+            <div class="sell-form-element">
+                <button @onclick="makesitereport">Make Report</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+@code {
+    private List<Product>? products;
+    private List<User>? users;
+
+    private string username;
+    private int userId;
+
+    private string ReportDescription;
+    private string ReportUserDescription;
+    private string ReportSiteDescription;
+    private int ReportProductId;
+    private int ReportUserId;
+
+    //popup---------------------
+    private bool isProductPopupVisible = false;
+    private bool isUserPopupVisible = false;
+    private bool isSitePopupVisible = false;
+
+    private string productpopupTop = "-150%";
+    private string productpopupOpacity = "0";
+    private string productpopupTransform = "translate(-50%, -50%) scale(1.25)";
+
+    private string userpopupTop = "-150%";
+    private string userpopupOpacity = "0";
+    private string userpopupTransform = "translate(-50%, -50%) scale(1.25)";
+
+    private string sitepopupTop = "-150%";
+    private string sitepopupOpacity = "0";
+    private string sitepopupTransform = "translate(-50%, -50%) scale(1.25)";
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
+        users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
+
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+
+        Console.WriteLine($"Username: {user.Identity.Name}");
+        // Get the userId from the user's identity
+        username = user.Identity.Name;
+
+        @foreach (var i in users)
+        {
+            if (i.Email == username)
+            {
+                userId = i.Id;
+            }
+        }
+        Console.WriteLine($"User ID: {userId}");
+    }
+    
+    public async Task makeproductreport()
+    {
+        var ProductReport = new Report
+            {
+                ReportType = "Product",
+                Description = ReportDescription,
+                DateCreated = DateTime.Now,
+                status = "Unresolved",
+                ReporterUserId = userId,
+                ReportedUserId = null,
+                ReportedProductId = ReportProductId
+            };
+
+        await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, ProductReport);
+        ToggleProductPopUp();
+    }
+    public async Task makeuserreport()
+    {
+        var UserReport = new Report
+            {
+                ReportType = "User",
+                Description = ReportUserDescription,
+                DateCreated = DateTime.Now,
+                status = "Unresolved",
+                ReporterUserId = userId,
+                ReportedUserId = ReportUserId,
+                ReportedProductId = null
+            };
+
+        await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, UserReport);
+        ToggleUserPopUp();
+    }
+    public async Task makesitereport()
+    {
+        var SiteReport = new Report
+            {
+                ReportType = "Site",
+                Description = ReportSiteDescription,
+                DateCreated = DateTime.Now,
+                status = "Unresolved",
+                ReporterUserId = userId,
+                ReportedUserId = null,
+                ReportedProductId = null
+            };
+
+        await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, SiteReport);
+        ToggleSitePopUp();
+    }
+    
+    private void ToggleProductPopUp()
+    {
+        isProductPopupVisible = !isProductPopupVisible;
+
+        // Set styles based on popup visibility
+        productpopupTop = isProductPopupVisible ? "50%" : "-150%";
+        productpopupOpacity = isProductPopupVisible ? "1" : "0";
+        productpopupTransform = isProductPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+    private void ToggleUserPopUp()
+    {
+        isUserPopupVisible = !isUserPopupVisible;
+
+        // Set styles based on popup visibility
+        userpopupTop = isUserPopupVisible ? "50%" : "-150%";
+        userpopupOpacity = isUserPopupVisible ? "1" : "0";
+        userpopupTransform = isUserPopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+    private void ToggleSitePopUp()
+    {
+        isSitePopupVisible = !isSitePopupVisible;
+
+        // Set styles based on popup visibility
+        sitepopupTop = isSitePopupVisible ? "50%" : "-150%";
+        sitepopupOpacity = isSitePopupVisible ? "1" : "0";
+        sitepopupTransform = isSitePopupVisible ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -50%) scale(1.25)";
+    }
+}
