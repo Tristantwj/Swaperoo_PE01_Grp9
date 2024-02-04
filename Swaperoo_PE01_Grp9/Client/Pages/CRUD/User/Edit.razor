@@ -1,6 +1,7 @@
 ﻿@page "/users/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Users</h3>
@@ -18,7 +19,34 @@
 
     async Task EditUsers()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.UsersEndpoint}/{id}", user);
-        _navManager.NavigateTo("/users/");
+        if (string.IsNullOrWhiteSpace(user.Name))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user name.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(user.Region))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user region.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(user.Email))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user email.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(user.Description))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user description.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.UsersEndpoint}/{id}", user);
+            _navManager.NavigateTo("/users/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating category: {ex.Message}");
+        }
     }
 }

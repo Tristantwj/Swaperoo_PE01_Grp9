@@ -1,6 +1,7 @@
 ﻿@page "/purchases/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3 class="card-title">Create New Purchase</h3>
@@ -24,8 +25,20 @@
 
     private async Task CreatePurchase()
     {
-        await _client.PostAsJsonAsync(Endpoints.PurchasesEndpoint, purchase);
-        _navManager.NavigateTo("/purchases/");
+        if (string.IsNullOrWhiteSpace(purchase.Status))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a purchase status.");
+            return;
+        }
+        try
+        {
+            await _client.PostAsJsonAsync(Endpoints.CategorysEndpoint, purchase);
+            _navManager.NavigateTo("/purchases/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating purchase: {ex.Message}");
+        }
     }
 
 }

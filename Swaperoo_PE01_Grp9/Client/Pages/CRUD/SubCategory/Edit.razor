@@ -1,6 +1,7 @@
 ﻿@page "/subCategorys/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit SubCategorys</h3>
@@ -18,7 +19,19 @@
 
     async Task EditSubCategorys()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.SubCategorysEndpoint}/{id}", subCategory);
-        _navManager.NavigateTo("/subCategorys/");
+        if (string.IsNullOrWhiteSpace(subCategory.Name))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a sub category name.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.SubCategorysEndpoint}/{id}", subCategory);
+            _navManager.NavigateTo("/subCategorys/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating sub category: {ex.Message}");
+        }
     }
 }

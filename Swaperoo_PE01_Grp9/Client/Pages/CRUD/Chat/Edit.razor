@@ -1,6 +1,7 @@
 ﻿@page "/chats/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Chats</h3>
@@ -32,9 +33,22 @@
         chat.PurchaseId = selectedPurchaseId;
         chat.SwapId = selectedSwapId;
 
-        await _client.PutAsJsonAsync($"{Endpoints.ChatsEndpoint}/{id}", chat);
-        _navManager.NavigateTo("/chats/");
+        if (string.IsNullOrWhiteSpace(chat.Name))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a chat name.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.ChatsEndpoint}/{id}", chat);
+            _navManager.NavigateTo("/chats/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating category: {ex.Message}");
+        }
     }
+}
 
     private void OnPurchaseSelected(ChangeEventArgs args)
     {

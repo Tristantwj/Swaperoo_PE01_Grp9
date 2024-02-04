@@ -1,6 +1,7 @@
 ﻿@page "/ratings/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3 class="card-title">Create New Rating</h3>
@@ -25,8 +26,20 @@
 
     private async Task CreateRating()
     {
-        await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
-        _navManager.NavigateTo("/ratings/");
+        if (string.IsNullOrWhiteSpace(rating.Description))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a rating description.");
+            return;
+        }
+        try
+        {
+            await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);
+            _navManager.NavigateTo("/ratings/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating rating: {ex.Message}");
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿@page "/messages/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Messages</h3>
@@ -18,7 +19,19 @@
 
     async Task EditMessages()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.MessagesEndpoint}/{id}", message);
-        _navManager.NavigateTo("/messages/");
+        if (string.IsNullOrWhiteSpace(message.MessageContent))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a message content.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.MessagesEndpoint}/{id}", message);
+            _navManager.NavigateTo("/messages/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating category: {ex.Message}");
+        }
     }
 }

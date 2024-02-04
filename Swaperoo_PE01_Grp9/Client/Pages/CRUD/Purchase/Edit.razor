@@ -1,6 +1,7 @@
 ﻿@page "/purchases/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Purchases</h3>
@@ -18,7 +19,19 @@
 
     async Task EditPurchases()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{id}", purchase);
-        _navManager.NavigateTo("/purchases/");
+        if (string.IsNullOrWhiteSpace(purchase.Status))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a purchase status.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{id}", purchase);
+            _navManager.NavigateTo("/purchases/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating purchase: {ex.Message}");
+        }
     }
 }

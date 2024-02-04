@@ -1,6 +1,7 @@
 ﻿@page "/products/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Products</h3>
@@ -18,7 +19,35 @@
 
     async Task EditProducts()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{id}", product);
-        _navManager.NavigateTo("/products/");
+        if (string.IsNullOrWhiteSpace(product.Name))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product name.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(product.Description))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product description.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(product.imagepath))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product image path.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(product.status))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product status.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{id}", product);
+            _navManager.NavigateTo("/products/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating category: {ex.Message}");
+        }
     }
+}
 }

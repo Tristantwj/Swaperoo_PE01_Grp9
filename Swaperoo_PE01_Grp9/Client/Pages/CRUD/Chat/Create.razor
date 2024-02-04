@@ -1,6 +1,7 @@
 ﻿@page "/chats/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3 class="card-title">Create New Chat</h3>
@@ -14,8 +15,20 @@
 
     private async Task CreateChat()
     {
-        await _client.PostAsJsonAsync(Endpoints.ChatsEndpoint, chat);
-        _navManager.NavigateTo("/chats/");
+        if (string.IsNullOrWhiteSpace(chat.Name))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a chat name.");
+            return;
+        }
+        try
+        {
+            await _client.PostAsJsonAsync(Endpoints.ChatsEndpoint, chat);
+            _navManager.NavigateTo("/chats/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating category: {ex.Message}");
+        }
     }
 
 }

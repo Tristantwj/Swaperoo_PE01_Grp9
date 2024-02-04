@@ -1,6 +1,7 @@
 ﻿@page "/reports/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Reports</h3>
@@ -18,8 +19,30 @@
 
     async Task EditReports()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.ReportsEndpoint}/{id}", report);
-        _navManager.NavigateTo("/reports/");
+        if (string.IsNullOrWhiteSpace(report.ReportType))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a report type.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(report.Description))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a report description.");
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(report.status))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a report status.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.ReportsEndpoint}/{id}", report);
+            _navManager.NavigateTo("/reports/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating report: {ex.Message}");
+        }
     }
 
 }

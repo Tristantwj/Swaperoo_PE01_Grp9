@@ -1,6 +1,7 @@
 ﻿@page "/ratings/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime JSRuntime
 @layout NoMenuLayout
 
 <h3>Edit Ratings</h3>
@@ -18,8 +19,20 @@
 
     async Task EditRatings()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.RatingsEndpoint}/{id}", rating);
-        _navManager.NavigateTo("/ratings/");
+        if (string.IsNullOrWhiteSpace(rating.Description))
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Please enter a rating description.");
+            return;
+        }
+        try
+        {
+            await _client.PutAsJsonAsync($"{Endpoints.RatingsEndpoint}/{id}", rating);
+            _navManager.NavigateTo("/ratings/");
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating rating: {ex.Message}");
+        }
     }
 
 }
