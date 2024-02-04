@@ -3,11 +3,11 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
+@inject HttpInterceptorService _interceptor
 @layout AdminMenuLayout
 
 <h3 class="card-title">Purchases</h3>
 <br />
-
 
 
 <a href="/purchases/create" class="btn btn-secondary">
@@ -27,6 +27,7 @@ else
             <tr>
                 <th>PurchaseId</th>
                 <th>Name</th>
+                <th>Offer Price</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@ else
                 <tr>
                     <td>@purchase.Id</td>
                     <td>@purchase.PurchaseProduct.Name</td>
+                    <td>@purchase.OfferPrice</td>
                     <td>
                         <a href="/Purchases/view/@purchase.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -58,6 +60,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
     }
 

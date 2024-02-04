@@ -3,6 +3,7 @@
 @inject IJSRuntime js
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpInterceptorService _interceptor
 
 <PageTitle>Product</PageTitle>
 <head>
@@ -117,6 +118,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         products = await _client.GetFromJsonAsync<List<Product>>(Endpoints.ProductsEndpoint);
         product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/Detail/{id}");
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
@@ -185,6 +187,21 @@
 
     private async Task makepurchase()
     {
+        if(product.User.Id == userId)
+        {
+            await js.InvokeVoidAsync("alert", "You can't buy your own product");
+            return; // Exit the method without proceeding further
+        }
+        if (offervalue == null)
+        {
+            await js.InvokeVoidAsync("alert", "Please fill in all the required fields with valid values.");
+            return; // Exit the method without proceeding further
+        }
+        if (product.status == "sold")
+        {
+            await js.InvokeVoidAsync("alert", "This product is not available.");
+            return; // Exit the method without proceeding further
+        }
         var purchase = new Purchase
             {
                 SellDate = DateTime.Now,
@@ -224,6 +241,16 @@
             // Display an error message or handle the validation error as needed
             // For example, you can show an alert using JavaScript
             await js.InvokeVoidAsync("alert", "Please select an option.");
+            return; // Exit the method without proceeding further
+        }
+        if (product.User.Id == userId)
+        {
+            await js.InvokeVoidAsync("alert", "You can't swap your own product");
+            return; // Exit the method without proceeding further
+        }
+        if (product.status == "sold")
+        {
+            await js.InvokeVoidAsync("alert", "This product is not available.");
             return; // Exit the method without proceeding further
         }
         var swap = new Swap

@@ -3,14 +3,11 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
+@inject HttpInterceptorService _interceptor
 @layout AdminMenuLayout
 
 <h3 class="card-title">Categorys</h3>
 <br />
-<head>
-    <link href="css/landing.css" rel="stylesheet" />
-    <link href="css/Crud.css" rel="stylesheet" />
-</head>
 
 
 <a href="/categorys/create" class="btn btn-secondary">
@@ -61,6 +58,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Categorys = await _client.GetFromJsonAsync<List<Category>>($"{Endpoints.CategorysEndpoint}");
     }
 

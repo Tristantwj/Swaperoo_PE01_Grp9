@@ -3,14 +3,11 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
+@inject HttpInterceptorService _interceptor
 @layout AdminMenuLayout
 
 <h3 class="card-title">Users</h3>
 <br />
-<head>
-    <link href="css/landing.css" rel="stylesheet" />
-    <link href="css/Crud.css" rel="stylesheet" />
-</head>
 
 
 <a href="/users/create" class="btn btn-secondary">
@@ -30,6 +27,7 @@ else
             <tr>
                 <th>User Id</th>
                 <th>User Name</th>
+                <th>Role</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -39,6 +37,7 @@ else
                 <tr>
                     <td>@user.Id - @user.UserId</td>
                     <td>@user.Name</td>
+                    <td>@user.Role</td>
                     <td>
                         <a href="/Users/view/@user.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -66,6 +65,7 @@ else
 
     async Task Delete(int UserId)
     {
+        _interceptor.MonitorEvent();
         if (Users != null)
         {
             var User = Users.First(q => q.Id == UserId);

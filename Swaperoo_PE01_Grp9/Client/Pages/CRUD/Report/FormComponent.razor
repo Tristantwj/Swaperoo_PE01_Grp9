@@ -29,8 +29,8 @@
             <div>
                 <InputSelect @bind-Value="@report.ReportType" class="form-control">
                 <option value=""> -- Select Report Type -- </option>
-                <option value="site">site</option>
-                <option value="user">user</option>
+                <option value="site">Site</option>
+                <option value="user">User</option>
                 </InputSelect>
                 <ValidationMessage For="@(() => report.ReportType)" />
             </div>
@@ -74,8 +74,8 @@
             <div>
                 <InputSelect @bind-Value="@report.status" class="form-control">
                 <option value=""> -- Status Type -- </option>
-                <option value="solved">solved</option>
-                <option value="unsolved">unsolved</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Unresolved">Unresolved</option>
                 <ValidationMessage For="@(() => report.status)" />
                 </InputSelect>
             </div>

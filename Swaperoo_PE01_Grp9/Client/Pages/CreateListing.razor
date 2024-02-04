@@ -3,6 +3,8 @@
 @inject IJSRuntime js
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpInterceptorService _interceptor
+
 
 <PageTitle>Create Listing</PageTitle>
 
@@ -56,6 +58,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
         subCategories = await _client.GetFromJsonAsync<List<SubCategory>>(Endpoints.SubCategorysEndpoint);
 

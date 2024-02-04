@@ -3,14 +3,11 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
+@inject HttpInterceptorService _interceptor
 @layout AdminMenuLayout
 
 <h3 class="card-title">SubCategorys</h3>
 <br />
-<head>
-    <link href="css/landing.css" rel="stylesheet" />
-    <link href="css/Crud.css" rel="stylesheet" />
-</head>
 
 
 <a href="/subCategorys/create/" class="btn btn-secondary">
@@ -30,6 +27,7 @@ else
             <tr>
                 <th>SubCategoryId</th>
                 <th>SubCategory</th>
+                <th>Category</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -39,6 +37,7 @@ else
                 <tr>
                     <td>@subCategory.Id</td>
                     <td>@subCategory.Name</td>
+                    <td>@subCategory.Category.Name</td>
                     <td>
                         <a href="/SubCategorys/view/@subCategory.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
@@ -61,6 +60,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         SubCategorys = await _client.GetFromJsonAsync<List<SubCategory>>($"{Endpoints.SubCategorysEndpoint}");
     }
 

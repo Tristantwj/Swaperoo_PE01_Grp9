@@ -5,6 +5,7 @@
 @inject NavigationManager Navigation
 @implements IAsyncDisposable
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpInterceptorService _interceptor
 <PageTitle>Chat</PageTitle>
 
 <head>
@@ -87,7 +88,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-
+        _interceptor.MonitorEvent();
         Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
         users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
 

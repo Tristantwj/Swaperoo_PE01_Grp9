@@ -3,6 +3,7 @@
 @inject IJSRuntime js
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpInterceptorService _interceptor
 <PageTitle>PrivateChat</PageTitle>
 
 <head>
@@ -319,6 +320,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
         IndivChat = await _client.GetFromJsonAsync<Chat>($"{Endpoints.ChatsEndpoint}/{id}");
         Messages = await _client.GetFromJsonAsync<List<Message>>($"{Endpoints.MessagesEndpoint}");
