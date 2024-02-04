@@ -19,7 +19,6 @@
                 <input type="text" id="itemName" name="itemName" @bind="itemName"><br>
                 <label for="itemImage">Select Image:</label><br>
                 <input type="text" id="itemImage" name="itemImage" @bind="itemImage"><br>
-            <!--<input type="file" id="itemImage" name="itemImage"><br>-->
                 <label for="price">Price:</label><br>
                 <input type="number" id="price" name="price" @bind="price"><br>
                 <button class="submitbutton" @onclick="CreateProduct">Submit</button>
@@ -31,6 +30,7 @@
                 <select id="subCategory" name="subCategory" @bind="subCategory">
                 @if (subCategories != null)
                 {
+                    <option value="" disabled selected>Select an option</option>
                     @foreach (var sub in subCategories)
                     {
                         <option value="@sub.Id">@sub.Name</option>
@@ -80,7 +80,8 @@
     {
         if (string.IsNullOrWhiteSpace(itemName) ||
         string.IsNullOrWhiteSpace(itemDescription) ||
-        string.IsNullOrWhiteSpace(itemImage))
+        string.IsNullOrWhiteSpace(itemImage) ||
+        subCategory == 0)
         {
             // Display an error message or handle the validation error as needed
             // For example, you can show an alert using JavaScript

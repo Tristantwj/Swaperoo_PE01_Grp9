@@ -74,9 +74,9 @@
     </div>
 
     <div class="reviews">
-        <h2>Reviews</h2>
         @if (ratings != null)
         {
+            <h2>Reviews</h2>
             @foreach (var r in ratings)
             {
                 @if(r.User.Id != id)
