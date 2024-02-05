@@ -24,6 +24,7 @@
             <label>Sender: </label>
             <div>
                 <InputSelect @bind-Value="message.SenderId" class="form-control">
+                    <option value="">-- Select Sender --</option>
                     @if (Users != null)
                     {
                         @foreach (var user in Users)
@@ -40,6 +41,7 @@
             <label>Chat: </label>
             <div>
                 <InputSelect @bind-Value="message.ChatId" class="form-control">
+                    <option value="">-- Select Chat --</option>
                     @if (Chats != null)
                     {
                         @foreach (var chat in Chats)
@@ -78,6 +80,7 @@
     {
         Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
         Chats = await _client.GetFromJsonAsync<List<Chat>>($"{Endpoints.ChatsEndpoint}");
+        message.DateCreated = DateTime.Now;
     }
 }
 

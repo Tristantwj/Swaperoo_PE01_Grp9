@@ -19,11 +19,6 @@
 
     async Task EditRatings()
     {
-        if (string.IsNullOrWhiteSpace(rating.Description))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a rating description.");
-            return;
-        }
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.RatingsEndpoint}/{id}", rating);
