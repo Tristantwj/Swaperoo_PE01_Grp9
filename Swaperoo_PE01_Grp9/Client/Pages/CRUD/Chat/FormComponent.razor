@@ -6,13 +6,6 @@
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label>Created Date: </label>
-            <div>
-                <InputDate @bind-Value="@chat.DateCreated" class="form-control" />
-                <ValidationMessage For="@(() => chat.DateCreated)" />
-            </div>
-        </div>
-        <div class="form-group">
             <label>Chat Name: </label>
             <div>
                 <InputText @bind-Value="@chat.Name" class="form-control" />
@@ -20,13 +13,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Date Created: </label>
+            <label>Created Date: </label>
             <div>
                 <InputDate @bind-Value="@chat.DateCreated" class="form-control" />
                 <ValidationMessage For="@(() => chat.DateCreated)" />
             </div>
         </div>
-
         <div class="form-group">
             <label>Purchase: </label>
             <div>
@@ -81,12 +73,13 @@
 
     private IList<Purchase>? Purchases;
     private IList<Swap>? Swaps;
-        private string selectedTransactionType = "Purchases";
+    private string selectedTransactionType = "Purchases";
 
     protected async override Task OnInitializedAsync()
     {
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
         Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
+        chat.DateCreated = DateTime.Now;
     }
     private void HandleSwapInput(ChangeEventArgs args)
     {

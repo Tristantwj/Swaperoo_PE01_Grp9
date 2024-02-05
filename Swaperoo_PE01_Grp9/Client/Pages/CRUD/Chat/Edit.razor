@@ -33,11 +33,6 @@
         chat.PurchaseId = selectedPurchaseId;
         chat.SwapId = selectedSwapId;
 
-        if (string.IsNullOrWhiteSpace(chat.Name))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a chat name.");
-            return;
-        }
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.ChatsEndpoint}/{id}", chat);
@@ -47,16 +42,5 @@
         {
             await JSRuntime.InvokeVoidAsync("alert", $"Error updating category: {ex.Message}");
         }
-    }
-}
-
-    private void OnPurchaseSelected(ChangeEventArgs args)
-    {
-        selectedSwapId = null;
-    }
-
-    private void OnSwapSelected(ChangeEventArgs args)
-    {
-        selectedPurchaseId = null;
     }
 }

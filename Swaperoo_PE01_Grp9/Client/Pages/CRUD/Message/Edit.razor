@@ -19,11 +19,6 @@
 
     async Task EditMessages()
     {
-        if (string.IsNullOrWhiteSpace(message.MessageContent))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a message content.");
-            return;
-        }
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.MessagesEndpoint}/{id}", message);

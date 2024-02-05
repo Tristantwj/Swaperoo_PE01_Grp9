@@ -38,6 +38,7 @@
             <label>User: </label>
             <div>
                 <InputSelect @bind-Value="rating.UserId" class="form-control">
+                    <option value="">-- Select User --</option>
                     @if (Users != null)
                     {
                         @foreach (var user in Users)
@@ -52,7 +53,7 @@
         <div class="form-group">
             <label>Purchase: </label>
             <div>
-                <InputSelect @bind-Value="rating.PurchaseId" class="form-control">
+                <InputSelect @bind-Value="rating.PurchaseId" class="form-control" @oninput="HandlePurchaseInput">
                     @if (Purchases != null)
                     {
                         <option value=""> Choose Option</option>
@@ -68,7 +69,7 @@
         <div class="form-group">
             <label>Swaps: </label>
             <div>
-                <InputSelect @bind-Value="rating.SwapId" class="form-control">
+                <InputSelect @bind-Value="rating.SwapId" class="form-control" @oninput="HandleSwapInput">
                     @if (Swaps != null)
                     {
                         <option value=""> Choose Option</option>
@@ -111,6 +112,25 @@
         Users = await _client.GetFromJsonAsync<List<User>>($"{Endpoints.UsersEndpoint}");
         Purchases = await _client.GetFromJsonAsync<List<Purchase>>($"{Endpoints.PurchasesEndpoint}");
         Swaps = await _client.GetFromJsonAsync<List<Swap>>($"{Endpoints.SwapsEndpoint}");
+        rating.DateCreated = DateTime.Now;
+    }
+
+    private void HandleSwapInput(ChangeEventArgs args)
+    {
+        if (args.Value != null && !string.IsNullOrWhiteSpace(args.Value.ToString()))
+        {
+            // If Swap input is selected, clear Purchase input
+            rating.PurchaseId = null;
+        }
+    }
+
+    private void HandlePurchaseInput(ChangeEventArgs args)
+    {
+        if (args.Value != null && !string.IsNullOrWhiteSpace(args.Value.ToString()))
+        {
+            // If Purchase input is selected, clear Swap input
+            rating.SwapId = null;
+        }
     }
 }
 

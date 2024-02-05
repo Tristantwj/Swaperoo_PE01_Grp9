@@ -15,11 +15,6 @@
 
     private async Task CreateChat()
     {
-        if (string.IsNullOrWhiteSpace(chat.Name))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a chat name.");
-            return;
-        }
         try
         {
             await _client.PostAsJsonAsync(Endpoints.ChatsEndpoint, chat);

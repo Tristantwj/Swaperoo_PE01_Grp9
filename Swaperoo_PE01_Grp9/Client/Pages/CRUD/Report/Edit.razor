@@ -19,21 +19,6 @@
 
     async Task EditReports()
     {
-        if (string.IsNullOrWhiteSpace(report.ReportType))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a report type.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(report.Description))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a report description.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(report.status))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a report status.");
-            return;
-        }
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.ReportsEndpoint}/{id}", report);

@@ -26,11 +26,6 @@
 
     private async Task CreateRating()
     {
-        if (string.IsNullOrWhiteSpace(rating.Description))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a rating description.");
-            return;
-        }
         try
         {
             await _client.PostAsJsonAsync(Endpoints.RatingsEndpoint, rating);

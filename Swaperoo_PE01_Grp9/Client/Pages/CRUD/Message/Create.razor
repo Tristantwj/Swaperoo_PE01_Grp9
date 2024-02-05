@@ -25,12 +25,6 @@
 
     private async Task CreateMessage()
     {
-
-        if (string.IsNullOrWhiteSpace(message.MessageContent))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a message content.");
-            return;
-        }
         try
         {
             await _client.PostAsJsonAsync(Endpoints.MessagesEndpoint, message);
