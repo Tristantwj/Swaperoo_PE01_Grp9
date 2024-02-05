@@ -45,7 +45,7 @@
         }
         try
         {
-            await _client.PostAsJsonAsync(Endpoints.CategorysEndpoint, report);
+            await _client.PostAsJsonAsync(Endpoints.ReportsEndpoint, report);
             _navManager.NavigateTo("/reports/");
         }
         catch (Exception ex)

@@ -32,7 +32,7 @@
         }
         try
         {
-            await _client.PostAsJsonAsync(Endpoints.CategorysEndpoint, purchase);
+            await _client.PostAsJsonAsync(Endpoints.PurchasesEndpoint, purchase);
             _navManager.NavigateTo("/purchases/");
         }
         catch (Exception ex)

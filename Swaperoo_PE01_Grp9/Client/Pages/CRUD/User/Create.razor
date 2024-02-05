@@ -37,8 +37,8 @@
         }
         try
         {
-            await _client.PostAsJsonAsync(Endpoints.CategorysEndpoint, user);
-            _navManager.NavigateTo("/categorys/");
+            await _client.PostAsJsonAsync(Endpoints.UsersEndpoint, user);
+            _navManager.NavigateTo("/users/");
         }
         catch (Exception ex)
         {
