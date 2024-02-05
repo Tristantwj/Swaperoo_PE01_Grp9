@@ -9,7 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Swaperoo_PE01_Grp9.Shared.Domain
 {
-    public class Product : IValidatableObject
+    public class Product
     {
         
         [Required(ErrorMessage = "Product ID is required")]
@@ -48,20 +48,6 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public int? SubCategoryId { get; set; }
         public virtual SubCategory? SubCategory { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var results = new List<ValidationResult>();
 
-            if (!string.IsNullOrWhiteSpace(imagepath))
-            {
-                if (!Uri.TryCreate(imagepath, UriKind.Absolute, out Uri uriResult) ||
-                    (uriResult.Scheme != Uri.UriSchemeHttp && uriResult.Scheme != Uri.UriSchemeHttps))
-                {
-                    results.Add(new ValidationResult("Invalid image URL.", new[] { nameof(imagepath) }));
-                }
-            }
-
-            return results;
-        }
     }
 }

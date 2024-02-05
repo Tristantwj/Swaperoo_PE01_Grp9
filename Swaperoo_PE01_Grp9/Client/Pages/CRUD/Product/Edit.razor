@@ -19,26 +19,6 @@
 
     async Task EditProducts()
     {
-        if (string.IsNullOrWhiteSpace(product.Name))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product name.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(product.Description))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product description.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(product.imagepath))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product image path.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(product.status))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a product status.");
-            return;
-        }
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{id}", product);
