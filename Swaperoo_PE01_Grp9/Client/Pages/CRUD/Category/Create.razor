@@ -15,11 +15,6 @@
 
     private async Task CreateCategory()
     {
-        if (string.IsNullOrWhiteSpace(category.Name))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a category name.");
-            return;
-        }
         try
         {
             await _client.PostAsJsonAsync(Endpoints.CategorysEndpoint, category);

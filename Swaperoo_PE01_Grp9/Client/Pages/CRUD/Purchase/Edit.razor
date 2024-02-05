@@ -19,11 +19,6 @@
 
     async Task EditPurchases()
     {
-        if (string.IsNullOrWhiteSpace(purchase.Status))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a purchase status.");
-            return;
-        }
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.PurchasesEndpoint}/{id}", purchase);

@@ -16,6 +16,8 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
 
         [Required(ErrorMessage = "User Region is required")]
         public string Region { get; set; }
+
+        [Required(ErrorMessage = "User Email is required")] 
         public string Email { get; set; }
         [Required(ErrorMessage = "User Description is required")]
         [StringLength(255, MinimumLength = 0, ErrorMessage = "User Description length should be between 0 and 255")] 

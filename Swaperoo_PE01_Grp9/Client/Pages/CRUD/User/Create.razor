@@ -15,26 +15,7 @@
 
     private async Task CreateUser()
     {
-        if (string.IsNullOrWhiteSpace(user.Name))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user name.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(user.Region))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user region.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(user.Email))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user email.");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(user.Description))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a user description.");
-            return;
-        }
+    
         try
         {
             await _client.PostAsJsonAsync(Endpoints.UsersEndpoint, user);

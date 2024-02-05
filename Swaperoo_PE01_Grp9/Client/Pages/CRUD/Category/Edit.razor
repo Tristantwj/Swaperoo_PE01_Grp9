@@ -19,12 +19,6 @@
 
     async Task EditCategorys()
     {
-        if (string.IsNullOrWhiteSpace(category.Name))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a category name.");
-            return;
-        }
-
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.CategorysEndpoint}/{id}", category);

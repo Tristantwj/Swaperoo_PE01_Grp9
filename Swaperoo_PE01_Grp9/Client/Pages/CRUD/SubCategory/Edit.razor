@@ -19,11 +19,7 @@
 
     async Task EditSubCategorys()
     {
-        if (string.IsNullOrWhiteSpace(subCategory.Name))
-        {
-            await JSRuntime.InvokeVoidAsync("alert", "Please enter a sub category name.");
-            return;
-        }
+
         try
         {
             await _client.PutAsJsonAsync($"{Endpoints.SubCategorysEndpoint}/{id}", subCategory);

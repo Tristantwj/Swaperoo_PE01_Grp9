@@ -30,6 +30,6 @@ namespace Swaperoo_PE01_Grp9.Shared.Domain
         public int? ReportedUserId { get; set; }
         public virtual User? ReportedUser { get; set; }
         public int? ReportedProductId { get; set; }
-        public virtual Product? Product { get; set; }
+        public virtual Product? ReportedProduct { get; set; }
     }
 }
